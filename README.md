@@ -1,7 +1,7 @@
 # Capstone 2 : E-Reading-Android
-[![Build Status](https://travis-ci.com/nguyenvanphuc0497/E-Reading-Android.svg?token=UkV6yazjctnuCm5poZzj&branch=master)](https://travis-ci.com/nguyenvanphuc0497/E-Reading-Android)
-[![Build Status](https://travis-ci.com/nguyenvanphuc0497/E-Reading-Android.svg?token=UkV6yazjctnuCm5poZzj&branch=develop)](https://travis-ci.com/nguyenvanphuc0497/E-Reading-Android)
-##Development
+[![CircleCI](https://circleci.com/gh/nguyenvanphuc0497/E-Reading-Android/tree/master.svg?style=svg&circle-token=a1c4b5a5edb59b3061516ed8287386fb954412c4)](https://circleci.com/gh/nguyenvanphuc0497/E-Reading-Android/tree/master)
+## Development
+[![CircleCI](https://circleci.com/gh/nguyenvanphuc0497/E-Reading-Android/tree/master.svg?style=svg&circle-token=a1c4b5a5edb59b3061516ed8287386fb954412c4)](https://circleci.com/gh/nguyenvanphuc0497/E-Reading-Android/tree/develop)
 - Language : Java
 - Structure : MVVM
 - Framework : RxJava and RxAndroid
