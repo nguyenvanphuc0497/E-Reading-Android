@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static final long API_TIMEOUT = 15000L;// Time out = 15s
     private static ApiClient sApiClient;
-    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/v1";
+    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/";
 
     public static ApiClient getInstants() {
         if (sApiClient == null) {
@@ -59,7 +59,7 @@ public class ApiClient {
                                 .method((original).method(), (original).body());
 
                         // Request customization: add request headers
-                        requestBuilder.addHeader("Authorization", "Token edc116fca3e3c5149b1d9f1842229b5419a8a83d");
+//                        requestBuilder.addHeader("Authorization", "Token edc116fca3e3c5149b1d9f1842229b5419a8a83d");
                         requestBuilder.addHeader("app-version", BuildConfig.VERSION_NAME);
                         requestBuilder.addHeader("User-Agent", "Android");
 

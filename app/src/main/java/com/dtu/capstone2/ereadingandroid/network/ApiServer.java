@@ -4,6 +4,7 @@ import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereadingandroid.network.response.Token;
 
 import io.reactivex.Single;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
@@ -17,5 +18,5 @@ public interface ApiServer {
      * @return
      */
     @POST("login")
-    Single<Token> loginForServer(AccountLoginRequest accountLoginRequest);
+    Single<Token> loginForServer(@Body AccountLoginRequest accountLoginRequest);
 }
