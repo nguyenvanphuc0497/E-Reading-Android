@@ -52,6 +52,7 @@ dependencies {
 
     //Show log request and response
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.android.support:design:28.0.0'
 }
 repositories {
     mavenCentral()
