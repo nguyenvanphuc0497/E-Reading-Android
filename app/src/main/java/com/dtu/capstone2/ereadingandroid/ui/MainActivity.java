@@ -88,37 +88,35 @@ public class MainActivity extends AppCompatActivity {
             currentActionMode = null; // Clear current action mode
         }
     };
-    @SuppressLint("CheckResult")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
-        tvTest = findViewById(R.id.tvTest);
-        tvTest.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (currentActionMode != null) { return false; }
-                startActionMode(modeCallBack);
-                v.setSelected(true);
-                return true;
-            }
-        });
+        @SuppressLint("CheckResult")
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.test);
+            tvTest = findViewById(R.id.tvTest);
+            tvTest.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (currentActionMode != null) { return false; }
+                    startActionMode(modeCallBack);
+                    v.setSelected(true);
+                    return true;
+                }
+            });
+            localRepository.login(new AccountLoginRequest("admin", "admin123456"))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Token>() {
+                        @Override
+                        public void accept(Token token) throws Exception {
+                            tk = token.getToken();
+                            Log.e("xxx", "accept: " + token);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
 
-        localRepository.login(new AccountLoginRequest("admin", "admin123456"))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Token>() {
-                    @Override
-                    public void accept(Token token) throws Exception {
-                        tk = token.getToken();
-                        Log.e("xxx", "accept: " + token);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                    }
-                });
-
-    }
+                        }
+                    });
+        }
 }
