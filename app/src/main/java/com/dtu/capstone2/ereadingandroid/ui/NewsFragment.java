@@ -57,11 +57,6 @@ public class NewsFragment extends Fragment {
         newsAdapter.setItemClickListener(new ItemRecyclerViewClickListener() {
             @Override
             public void onClick(int position) {
-                FragmentManager fm;
-                fm=getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.add(new DisplayANewsFragment(), "");
-                ft.commit();
 
                 Toast.makeText(getContext(), "day la item thu " + position, Toast.LENGTH_LONG)
                         .show();
