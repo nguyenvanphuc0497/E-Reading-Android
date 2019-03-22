@@ -1,6 +1,6 @@
-package com.dtu.capstone2.ereadingandroid.network;
+package com.dtu.capstone2.ereading.network;
 
-import com.dtu.capstone2.ereadingandroid.BuildConfig;
+import com.dtu.capstone2.ereading.BuildConfig;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

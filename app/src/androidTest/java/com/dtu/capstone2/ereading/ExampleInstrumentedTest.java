@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereadingandroid;
+package com.dtu.capstone2.ereading;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

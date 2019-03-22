@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.dtu.capstone2.ereadingandroid.R;
+import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereadingandroid.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereadingandroid.network.response.Token;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         localRepository.login(new AccountLoginRequest("admin", "admin123456"))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Token>() {
                     @Override
                     public void accept(Token token) throws Exception {
