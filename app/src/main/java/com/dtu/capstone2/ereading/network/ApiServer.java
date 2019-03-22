@@ -1,7 +1,7 @@
 package com.dtu.capstone2.ereading.network;
 
-import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
-import com.dtu.capstone2.ereadingandroid.network.response.Token;
+import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;

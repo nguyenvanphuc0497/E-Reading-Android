@@ -12,9 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereadingandroid.datasource.repository.EReadingRepository;
-import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
-import com.dtu.capstone2.ereadingandroid.network.response.Token;
+import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
