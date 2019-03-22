@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereadingandroid.ui;
+package com.dtu.capstone2.ereading.ui.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import com.dtu.capstone2.ereadingandroid.network.response.Token;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private EReadingRepository localRepository = new EReadingRepository();
     private String tk = "";
     private TextView tvTest;
@@ -61,17 +61,17 @@ public class MainActivity extends AppCompatActivity {
             // Finish and close the ActionMode
             switch (item.getItemId()) {
                 case R.id.menu_choose:
-                    Toast.makeText(MainActivity.this, "Chọn!" + selectedText, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Chọn!" + selectedText, Toast.LENGTH_SHORT).show();
                     mode.finish();
                     return true;
                 case R.id.menu_add:
                     // Trigger the deletion here
                     mode.finish();
-                    Toast.makeText(MainActivity.this, "Add!" + selectedText, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Add!" + selectedText, Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.menu_request:
                     mode.finish();
-                    Toast.makeText(MainActivity.this, "Request!" + selectedText, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Request!" + selectedText, Toast.LENGTH_SHORT).show();
                     return true;
 
                 default:
