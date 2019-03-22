@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.dtu.capstone2.ereadingandroid", appContext.getPackageName());
+        assertEquals("com.dtu.capstone2.ereading", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereadingandroid.network.response
+package com.dtu.capstone2.ereading.network.response
 
 /**
  * Create by Nguyen Van Phuc on 3/11/19

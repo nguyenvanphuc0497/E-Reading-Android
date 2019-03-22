@@ -1,8 +1,8 @@
-package com.dtu.capstone2.ereadingandroid.datasource.repository;
+package com.dtu.capstone2.ereading.datasource.repository;
 
-import com.dtu.capstone2.ereadingandroid.network.remote.EReadingRemoteDataSource;
-import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
-import com.dtu.capstone2.ereadingandroid.network.response.Token;
+import com.dtu.capstone2.ereading.network.remote.EReadingRemoteDataSource;
+import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
 
