@@ -2,6 +2,8 @@ package com.dtu.capstone2.ereadingandroid.datasource.repository;
 
 import com.dtu.capstone2.ereadingandroid.network.remote.EReadingRemoteDataSource;
 import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereadingandroid.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereadingandroid.network.request.DataStringReponse;
 import com.dtu.capstone2.ereadingandroid.network.response.Token;
 
 import io.reactivex.Single;
@@ -15,4 +17,12 @@ public class EReadingRepository {
     public Single<Token> login(AccountLoginRequest account) {
         return eReadingRemoteDataSource.login(account);
     }
+    public Single<Boolean> addFavorite(AddFavoriteRequest paraFavorite){
+        return eReadingRemoteDataSource.addFavorite(paraFavorite);
+    }
+    public  Single<DataStringReponse> GetDataStringReponse(String paraReponse)
+    {
+        return eReadingRemoteDataSource.GetDataStringReponseRemote(paraReponse);
+    }
+
 }

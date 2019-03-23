@@ -9,6 +9,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 import com.dtu.capstone2.ereadingandroid.R;
 import com.dtu.capstone2.ereadingandroid.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereadingandroid.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereadingandroid.network.request.DataStringReponse;
 import com.dtu.capstone2.ereadingandroid.network.response.Token;
+
+import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -27,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private String tk = "";
     private TextView tvTest;
     private String text;
+    private ArrayList listFavoriteWord= new ArrayList();
+    private ArrayList listFavoriteId= new ArrayList();
+    private Button btnTest;
+
+    MainActivityViewModel MainActivityVMD = new MainActivityViewModel();
 
    //test text selection action
     // Tracks current contextual action mode
@@ -64,16 +73,17 @@ public class MainActivity extends AppCompatActivity {
             // Finish and close the ActionMode
             switch (item.getItemId()) {
                 case R.id.menu_choose:
+                    listFavoriteWord.add(selectedText);
                     Toast.makeText(MainActivity.this, "Chọn!" + selectedText, Toast.LENGTH_SHORT).show();
-                    mode.finish();
                     return true;
                 case R.id.menu_add:
-                    // Trigger the deletion here
-                    mode.finish();
+                    for(int i=0;i<listFavoriteWord.size();i++)
+                    {
+                        Log.e("list", String.valueOf(listFavoriteWord.get(i)));
+                    }
                     Toast.makeText(MainActivity.this, "Add!"+ selectedText, Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.menu_request:
-                    mode.finish();
                     Toast.makeText(MainActivity.this, "Request!"+ selectedText, Toast.LENGTH_SHORT).show();
                     return true;
 
@@ -94,6 +104,23 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.test);
             tvTest = findViewById(R.id.tvTest);
+            btnTest=findViewById(R.id.btn_test);
+
+            btnTest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivityVMD.GetDataStringReponse("Islamic terror group has lost its last territory in Syria, but its breeding ground still thrives")
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<DataStringReponse>() {
+                                @Override
+                                public void accept(DataStringReponse dataStringReponse) throws Exception {
+                                    Log.e("string",dataStringReponse.getStringData());
+
+                                }
+                            });
+                }
+            });
             tvTest.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -118,5 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+            // even addfavorite
+            MainActivityVMD.addFavoriteMD(1,1);
         }
 }
