@@ -1,6 +1,5 @@
-package com.dtu.capstone2.ereadingandroid.helper;
+package com.dtu.capstone2.ereadingandroid.ui.news;
 
-import android.view.View;
 
 public interface ItemRecyclerViewClickListener {
 

@@ -1,8 +1,12 @@
-package com.dtu.capstone2.ereadingandroid.ui;
+package com.dtu.capstone2.ereadingandroid.ui.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.dtu.capstone2.ereadingandroid.ui.translate.TranslateFragment;
+import com.dtu.capstone2.ereadingandroid.ui.yourtext.YourTextFragment;
+import com.dtu.capstone2.ereadingandroid.ui.news.NewsFragment;
 
 /**
  * Create By Huynh Vu Ha Lan on 19/03/2019

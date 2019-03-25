@@ -1,12 +1,4 @@
-package com.dtu.capstone2.ereadingandroid.ui;
-
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.dtu.capstone2.ereadingandroid.R;
+package com.dtu.capstone2.ereadingandroid.ui.news;
 
 /**
  * Create By Huynh Vu Ha Lan on 19/03/2019
@@ -35,10 +27,6 @@ public class News {
     public News(String title, int thumbnail) {
         this.title = title;
         this.thumbnail = thumbnail;
-    }
-
-    public News(){
-
     }
 
 }

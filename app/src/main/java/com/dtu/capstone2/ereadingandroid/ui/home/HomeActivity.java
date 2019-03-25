@@ -1,6 +1,5 @@
-package com.dtu.capstone2.ereadingandroid.ui;
+package com.dtu.capstone2.ereadingandroid.ui.home;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +16,6 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager pager;
     private TabLayout tabLayout;
 
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +31,5 @@ public class HomeActivity extends AppCompatActivity {
         PagerAdapter adapter = new PagerAdapter(manager);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
-        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setTabsFromPagerAdapter(adapter);//deprecated
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
     }
 }

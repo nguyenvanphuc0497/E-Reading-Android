@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereadingandroid.ui;
+package com.dtu.capstone2.ereadingandroid.ui.displayanews;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

@@ -1,9 +1,9 @@
-package com.dtu.capstone2.ereadingandroid.ui;
+package com.dtu.capstone2.ereadingandroid.ui.news;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.dtu.capstone2.ereadingandroid.R;
-import com.dtu.capstone2.ereadingandroid.helper.ItemRecyclerViewClickListener;
+import com.dtu.capstone2.ereadingandroid.ui.displayanews.DisplayANewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,27 +43,34 @@ public class NewsFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(newsAdapter);
 
-        addEvent();
-
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addEvent();
+
+    }
 
     private void addEvent() {
-        //Call method add data
-        createData();
+        createData();//Call method add data
         newsAdapter.notifyDataSetChanged();
 
         newsAdapter.setItemClickListener(new ItemRecyclerViewClickListener() {
             @Override
             public void onClick(int position) {
+                Fragment newDetails=new DisplayANewsFragment();
+                FragmentTransaction displayANewsFragment = getActivity().getSupportFragmentManager().beginTransaction();
+                displayANewsFragment.replace(R.id.news_fragment, newDetails);
+                displayANewsFragment.addToBackStack(null);
+                displayANewsFragment.commit();
 
                 Toast.makeText(getContext(), "day la item thu " + position, Toast.LENGTH_LONG)
                         .show();
             }
         });
     }
-
 
     //Add data to newsList
     public void createData() {
