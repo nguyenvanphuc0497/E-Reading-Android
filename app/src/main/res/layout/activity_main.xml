@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:tools="http://schemas.android.com/tools"
-android:background="@color/colorGrey"
-tools:context=".ui.MainActivity">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is Main layout"
-        android:layout_centerHorizontal="true"/>
+    android:background="@color/colorGrey">
 
-    <Button
-        android:id="@+id/btn_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:layout_centerInParent="true"
-        android:background="@color/colorLightBlue"/>
-</RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerMain"
+        app:layout_constraintBottom_toTopOf="@id/tabLayoutMain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayoutMain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabIndicatorHeight="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+</android.support.constraint.ConstraintLayout>
