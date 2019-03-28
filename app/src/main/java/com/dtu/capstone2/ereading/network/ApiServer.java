@@ -40,4 +40,5 @@ public interface ApiServer {
     Single<DataStringReponse>GetDataStringReponse(@Query("work") String paraReponse);
 
 
+
 }
