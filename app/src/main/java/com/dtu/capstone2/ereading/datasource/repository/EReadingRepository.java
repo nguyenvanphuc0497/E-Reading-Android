@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.datasource.repository;
 import com.dtu.capstone2.ereading.network.remote.EReadingRemoteDataSource;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 
@@ -24,5 +25,9 @@ public class EReadingRepository {
     public  Single<DataStringReponse> GetDataStringReponse(String paraReponse)
     {
         return eReadingRemoteDataSource.GetDataStringReponseRemote(paraReponse);
+    }
+    public  Single<DataLoginRequest>GetDataLoginRequest(AccountLoginRequest accountLoginRequest)
+    {
+        return  eReadingRemoteDataSource.GetDataLoginRequest(accountLoginRequest);
     }
 }

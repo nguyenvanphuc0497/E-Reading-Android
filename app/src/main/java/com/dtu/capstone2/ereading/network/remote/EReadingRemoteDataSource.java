@@ -4,6 +4,7 @@ import com.dtu.capstone2.ereading.network.ApiClient;
 import com.dtu.capstone2.ereading.network.ApiServer;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 
@@ -25,5 +26,9 @@ public class EReadingRemoteDataSource {
 
     public Single<DataStringReponse> GetDataStringReponseRemote(String paraReponse) {
         return mApiServer.GetDataStringReponse(paraReponse);
+    }
+    public  Single<DataLoginRequest>GetDataLoginRequest(AccountLoginRequest accountLoginRequest)
+    {
+        return  mApiServer.GetDataLoginRequest(accountLoginRequest);
     }
 }

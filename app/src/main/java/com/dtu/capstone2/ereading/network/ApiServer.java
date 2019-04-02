@@ -2,6 +2,7 @@ package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 
@@ -38,6 +39,13 @@ public interface ApiServer {
      */
     @GET("v1/procresstext")
     Single<DataStringReponse>GetDataStringReponse(@Query("work") String paraReponse);
+    /**
+     *
+     * @param accountLoginRequest
+     * @return
+     */
+    @POST("signin")
+    Single<DataLoginRequest>GetDataLoginRequest(@Body AccountLoginRequest accountLoginRequest );
 
 
 
