@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Style for form account manage-->
     <style name="InputEditTextAccounts" parent="Base.Widget.MaterialComponents.TextInputEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -15,6 +16,7 @@
         <item name="android:maxLength">16</item>
     </style>
 
+    <!--Style for form account manage-->
     <style name="LayoutInputEditTextAccounts" parent="Widget.Design.TextInputLayout">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -26,6 +28,7 @@
         <item name="boxCornerRadiusTopStart">10dp</item>
         <item name="boxCornerRadiusBottomEnd">10dp</item>
         <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="errorEnabled">true</item>
     </style>
 
 </resources>

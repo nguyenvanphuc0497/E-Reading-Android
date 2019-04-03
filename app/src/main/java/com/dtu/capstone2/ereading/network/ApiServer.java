@@ -1,6 +1,7 @@
 package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
@@ -19,4 +20,7 @@ public interface ApiServer {
      */
     @POST("login")
     Single<Token> loginForServer(@Body AccountLoginRequest accountLoginRequest);
+
+    @POST("register")
+    Single<AccountRegisterRequest> regiterAccount(@Body AccountRegisterRequest accountRegisterRequest);
 }

@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.network.remote;
 import com.dtu.capstone2.ereading.network.ApiClient;
 import com.dtu.capstone2.ereading.network.ApiServer;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
@@ -15,5 +16,9 @@ public class EReadingRemoteDataSource {
 
     public Single<Token> login(AccountLoginRequest account) {
         return mApiServer.loginForServer(account);
+    }
+
+    public Single<AccountRegisterRequest> registerNewAccount(AccountRegisterRequest accountRegisterRequest) {
+        return mApiServer.regiterAccount(accountRegisterRequest);
     }
 }
