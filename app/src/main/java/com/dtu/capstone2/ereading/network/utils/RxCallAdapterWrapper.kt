@@ -23,7 +23,7 @@ class RxCallAdapterWrapper<R>(type: Type, retrofit: Retrofit, wrapped: CallAdapt
             when (response?.code()) {
                 HttpsURLConnection.HTTP_BAD_REQUEST -> response.errorBody()?.let {
                     val messageError = it.string()
-                    val apiException = ApiException(messageError)
+                    val apiException = ApiExceptionResponse(messageError)
                     apiException.statusCode = HttpsURLConnection.HTTP_BAD_REQUEST
                     return apiException
                 }
@@ -32,13 +32,13 @@ class RxCallAdapterWrapper<R>(type: Type, retrofit: Retrofit, wrapped: CallAdapt
 
         if (throwable is UnknownHostException || throwable is ConnectException) {
             // Set message error of this case in activity extension
-            val apiException = ApiException("", MessageApiException())
-            apiException.statusCode = ApiException.NETWORK_ERROR_CODE
+            val apiException = ApiExceptionResponse("", MessageApiException())
+            apiException.statusCode = ApiExceptionResponse.NETWORK_ERROR_CODE
             return apiException
         }
 
         if (throwable is SocketTimeoutException) {
-            val apiException = ApiException("", MessageApiException())
+            val apiException = ApiExceptionResponse("", MessageApiException())
             apiException.statusCode = HttpURLConnection.HTTP_CLIENT_TIMEOUT
             return apiException
         }

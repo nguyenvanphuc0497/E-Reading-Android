@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Use this file to handle error from api
  */
-data class ApiException(
+data class ApiExceptionResponse(
         @SerializedName("message") val messageError: String,
         val errors: MessageApiException? = MessageApiException(),
         @SerializedName("status") val status: String = "",
@@ -24,5 +24,5 @@ data class ApiException(
         internal const val MAINTENANCE_CARD = 603
     }
 
-    var statusCode: Int? = null
+    var statusCode: Int? = 0
 }

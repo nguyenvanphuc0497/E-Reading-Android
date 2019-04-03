@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment
  */
 abstract class BaseFragment : Fragment() {
     private lateinit var loadingDialog: LoadingDialog
+    private lateinit var apiErrorDialog: ApiErrorDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadingDialog = LoadingDialog()
+        apiErrorDialog = ApiErrorDialog()
     }
 
     protected fun showLoadingDialog(tag: String) {
@@ -20,5 +22,9 @@ abstract class BaseFragment : Fragment() {
 
     protected fun dismissLoadingDialog() {
         loadingDialog.dismiss()
+    }
+
+    protected fun showApiErrorDialog(tag: String) {
+        apiErrorDialog.show(fragmentManager, tag)
     }
 }

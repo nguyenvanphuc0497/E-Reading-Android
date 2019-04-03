@@ -93,38 +93,38 @@ internal class CustomCallAdapter<T>(private val call: Call<T>, private val retro
                     when (code) {
                         HttpURLConnection.HTTP_OK -> callback.success(call, response)
                         HttpURLConnection.HTTP_UNAUTHORIZED -> {
-                            val converter: Converter<ResponseBody, ApiException> = retrofit.responseBodyConverter(ApiException::class.java, arrayOfNulls<Annotation>(0))
+                            val converter: Converter<ResponseBody, ApiExceptionResponse> = retrofit.responseBodyConverter(ApiExceptionResponse::class.java, arrayOfNulls<Annotation>(0))
                             val responseAfterConvert = converter.convert(response.errorBody())
                             responseAfterConvert?.statusCode = HttpURLConnection.HTTP_UNAUTHORIZED
                             callback.serverError(responseAfterConvert!!)
                         }
 
                         HttpURLConnection.HTTP_INTERNAL_ERROR -> {
-                            val converter: Converter<ResponseBody, ApiException> = retrofit.responseBodyConverter(ApiException::class.java, arrayOfNulls<Annotation>(0))
+                            val converter: Converter<ResponseBody, ApiExceptionResponse> = retrofit.responseBodyConverter(ApiExceptionResponse::class.java, arrayOfNulls<Annotation>(0))
                             val responseAfterConvert = converter.convert(response.errorBody())
                             callback.serverError(responseAfterConvert!!)
                         }
 
                         HttpURLConnection.HTTP_BAD_REQUEST -> {
-                            val converter: Converter<ResponseBody, ApiException> = retrofit.responseBodyConverter(ApiException::class.java, arrayOfNulls<Annotation>(0))
+                            val converter: Converter<ResponseBody, ApiExceptionResponse> = retrofit.responseBodyConverter(ApiExceptionResponse::class.java, arrayOfNulls<Annotation>(0))
                             val responseAfterConvert = converter.convert(response.errorBody())
                             callback.clientError(responseAfterConvert!!)
                         }
 
                         HttpURLConnection.HTTP_NOT_ACCEPTABLE -> {
-                            val converter: Converter<ResponseBody, ApiException> = retrofit.responseBodyConverter(ApiException::class.java, arrayOfNulls<Annotation>(0))
+                            val converter: Converter<ResponseBody, ApiExceptionResponse> = retrofit.responseBodyConverter(ApiExceptionResponse::class.java, arrayOfNulls<Annotation>(0))
                             val responseAfterConvert = converter.convert(response.errorBody())
                             callback.clientError(responseAfterConvert!!)
                         }
 
                         HttpsURLConnection.HTTP_NOT_FOUND -> {
-                            val converter: Converter<ResponseBody, ApiException> = retrofit.responseBodyConverter(ApiException::class.java, arrayOfNulls<Annotation>(0))
+                            val converter: Converter<ResponseBody, ApiExceptionResponse> = retrofit.responseBodyConverter(ApiExceptionResponse::class.java, arrayOfNulls<Annotation>(0))
                             val responseAfterConvert = converter.convert(response.errorBody())
                             callback.clientError(responseAfterConvert!!)
                         }
 
                         HttpsURLConnection.HTTP_FORBIDDEN -> {
-                            val converter: Converter<ResponseBody, ApiException> = retrofit.responseBodyConverter(ApiException::class.java, arrayOfNulls<Annotation>(0))
+                            val converter: Converter<ResponseBody, ApiExceptionResponse> = retrofit.responseBodyConverter(ApiExceptionResponse::class.java, arrayOfNulls<Annotation>(0))
                             val responseAfterConvert = converter.convert(response.errorBody())
                             callback.clientError(responseAfterConvert!!)
                         }
@@ -141,12 +141,12 @@ internal class CustomCallAdapter<T>(private val call: Call<T>, private val retro
                 if (t is IOException) {
                     when (t) {
                         is UnknownHostException -> {
-                            val apiException = ApiException("", MessageApiException())
-                            apiException.statusCode = ApiException.NETWORK_ERROR_CODE
+                            val apiException = ApiExceptionResponse("", MessageApiException())
+                            apiException.statusCode = ApiExceptionResponse.NETWORK_ERROR_CODE
                             callback.networkError(apiException)
                         }
                         is SocketTimeoutException -> {
-                            val apiException = ApiException("", MessageApiException())
+                            val apiException = ApiExceptionResponse("", MessageApiException())
                             apiException.statusCode = HttpURLConnection.HTTP_CLIENT_TIMEOUT
                             callback.networkError(apiException)
                         }

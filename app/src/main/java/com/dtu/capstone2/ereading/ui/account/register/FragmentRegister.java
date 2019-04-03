@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.EditText;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
-import com.dtu.capstone2.ereading.network.utils.ApiException;
+import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
+import com.dtu.capstone2.ereading.ui.model.AccountRegisterErrorResponse;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.google.gson.Gson;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,6 +36,11 @@ public class FragmentRegister extends BaseFragment {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtPasswordConfirm;
+
+    private TextInputLayout layoutUserName;
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+    private TextInputLayout layoutPasswordConfirm;
 
 
     @Override
@@ -54,6 +62,10 @@ public class FragmentRegister extends BaseFragment {
         edtEmail = view.findViewById(R.id.edtRegisterEmail);
         edtPassword = view.findViewById(R.id.edtRegisterPassword);
         edtPasswordConfirm = view.findViewById(R.id.edtRegisterPasswordConfirm);
+        layoutUserName = view.findViewById(R.id.layoutRegisterUserName);
+        layoutEmail = view.findViewById(R.id.layoutRegisterEmail);
+        layoutPassword = view.findViewById(R.id.layoutRegisterPassword);
+        layoutPasswordConfirm = view.findViewById(R.id.layoutRegisterPasswordConfirm);
 
         return view;
     }
@@ -67,7 +79,6 @@ public class FragmentRegister extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showLoadingDialog("");
-
                 AccountRegisterRequest account = new AccountRegisterRequest(edtUserName.getText().toString().trim(),
                         edtPassword.getText().toString().trim(),
                         edtPasswordConfirm.getText().toString().trim(),
@@ -84,39 +95,23 @@ public class FragmentRegister extends BaseFragment {
                     public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
                         Log.e("xxx", "x" + accountRegisterRequest.toString());
 
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("xxx", "xxxx" + ((ApiException) e).getMessageError());
-                        Log.e("xxx", "code" + ((ApiException) e).getStatusCode());
-
-//                        dialog = new Dialog(getActivity());
-//                        dialog.setTitle("Login Error");
-////                        dialog.setContentView(R.layout.dialog);
-//                        dialog.show();
-
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                        builder.setTitle("ThangCoder.Com");
-//                        builder.setMessage("Bạn có muốn đăng xuất không?");
-//                        builder.setCancelable(false);
-//                        builder.setView()
-//                        builder.setPositiveButton("Ứ chịu", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-////                                Toast.makeText(MainActivity.this, "Không thoát được", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        builder.setNegativeButton("Đăng xuất", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                dialogInterface.dismiss();
-//                            }
-//                        });
-//                        AlertDialog alertDialog = builder.create();
-//                        alertDialog.show();
                         dismissLoadingDialog();
+//                        ApiExceptionResponse response = ((ApiExceptionResponse) e);
+//                        if (response.getStatusCode() != null && response.getStatusCode() == 400) {
+//                            Gson gson = new Gson();
+//                            AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
+//                            layoutUserName.setError(registerError.getUserNameError());
+//                            layoutEmail.setError(registerError.getEmailError());
+//                            layoutPassword.setError(registerError.getPasswordError());
+//                            layoutPasswordConfirm.setError(registerError.getPasswordConfirmError());
+//                        }else {
+//
+//                        }
+                        showApiErrorDialog("xxx");
                     }
                 });
             }
