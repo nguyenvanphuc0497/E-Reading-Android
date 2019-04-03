@@ -61,15 +61,15 @@ public class LoginActivity extends AppCompatActivity {
                                 intIduser = dataLoginRequest.getIntId();
                                 final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
                                         "Loading. Please wait...", true);
-                                final Runnable runnable=new Runnable() {
+                                final Runnable runnable = new Runnable() {
                                     @Override
                                     public void run() {
                                         dialog.cancel();
                                     }
                                 };
-                                Handler handler=new Handler();
-                                handler.postDelayed(runnable,2000);
-                                Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
+                                Handler handler = new Handler();
+                                handler.postDelayed(runnable, 2000);
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
                             }
 
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                                 dialog.setCancelable(false);
                                 dialog.setTitle("Lỗi");
-                                dialog.setMessage("Tên đăng nhập hoặc mật khẩu không chính xác" );
+                                dialog.setMessage("Tên đăng nhập hoặc mật khẩu không chính xác");
                                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
@@ -89,8 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 final AlertDialog alert = dialog.create();
                                 alert.show();
-//                                Log.e("xxx", " mesage" + ((HttpException) throwable).message());
-//                                Log.e("xxx", " code" + ((HttpException)throwable).code());
+//
                             }
                         });
 
@@ -99,112 +98,5 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
-//    private FirebaseAuth mAuth;
-//    private static final int RC_SIGN_IN = 123;
-//    private static final String TAG = LoginActivity.class.getSimpleName();
-//    private GoogleSignInClient mGoogleSignInClient;
-//    private SignInButton mSignIn;
-//    private TextView mTvInfo;
-//    private Button mSignOut;
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_login);
-//
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail()
-//                .build();
-//        // Build a GoogleSignInClient with the options specified by gso.
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        mSignOut = findViewById(R.id.btnSignOut);
-//        mSignOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        mTvInfo.setText("Hello Work");
-//                        mSignOut.setVisibility(View.GONE);
-//                        mSignIn.setVisibility(View.VISIBLE);
-//                    }
-//                });
-//            }
-//        });
-//        mTvInfo = findViewById(R.id.tvInfo);
-//        mSignIn = findViewById(R.id.btnSignIn);
-//        mSignIn.setSize(SignInButton.SIZE_WIDE);
-//        mSignIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signIn();
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
-//    }
-//
-//    private void signIn() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                // Google Sign In was successful, authenticate with Firebase
-//                GoogleSignInAccount account = task.getResult(ApiException.class);
-//                firebaseAuthWithGoogle(account);
-//            } catch (ApiException e) {
-//                // Google Sign In failed, update UI appropriately
-//                Log.w(TAG, "Google sign in failed", e);
-//                // ...
-//            }
-//        }
-//    }
-//
-//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-//        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-//
-//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithCredential:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                            updateUI(null);
-//                        }
-//                    }
-//                });
-//    }
-//
-//    private void updateUI(UserInfo user) {
-//        if (user != null) {
-//            mSignOut.setVisibility(View.VISIBLE);
-//            mSignIn.setVisibility(View.GONE);
-//            mTvInfo.setText("Name: " + user.getDisplayName() + "; Email: " + user.getEmail() + "; SDT:" + user.getPhoneNumber());
-//        }
-//    }
 }
+

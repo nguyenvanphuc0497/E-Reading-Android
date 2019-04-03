@@ -71,23 +71,4 @@
         android:background="#fff"
         android:textColor="#000"
         android:layout_marginLeft="160dp" />
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Logout"
-        android:visibility="gone" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btnSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp" />
-
 </android.support.constraint.ConstraintLayout>
