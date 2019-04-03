@@ -1,10 +1,10 @@
 package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.BuildConfig;
+import com.dtu.capstone2.ereading.network.utils.CustomCallAdapterFactory;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -76,8 +76,9 @@ public class ApiClient {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(sBaseUrl)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(CustomCallAdapterFactory.Companion.create())
                 .client(client)
                 .build();
         return retrofit.create(ApiServer.class);
