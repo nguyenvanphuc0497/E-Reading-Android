@@ -83,7 +83,8 @@ public class FragmentRegister extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("xxx", "xxxx" + ((ApiException) e).getResponseBody());
+                        Log.e("xxx", "xxxx" + ((ApiException) e).getMessageError());
+                        Log.e("xxx", "code" + ((ApiException) e).getStatusCode());
                     }
                 });
             }

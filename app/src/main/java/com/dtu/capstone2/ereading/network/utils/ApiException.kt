@@ -25,5 +25,4 @@ data class ApiException(
     }
 
     var statusCode: Int? = null
-    var responseBody: String? = null
 }
