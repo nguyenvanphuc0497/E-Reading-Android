@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,19 +35,16 @@ public class FragmentRegister extends BaseFragment {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtPasswordConfirm;
-
     private TextInputLayout layoutUserName;
     private TextInputLayout layoutEmail;
     private TextInputLayout layoutPassword;
     private TextInputLayout layoutPasswordConfirm;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         viewModel = new RegisterViewModel(new EReadingRepository());
-
     }
 
     @Nullable
@@ -79,42 +75,48 @@ public class FragmentRegister extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showLoadingDialog("");
+                resetErrorInputLayout();
                 AccountRegisterRequest account = new AccountRegisterRequest(edtUserName.getText().toString().trim(),
                         edtPassword.getText().toString().trim(),
                         edtPasswordConfirm.getText().toString().trim(),
                         edtEmail.getText().toString().trim());
 
                 viewModel.createNewAccount(account).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<AccountRegisterRequest>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new SingleObserver<AccountRegisterRequest>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
 
-                    }
+                            @Override
+                            public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
+                                //TODO : Login success
+                            }
 
-                    @Override
-                    public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
-                        Log.e("xxx", "x" + accountRegisterRequest.toString());
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        dismissLoadingDialog();
-//                        ApiExceptionResponse response = ((ApiExceptionResponse) e);
-//                        if (response.getStatusCode() != null && response.getStatusCode() == 400) {
-//                            Gson gson = new Gson();
-//                            AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
-//                            layoutUserName.setError(registerError.getUserNameError());
-//                            layoutEmail.setError(registerError.getEmailError());
-//                            layoutPassword.setError(registerError.getPasswordError());
-//                            layoutPasswordConfirm.setError(registerError.getPasswordConfirmError());
-//                        }else {
-//
-//                        }
-                        showApiErrorDialog("xxx");
-                    }
-                });
+                            @Override
+                            public void onError(Throwable e) {
+                                dismissLoadingDialog();
+                                ApiExceptionResponse response = ((ApiExceptionResponse) e);
+                                if (response.getStatusCode() != null && response.getStatusCode() == 400) {
+                                    Gson gson = new Gson();
+                                    AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
+                                    layoutUserName.setError(registerError.getUserNameError());
+                                    layoutEmail.setError(registerError.getEmailError());
+                                    layoutPassword.setError(registerError.getPasswordError());
+                                    layoutPasswordConfirm.setError(registerError.getPasswordConfirmError());
+                                } else {
+                                    showApiErrorDialog("");
+                                }
+                            }
+                        });
             }
         });
+    }
+
+    private void resetErrorInputLayout() {
+        layoutUserName.setError(null);
+        layoutEmail.setError(null);
+        layoutPassword.setError(null);
+        layoutPasswordConfirm.setError(null);
     }
 }
