@@ -1,9 +1,13 @@
 package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+<<<<<<< HEAD
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
+=======
+import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
+>>>>>>> develop
 import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
@@ -25,6 +29,7 @@ public interface ApiServer {
     @POST("login")
     Single<Token> loginForServer(@Body AccountLoginRequest accountLoginRequest);
 
+<<<<<<< HEAD
     /**
      *
      * @param paraFavorite
@@ -49,4 +54,8 @@ public interface ApiServer {
 
 
 
+=======
+    @POST("register")
+    Single<AccountRegisterRequest> regiterAccount(@Body AccountRegisterRequest accountRegisterRequest);
+>>>>>>> develop
 }

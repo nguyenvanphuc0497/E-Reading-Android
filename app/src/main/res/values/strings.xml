@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">E Reading Android</string>
+
+    <!--Api Error-->
+    <string name="api_dialog_error_tv_title">Lỗi truy cập dữ liệu từ Server.\nVui long kiểm tra kết nối mạng và thử lại.</string>
+    <string name="api_dialog_error_tv_ok">OK</string>
+
 </resources>
