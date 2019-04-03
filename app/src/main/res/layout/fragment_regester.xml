@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundMainApp"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingLeft="10dp">
+
+    <TextView
+        android:id="@+id/tvRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Create a New Account"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutRegisterUserName"
+        style="@style/LayoutInputEditTextAccounts"
+        android:layout_marginTop="75dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtRegisterUserName"
+            style="@style/InputEditTextAccounts"
+            android:hint="User Name"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutRegisterEmail"
+        style="@style/LayoutInputEditTextAccounts"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutRegisterUserName">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtRegisterEmail"
+            style="@style/InputEditTextAccounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Gmail"
+            android:inputType="textEmailAddress"
+            android:maxLength="24" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutRegisterPassword"
+        style="@style/LayoutInputEditTextAccounts"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutRegisterEmail"
+        app:passwordToggleDrawable="@drawable/icons8_lock_25"
+        app:passwordToggleEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtRegisterPassword"
+            style="@style/InputEditTextAccounts"
+            android:hint="Password"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutRegisterPasswordConfirm"
+        style="@style/LayoutInputEditTextAccounts"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutRegisterPassword"
+        app:passwordToggleDrawable="@drawable/icons8_lock_25"
+        app:passwordToggleEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtRegisterPasswordConfirm"
+            style="@style/InputEditTextAccounts"
+            android:hint="Password Confirm"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_button_main_app"
+        android:text="Continue"
+        android:textColor="@color/colorMainApp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>
