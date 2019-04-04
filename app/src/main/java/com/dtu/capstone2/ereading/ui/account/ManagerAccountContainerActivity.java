@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
+import com.dtu.capstone2.ereading.ui.login.LoginFragment;
 
 
 /**
@@ -24,7 +25,7 @@ public class ManagerAccountContainerActivity extends AppCompatActivity {
         super.onResume();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.layoutManagerAccountContainerActivity, new FragmentRegister());
+        ft.add(R.id.layoutManagerAccountContainerActivity, new LoginFragment());
         ft.commit();
     }
 }

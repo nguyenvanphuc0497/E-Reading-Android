@@ -1,7 +1,6 @@
 package com.dtu.capstone2.ereading.ui.home;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,7 +18,6 @@ import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.MainViewModel;
-import com.dtu.capstone2.ereading.ui.login.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -105,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         tvTest = findViewById(R.id.tvTest);
-        btnTest = findViewById(R.id.btn_test);
+//        btnTest = findViewById(R.id.btn_test);
 
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
