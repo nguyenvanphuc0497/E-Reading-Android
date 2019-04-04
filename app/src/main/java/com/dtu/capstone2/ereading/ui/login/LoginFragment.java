@@ -1,9 +1,16 @@
 package com.dtu.capstone2.ereading.ui.login;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +20,13 @@ import android.widget.EditText;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.ui.MainActivity;
+import com.dtu.capstone2.ereading.ui.home.HomeActivity;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
 
 public class LoginFragment extends BaseFragment {
     LoginViewModel loginviewmodel = new LoginViewModel();
@@ -30,27 +37,22 @@ public class LoginFragment extends BaseFragment {
     private EditText edtUsername;
     private EditText edtPassword;
     private Button btnLogin;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.activity_login, container, false);
-
+        View view= LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_login,container,false);
         edtPassword = view.findViewById(R.id.txtPassword);
         edtUsername = view.findViewById(R.id.txtUsername);
-
         btnLogin = view.findViewById(R.id.btnSignInAccount);
         /*
          * this is function event click button login*/
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("CheckResult")
             @Override
             public void onClick(View v) {
-                showLoadingDialog();
                 strUserName = edtUsername.getText().toString();
                 strPassword = edtPassword.getText().toString();
-
+                showLoadingDialog();
                 loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -60,26 +62,19 @@ public class LoginFragment extends BaseFragment {
                                 strToken = dataLoginRequest.getStringToken();
                                 intIduser = dataLoginRequest.getIntId();
                                 dismissLoadingDialog();
-                                showSuccessDialog();
-                                setCallBakSuccessDialogDismiss(new Function0<Unit>() {
-                                    @Override
-                                    public Unit invoke() {
-                                        getActivity().finish();
-                                        return null;
-                                    }
-                                });
+                                 showSuccessDialog();
                             }
 
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
                                 dismissLoadingDialog();
-                                showApiErrorDialog();
+                               showApiErrorDialog();
                             }
                         });
             }
         });
-
         return view;
     }
 }
+

@@ -18,6 +18,9 @@ public class ManagerAccountContainerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_account_container);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.layoutManagerAccountContainerActivity, new LoginFragment())
+                .addToBackStack(null).commit();
     }
 
     @Override
