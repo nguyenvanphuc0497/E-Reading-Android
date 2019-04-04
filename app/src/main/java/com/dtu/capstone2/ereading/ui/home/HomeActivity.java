@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnTest;
 
     MainViewModel.MainActivityViewModel MainActivityVMD = new MainViewModel.MainActivityViewModel();
+
     //test text selection action
     // Tracks current contextual action mode
     private ActionMode currentActionMode;
@@ -47,11 +48,13 @@ public class HomeActivity extends AppCompatActivity {
             mode.getMenuInflater().inflate(R.menu.actions_textview, menu);
             return true;
         }
+
         // Called each time the action mode is shown.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             return false; // Return false if nothing is done
         }
+
         // Called when the user selects a contextual menu item
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
@@ -81,22 +84,27 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.menu_request:
                     Toast.makeText(HomeActivity.this, "Request!" + selectedText, Toast.LENGTH_SHORT).show();
                     return true;
+
                 default:
                     return false;
             }
         }
+
         // Called when the user exits the action mode
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             currentActionMode = null; // Clear current action mode
         }
     };
+
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         tvTest = findViewById(R.id.tvTest);
+//        btnTest = findViewById(R.id.btn_test);
+
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
                             @Override
                             public void accept(DataStringReponse dataStringReponse) throws Exception {
                                 Log.e("string", dataStringReponse.getStringData());
+
                             }
                         });
             }
@@ -134,8 +143,10 @@ public class HomeActivity extends AppCompatActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+
                     }
                 });
+        // even addfavorite
         MainActivityVMD.addFavoriteMD(1, 1);
     }
 }

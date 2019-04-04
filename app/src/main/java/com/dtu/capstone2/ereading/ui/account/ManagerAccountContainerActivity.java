@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
+import com.dtu.capstone2.ereading.ui.home.HomeFragment;
 import com.dtu.capstone2.ereading.ui.login.LoginFragment;
 
 
@@ -19,7 +20,7 @@ public class ManagerAccountContainerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_account_container);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.layoutManagerAccountContainerActivity, new LoginFragment())
+                .add(R.id.layoutManagerAccountContainerActivity, new HomeFragment())
                 .addToBackStack(null).commit();
     }
 
