@@ -37,7 +37,7 @@ public interface ApiServer {
      * @param paraReponse
      * @return
      */
-    @GET("v1/procresstext")
+    @GET("v1/detectword")
     Single<DataStringReponse> GetDataStringReponse(@Query("work") String paraReponse);
 
     /**

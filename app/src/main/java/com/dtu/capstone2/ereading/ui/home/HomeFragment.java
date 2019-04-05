@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.ListVocabulary;
+import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by Nguyen Van Phuc on 3/22/19
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
     HomeFragmentViewModal homeFragmentViewModal = new HomeFragmentViewModal();
     private List<ListVocabulary> listWord;
     private String strInputText;
@@ -43,12 +44,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 strInputText = edtInputText.getText().toString();
+                showLoadingDialog();
                 homeFragmentViewModal.getDataStringReponse(strInputText)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<DataStringReponse>() {
                             @Override
                             public void accept(DataStringReponse dataStringReponse) throws Exception {
+                                dismissLoadingDialog();
+                                showSuccessDialog();
                                 strReponseText = dataStringReponse.getStringData();
                                 edtReponserText.setText(strInputText);
                                 listWord = dataStringReponse.getListWord();
@@ -56,6 +60,8 @@ public class HomeFragment extends Fragment {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                dismissLoadingDialog();
+                                showApiErrorDialog();
 
                             }
                         });
