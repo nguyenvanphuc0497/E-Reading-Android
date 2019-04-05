@@ -1,8 +1,5 @@
 package com.dtu.capstone2.ereading.ui.news;
 
-/**
- * Create By Huynh Vu Ha Lan on 19/03/2019
- */
 public class News {
 
     private String title;

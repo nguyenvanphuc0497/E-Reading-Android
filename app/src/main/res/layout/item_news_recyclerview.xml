@@ -10,14 +10,14 @@
     android:clickable="true"
     android:orientation="vertical">
     
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_news_thumbnail"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
         android:layout_height="100dp" />
 
     <TextView
-        android:id="@+id/tw_news_title"
+        android:id="@+id/tv_news_title"
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_width="match_parent"

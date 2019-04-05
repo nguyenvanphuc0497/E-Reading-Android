@@ -15,9 +15,6 @@ import com.dtu.capstone2.ereading.ui.news.NewsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Create by Nguyen Van Phuc on 3/22/19
- */
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerMain;
     private TabLayout mTabLayout;

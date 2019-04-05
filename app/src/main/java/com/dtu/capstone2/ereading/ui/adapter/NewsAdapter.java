@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.news;
+package com.dtu.capstone2.ereading.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.ui.Interface.ItemRecyclerViewClickListener;
+import com.dtu.capstone2.ereading.ui.news.News;
 
 import java.util.List;
 
-/**
- * Create By Huynh Vu Ha Lan on 19/03/2019
- */
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
     private ItemRecyclerViewClickListener itemClickListener;
@@ -62,7 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         public NewsViewHolder(View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.tw_news_title);
+            title = itemView.findViewById(R.id.tv_news_title);
             thumbnail = itemView.findViewById(R.id.btn_news_thumbnail);
 
             itemView.setOnClickListener(new View.OnClickListener() {

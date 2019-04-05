@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.news;
+package com.dtu.capstone2.ereading.ui.Interface;
 
 
 public interface ItemRecyclerViewClickListener {
