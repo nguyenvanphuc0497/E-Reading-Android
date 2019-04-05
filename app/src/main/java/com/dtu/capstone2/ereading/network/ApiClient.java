@@ -25,7 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static final long API_TIMEOUT = 15000L;// Time out = 15s
     private static ApiClient sApiClient;
-    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/";
+//    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/";
+    private static String sBaseUrl = "http://172.245.123.121:8000/api/";
 
     public static ApiClient getInstants() {
         if (sApiClient == null) {
