@@ -1,10 +1,10 @@
 package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.BuildConfig;
+import com.dtu.capstone2.ereading.network.utils.CustomCallAdapterFactory;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import org.simpleframework.xml.convert.AnnotationStrategy;
 import org.simpleframework.xml.core.Persister;

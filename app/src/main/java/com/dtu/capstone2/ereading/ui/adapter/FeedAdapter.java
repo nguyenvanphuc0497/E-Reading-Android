@@ -1,6 +1,5 @@
 package com.dtu.capstone2.ereading.ui.adapter;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +11,9 @@ import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.Interface.ItemClickListener;
-import com.dtu.capstone2.ereading.ui.model.Feed;
-import com.dtu.capstone2.ereading.ui.model.Item;
 import com.dtu.capstone2.ereading.ui.model.RSSObject;
-import com.squareup.picasso.Picasso;
 
-class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     public TextView tvTitle;
     public ImageView ivThumbnail;
@@ -68,7 +64,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
     @NonNull
     @Override
     public FeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.item_news_recyclerview,parent, false);
+        View itemView = inflater.inflate(R.layout.item_news_recyclerview, parent, false);
         return new FeedViewHolder(itemView);
     }
 
