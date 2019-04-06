@@ -58,7 +58,11 @@ dependencies {
 
     //Converter data (Json and Xml)
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-simplexml:2.4.0'
+    implementation('com.squareup.retrofit2:converter-simplexml:2.4.0') {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
 
     //Rx Java
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
