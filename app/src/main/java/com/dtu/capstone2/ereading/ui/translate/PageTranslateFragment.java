@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.home;
+package com.dtu.capstone2.ereading.ui.translate;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import com.dtu.capstone2.ereading.R;
 
 /**
- * Create by Nguyen Van Phuc on 3/22/19
+ * Create By Huynh Vu Ha Lan on 20/03/2019
  */
-public class HomeFragment extends Fragment {
+public class PageTranslateFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_translate, container, false);
+        return view;
     }
 }

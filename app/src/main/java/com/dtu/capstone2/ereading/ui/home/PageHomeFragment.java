@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.news;
+package com.dtu.capstone2.ereading.ui.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +13,11 @@ import com.dtu.capstone2.ereading.R;
 /**
  * Create by Nguyen Van Phuc on 3/22/19
  */
-public class NewsFragment extends Fragment {
+public class PageHomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }

@@ -18,4 +18,6 @@ public class RegisterViewModel {
     public Single<AccountRegisterRequest> createNewAccount(AccountRegisterRequest accountRegisterRequest) {
         return mEReadingRepository.registerNewAccount(accountRegisterRequest);
     }
+
+
 }

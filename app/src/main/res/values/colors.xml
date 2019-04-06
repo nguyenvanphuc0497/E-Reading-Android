@@ -5,4 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBackgroundMainApp">#EEEEEE</color>
     <color name="colorMainApp">#399BD6</color>
+    <color name="colorLightBlue">#98A6EC</color>
+    <color name="colorWhite">#FCFDFD</color>
+    <color name="colorGrey">#E3E9E9</color>
+
 </resources>

@@ -6,6 +6,9 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.simpleframework.xml.convert.AnnotationStrategy;
+import org.simpleframework.xml.core.Persister;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +20,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
  * Create by Nguyen Van Phuc on 2/20/19
@@ -25,8 +30,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static final long API_TIMEOUT = 15000L;// Time out = 15s
     private static ApiClient sApiClient;
-//    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/";
-    private static String sBaseUrl = "http://172.245.123.121:8000/api/";
 
     public static ApiClient getInstants() {
         if (sApiClient == null) {
@@ -36,11 +39,7 @@ public class ApiClient {
     }
 
     public ApiServer createServer() {
-        //Pares data
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-                .serializeNulls()
-                .create();
+        String mBaseUrl = "http://172.245.123.121:8000/api/";
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
@@ -49,6 +48,18 @@ public class ApiClient {
             httpClientBuilder.addInterceptor(new HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY));
         }
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .create();
+
+        // Set time out for request
+        OkHttpClient client = httpClientBuilder.connectTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
+                .writeTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
+                .readTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
+                .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+                .build();
 
         // Header for request
         httpClientBuilder.interceptors()
@@ -68,6 +79,31 @@ public class ApiClient {
                     }
                 });
 
+        //Pares data
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mBaseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(CustomCallAdapterFactory.Companion.create())
+                .client(client)
+                .build();
+        return retrofit.create(ApiServer.class);
+    }
+
+    public ApiServer createServerXml(String baseUrl) {
+
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+
+        String baseUrls = "http://rss.cnn.com/rss/";
+        if (!baseUrl.equals("")) {
+            baseUrls = baseUrl;
+        }
+
+        //Show log request
+        if (BuildConfig.DEBUG) {
+            httpClientBuilder.addInterceptor(new HttpLoggingInterceptor()
+                    .setLevel(HttpLoggingInterceptor.Level.BODY));
+        }
+
         // Set time out for request
         OkHttpClient client = httpClientBuilder.connectTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -76,10 +112,9 @@ public class ApiClient {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(sBaseUrl)
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(CustomCallAdapterFactory.Companion.create())
+                .baseUrl(baseUrls)
+                .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(new Persister(new AnnotationStrategy())))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
         return retrofit.create(ApiServer.class);
