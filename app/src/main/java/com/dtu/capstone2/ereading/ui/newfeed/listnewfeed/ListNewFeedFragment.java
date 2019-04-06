@@ -1,9 +1,11 @@
-package com.dtu.capstone2.ereading.ui.newfeed.newfeeddisplay;
+package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,21 +22,32 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create By Huynh Vu Ha Lan on 21/03/2019
  */
-public class NewFeedDisplayFragment extends BaseFragment {
-    private NewFeedDisplayViewModel mViewModel;
+public class ListNewFeedFragment extends BaseFragment {
+    private ListNewFeedViewModel mViewModel;
+    private ListNewFeedAdapter mAdapter;
+    private RecyclerView mRecyclerViewFeedDisplay;
+    private SwipeRefreshLayout mSwipeRefresh;
 
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new NewFeedDisplayViewModel();
+        mViewModel = new ListNewFeedViewModel();
+        mAdapter = new ListNewFeedAdapter(mViewModel.getListRssItemResponse(), getActivity());
+        // Show tiến trình Load data lần đầu
+        showLoadingDialog();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_new_feed_display, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_list_new_feed, container, false);
+        mRecyclerViewFeedDisplay = view.findViewById(R.id.recyclerViewPageNewFeedDisplay);
+        mSwipeRefresh = view.findViewById(R.id.layoutSwipeRefreshListNewFeed);
+        mSwipeRefresh.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
+        initEventsView();
         return view;
     }
 
@@ -42,7 +55,21 @@ public class NewFeedDisplayFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        showLoadingDialog();
+        mRecyclerViewFeedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerViewFeedDisplay.setAdapter(mAdapter);
+        loadDataFromServer();
+    }
+
+    private void initEventsView() {
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadDataFromServer();
+            }
+        });
+    }
+
+    private void loadDataFromServer() {
         mViewModel.getNewFeedOfServerCNN().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<RssResponse>() {
             @Override
@@ -53,12 +80,15 @@ public class NewFeedDisplayFragment extends BaseFragment {
             @Override
             public void onSuccess(RssResponse rssResponse) {
                 dismissLoadingDialog();
-                Log.e("onSuccess", ":" + rssResponse.getArticleList().size());
+
+                mAdapter.notifyDataSetChanged();
+                mSwipeRefresh.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 showApiErrorDialog();
+                mSwipeRefresh.setRefreshing(false);
             }
         });
     }

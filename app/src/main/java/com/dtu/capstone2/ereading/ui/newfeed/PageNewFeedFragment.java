@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.model.ItemPageNewFeed;
-import com.dtu.capstone2.ereading.ui.newfeed.newfeeddisplay.NewFeedDisplayFragment;
+import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.ListNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class PageNewFeedFragment extends BaseFragment {
             public void onItemClick(int position) {
                 //TODO Send position to Activity để mở fragment
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.layoutContainerNewFeed, new NewFeedDisplayFragment());
+                ft.add(R.id.layoutContainerNewFeed, new ListNewFeedFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }

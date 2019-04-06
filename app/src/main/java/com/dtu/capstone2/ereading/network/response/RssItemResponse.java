@@ -1,7 +1,11 @@
 package com.dtu.capstone2.ereading.network.response;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
+
+import java.util.List;
 
 /**
  * Create by Nguyen Van Phuc on 4/6/19
@@ -17,6 +21,13 @@ public class RssItemResponse {
 
     @Element(name = "description", required = false)
     private String description;
+
+    @Element(name = "pubDate", required = false)
+    private String pushDatel;
+
+    @ElementList(name = "content", required = false, inline = true)
+    @Path("group")
+    private List<RssItemMediaGroup> rssItemMediaGroups;
 
     /**
      * @return the title
@@ -58,5 +69,21 @@ public class RssItemResponse {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPushDatel() {
+        return pushDatel;
+    }
+
+    public void setPushDatel(String pushDatel) {
+        this.pushDatel = pushDatel;
+    }
+
+    public List<RssItemMediaGroup> getRssItemMediaGroups() {
+        return rssItemMediaGroups;
+    }
+
+    public void setRssItemMediaGroups(List<RssItemMediaGroup> rssItemMediaGroups) {
+        this.rssItemMediaGroups = rssItemMediaGroups;
     }
 }

@@ -38,6 +38,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun showSuccessDialog() {
+        loadingDialog.dismiss()
         successDialog.show(fragmentManager, null)
         Handler().postDelayed({
             successDialog.dismiss()

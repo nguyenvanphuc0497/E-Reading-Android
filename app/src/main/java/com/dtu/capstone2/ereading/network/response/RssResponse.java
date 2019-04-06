@@ -19,7 +19,7 @@ public class RssResponse {
 
     @ElementList(name = "item", inline = true)
     @Path("channel")
-    private List<RssItemResponse> articleList;
+    private List<RssItemResponse> rssItemResponses;
 
     /**
      * @return the channelTitle
@@ -36,17 +36,17 @@ public class RssResponse {
     }
 
     /**
-     * @return the articleList
+     * @return the rssItemResponses
      */
-    public List<RssItemResponse> getArticleList() {
-        return articleList;
+    public List<RssItemResponse> getRssItemResponses() {
+        return rssItemResponses;
     }
 
     /**
-     * @param articleList the articleList to set
+     * @param rssItemResponses the rssItemResponses to set
      */
-    public void setArticleList(List<RssItemResponse> articleList) {
-        this.articleList = articleList;
+    public void setRssItemResponses(List<RssItemResponse> rssItemResponses) {
+        this.rssItemResponses = rssItemResponses;
     }
 
 }
