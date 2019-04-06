@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.model.ItemPageNewFeed;
+import com.dtu.capstone2.ereading.ui.newfeed.newfeeddisplay.NewFeedDisplayFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import java.util.ArrayList;

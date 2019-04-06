@@ -7,8 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.ui.account.AccountFragment;
-import com.dtu.capstone2.ereading.ui.home.HomeFragment;
+import com.dtu.capstone2.ereading.ui.account.PageAccountFragment;
+import com.dtu.capstone2.ereading.ui.home.PageHomeFragment;
 import com.dtu.capstone2.ereading.ui.model.MainPage;
 import com.dtu.capstone2.ereading.ui.newfeed.PageNewFeedFragment;
 
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(new MainPage(new PageNewFeedFragment(), "News"));
-        mListFragment.add(new MainPage(new HomeFragment(), "Home"));
-        mListFragment.add(new MainPage(new AccountFragment(), "Account"));
+        mListFragment.add(new MainPage(new PageNewFeedFragment(), "Tin tức"));
+        mListFragment.add(new MainPage(new PageHomeFragment(), "Home"));
+        mListFragment.add(new MainPage(new PageAccountFragment(), "Tài khoản"));
     }
 }

@@ -33,6 +33,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun showApiErrorDialog() {
+        loadingDialog.dismiss()
         apiErrorDialog.show(fragmentManager, null)
     }
 

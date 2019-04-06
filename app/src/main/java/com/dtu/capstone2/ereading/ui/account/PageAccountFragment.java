@@ -15,7 +15,7 @@ import com.dtu.capstone2.ereading.R;
 /**
  * Create by Nguyen Van Phuc on 3/22/19
  */
-public class AccountFragment extends Fragment {
+public class PageAccountFragment extends Fragment {
     private TextView tvTitle;
 
     @Nullable
