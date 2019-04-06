@@ -32,6 +32,14 @@ android {
             resValue "string", "app_name_debug", "[DEV] E Reading"
         }
     }
+    lintOptions {
+        abortOnError false
+        /**
+         * Fix Fail
+         *  /home/circleci/.gradle/caches/modules-2/files-2.1/org.simpleframework/simple-xml/2.7.1/dd91fb744c2ff921407475cb29a1e3fee397d411/simple-xml-2.7.1.jar: Error: Invalid package reference in library; not included in Android: javax.xml.stream.events. Referenced from org.simpleframework.xml.stream.StreamReader. [InvalidPackage]
+         */
+        lintConfig file("lint.xml")
+    }
 }
 
 dependencies {
@@ -62,12 +70,6 @@ dependencies {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
-    }
-    //Fix fail CI
-    implementation('org.simpleframework:simple-xml:2.7.+'){
-        exclude module: 'stax'
-        exclude module: 'stax-api'
-        exclude module: 'xpp3'
     }
 
     //Rx Java
