@@ -70,3 +70,8 @@ dependencies {
 repositories {
     mavenCentral()
 }
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
+}
