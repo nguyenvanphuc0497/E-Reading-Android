@@ -9,4 +9,9 @@
     <color name="colorWhite">#FCFDFD</color>
     <color name="colorGrey">#E3E9E9</color>
 
+    <!--Color swipe refresh layout-->
+    <color name="colorPink">#FF4081</color>
+    <color name="colorIndigo">#3F51B5</color>
+    <color name="colorLime">#CDDC39</color>
+
 </resources>

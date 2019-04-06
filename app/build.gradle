@@ -78,6 +78,9 @@ dependencies {
 
     //Show log request and response
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    //Load Image From Url
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 }
 repositories {
     mavenCentral()
