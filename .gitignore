@@ -19,7 +19,7 @@
 .nfs*
 
 ### Windows ###
-# Windows rssItemMediaGroups cache files
+# Windows thumbnail cache files
 ehthumbs_vista.db
 
 # Dump file
