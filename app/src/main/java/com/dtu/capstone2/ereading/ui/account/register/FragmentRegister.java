@@ -53,7 +53,7 @@ public class FragmentRegister extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_regester, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         btnContinue = view.findViewById(R.id.btnRegisterContinue);
         edtUserName = view.findViewById(R.id.edtRegisterUserName);
