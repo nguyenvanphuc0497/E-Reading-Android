@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import org.simpleframework.xml.convert.AnnotationStrategy;
+import org.simpleframework.xml.core.Persister;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +20,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
  * Create by Nguyen Van Phuc on 2/20/19
@@ -25,7 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static final long API_TIMEOUT = 15000L;// Time out = 15s
     private static ApiClient sApiClient;
-    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/";
+    //    private static String sBaseUrl = "https://e-reading.herokuapp.com/api/";
+    private static String sBaseUrl = "http://rss.cnn.com/rss/";
 
     public static ApiClient getInstants() {
         if (sApiClient == null) {
@@ -76,8 +81,11 @@ public class ApiClient {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(sBaseUrl)
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(new Persister(new AnnotationStrategy())))
+//                .addCallAdapterFactory(CustomCallAdapterFactory.Companion.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         return retrofit.create(ApiServer.class);

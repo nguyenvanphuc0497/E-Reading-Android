@@ -1,59 +1,46 @@
 package com.dtu.capstone2.ereading.ui.news;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.ui.Interface.ItemRecyclerViewClickListener;
-import com.dtu.capstone2.ereading.ui.adapter.FeedAdapter;
-import com.dtu.capstone2.ereading.ui.adapter.NewsAdapter;
-import com.dtu.capstone2.ereading.ui.common.HTTPDataHandler;
-import com.dtu.capstone2.ereading.ui.displayanews.DisplayANewsFragment;
-import com.dtu.capstone2.ereading.ui.model.Feed;
-import com.dtu.capstone2.ereading.ui.model.RSSObject;
-import com.google.gson.Gson;
+import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class NewsFragment extends Fragment {
-
-    private List<Feed> feedList;
-    private RecyclerView recyclerView;
-    private FeedAdapter feedAdapter;
-    private RSSObject rssObject;
-
-    private final String rssLink = "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml";
-    private final String rssToJSonAPI = "https://api.rss2json.com/v1/api.json?rss_url";
+/**
+ * Create by Nguyen Van Phuc on 3/22/19
+ */
+public class NewsFragment extends BaseFragment implements View.OnClickListener {
+    private TextView tvOpenNews;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         View view = inflater.inflate(R.layout.fragment_news, container, false);
+        tvOpenNews = view.findViewById(R.id.tvNewsOpen);
 
-        recyclerView = view.findViewById(R.id.rcw_news);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(feedAdapter);
-
-        loadRSS();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tvOpenNews.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.tvNewsOpen) {
+            startActivity(new Intent(getActivity(), NewsContainerActivity.class));
+        }
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
+import com.dtu.capstone2.ereading.network.response.RssResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -19,4 +22,10 @@ public interface ApiServer {
      */
     @POST("login")
     Single<Token> loginForServer(@Body AccountLoginRequest accountLoginRequest);
+
+    @POST("register")
+    Single<AccountRegisterRequest> regiterAccount(@Body AccountRegisterRequest accountRegisterRequest);
+
+    @GET("edition.rss")
+    Single<RssResponse> getNewsFromCNN();
 }
