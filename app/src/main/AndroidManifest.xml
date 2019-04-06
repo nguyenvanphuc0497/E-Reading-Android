@@ -33,7 +33,7 @@
             android:name=".ui.account.ManagerAccountContainerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.news.NewsContainerActivity"
+            android:name=".ui.newfeed.NewFeedContainerActivity"
             android:screenOrientation="portrait" />
     </application>
 

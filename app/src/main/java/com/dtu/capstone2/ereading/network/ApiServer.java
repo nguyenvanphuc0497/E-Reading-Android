@@ -2,7 +2,6 @@ package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
-import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 
@@ -26,7 +25,6 @@ public interface ApiServer {
 
     @POST("register")
     Single<AccountRegisterRequest> regiterAccount(@Body AccountRegisterRequest accountRegisterRequest);
-
 
     @GET("edition.rss")
     Single<RssResponse> getNewsFromCNN();

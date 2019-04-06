@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.news;
+package com.dtu.capstone2.ereading.ui.newfeed;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.network.remote.NewsRemoteDataSource;
+import com.dtu.capstone2.ereading.datasource.repository.NewFeedRepository;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
 
 import io.reactivex.SingleObserver;
@@ -19,16 +19,16 @@ import io.reactivex.schedulers.Schedulers;
  * Create by Nguyen Van Phuc on 4/6/19
  */
 @SuppressLint("CheckResult")
-public class NewsContainerActivity extends AppCompatActivity {
-    private NewsRemoteDataSource newsRemoteDataSource;
+public class NewFeedContainerActivity extends AppCompatActivity {
+    private NewFeedRepository newFeedRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_container);
 
-        newsRemoteDataSource = new NewsRemoteDataSource();
-        newsRemoteDataSource.getNewsFromServer().subscribeOn(Schedulers.io())
+        newFeedRepository = new NewFeedRepository();
+        newFeedRepository.getNewFeedFromServerCNN().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<RssResponse>() {
                     @Override

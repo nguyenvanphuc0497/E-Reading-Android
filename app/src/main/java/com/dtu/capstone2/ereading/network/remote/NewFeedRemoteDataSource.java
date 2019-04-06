@@ -9,10 +9,10 @@ import io.reactivex.Single;
 /**
  * Create by Nguyen Van Phuc on 4/6/19
  */
-public class NewsRemoteDataSource {
-    private ApiServer mApiServer = ApiClient.getInstants().createServer();
+public class NewFeedRemoteDataSource {
+    private ApiServer mApiServer = ApiClient.getInstants().createServerXml("");
 
-    public Single<RssResponse> getNewsFromServer() {
+    public Single<RssResponse> getNewFeedFromServerCNN() {
         return mApiServer.getNewsFromCNN();
     }
 }
