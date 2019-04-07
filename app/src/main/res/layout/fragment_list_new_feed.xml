@@ -13,8 +13,7 @@
         android:id="@+id/layoutListNewFeedHeader"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/colorMainApp"
-        android:orientation="horizontal">
+        android:background="@color/colorMainApp">
 
         <ImageView
             android:id="@+id/imgListNewFeedBack"
