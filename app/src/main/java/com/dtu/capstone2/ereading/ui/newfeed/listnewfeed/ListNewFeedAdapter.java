@@ -22,10 +22,15 @@ import java.util.List;
 public class ListNewFeedAdapter extends RecyclerView.Adapter<ListNewFeedAdapter.ListNewFeedViewHolder> {
     private List<RssItemResponse> mRssItemResponses;
     private Context mContext;
+    private OnItemListener mOnItemListener;
 
     ListNewFeedAdapter(List<RssItemResponse> rssItemResponses, Context context) {
         mRssItemResponses = rssItemResponses;
         mContext = context;
+    }
+
+    public void setmOnItemListener(OnItemListener mOnItemListener) {
+        this.mOnItemListener = mOnItemListener;
     }
 
     @NonNull
@@ -66,6 +71,13 @@ public class ListNewFeedAdapter extends RecyclerView.Adapter<ListNewFeedAdapter.
             imgNewsThumbnail = itemView.findViewById(R.id.img_news_thumbnail);
             tvNewsTitle = itemView.findViewById(R.id.tv_news_title);
             tvNewsDescription = itemView.findViewById(R.id.tv_news_description);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemListener.onItemClick(getAdapterPosition());
+                }
+            });
         }
 
         void onBindData(RssItemResponse rssItemResponse) {
@@ -80,5 +92,12 @@ public class ListNewFeedAdapter extends RecyclerView.Adapter<ListNewFeedAdapter.
             tvNewsDescription.setText(rssItemResponse.getDescription());
 
         }
+    }
+
+    /**
+     * Interface is used listener event of item
+     */
+    interface OnItemListener {
+        void onItemClick(int position);
     }
 }
