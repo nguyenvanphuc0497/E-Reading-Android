@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
@@ -27,6 +28,7 @@ public class ListNewFeedFragment extends BaseFragment {
     private ListNewFeedAdapter mAdapter;
     private RecyclerView mRecyclerViewFeedDisplay;
     private SwipeRefreshLayout mSwipeRefresh;
+    private ImageView mImgActionBarBack;
 
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class ListNewFeedFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_list_new_feed, container, false);
         mRecyclerViewFeedDisplay = view.findViewById(R.id.recyclerViewPageNewFeedDisplay);
         mSwipeRefresh = view.findViewById(R.id.layoutSwipeRefreshListNewFeed);
+        mImgActionBarBack = view.findViewById(R.id.imgListNewFeedBack);
+
         mSwipeRefresh.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
         initEventsView();
         return view;
@@ -65,6 +69,12 @@ public class ListNewFeedFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 loadDataFromServer();
+            }
+        });
+        mImgActionBarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
     }

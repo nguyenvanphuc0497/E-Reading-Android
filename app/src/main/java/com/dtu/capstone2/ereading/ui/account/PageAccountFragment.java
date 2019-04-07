@@ -22,7 +22,7 @@ public class PageAccountFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         tvTitle = view.findViewById(R.id.tvAccountTitle);
         return view;
     }

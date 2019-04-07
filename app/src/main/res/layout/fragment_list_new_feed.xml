@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?><!--paragraph 1, line 3&4: prevent click on items
     when were lost f-->
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutSwipeRefreshListNewFeed"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundMainApp"
     android:clickable="true"
     android:focusable="true">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewPageNewFeedDisplay"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layoutListNewFeedHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorMainApp"
+        android:orientation="horizontal">
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <ImageView
+            android:id="@+id/imgListNewFeedBack"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:padding="10dp"
+            android:src="@drawable/ic_back_default"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvListNewFeedTitle"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:gravity="center"
+            android:text="@string/list_new_feed_header_title"
+            android:textSize="@dimen/action_bar_title_text_size"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layoutSwipeRefreshListNewFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layoutListNewFeedHeader">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewPageNewFeedDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

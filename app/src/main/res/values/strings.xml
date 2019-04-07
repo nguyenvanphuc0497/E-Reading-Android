@@ -5,4 +5,14 @@
     <string name="api_dialog_error_tv_title">Lỗi truy cập dữ liệu từ Server.\nVui long kiểm tra kết nối mạng và thử lại.</string>
     <string name="api_dialog_error_tv_ok">OK</string>
 
+    <!--Pager new Feed-->
+    <string name="page_new_feed_header_title">Tin tức</string>
+    <string name="list_new_feed_header_title">Cnn News</string>
+
+    <!--Pager Home-->
+    <string name="page_home_header_title">Trang chủ</string>
+
+    <!--Pager Account-->
+    <string name="page_account_header_title">Tài khoản</string>
+
 </resources>
