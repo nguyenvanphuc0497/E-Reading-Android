@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPagerMain = findViewById(R.id.viewPagerMain);
         mTabLayout = findViewById(R.id.tabLayoutMain);
     }
-
     private void initData() {
         mListFragment = new ArrayList<>();
         mListFragment.add(new MainPage(new PageNewFeedFragment(), "Tin tức"));

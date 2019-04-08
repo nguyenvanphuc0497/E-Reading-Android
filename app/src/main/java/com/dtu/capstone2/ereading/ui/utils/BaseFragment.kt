@@ -55,7 +55,7 @@ abstract class BaseFragment : Fragment() {
             successDialog.show(fragmentManager, null)
             successDialogDialogIsShowing = false
             Handler().postDelayed({
-                if (successDialogDialogIsShowing) {
+                if (!successDialogDialogIsShowing) {
                     successDialog.dismiss()
                     successDialogDialogIsShowing = false
                 }

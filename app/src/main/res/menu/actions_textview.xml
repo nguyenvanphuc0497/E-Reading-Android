@@ -2,11 +2,11 @@
     <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item android:id="@+id/menu_choose"
             android:title="Chọn"
-            android:icon="@android:drawable/ic_menu_agenda"/>
+            android:icon="@drawable/icon_choose"/>
         <item android:id="@+id/menu_request"
             android:title="Dịch"
-            android:icon="@android:drawable/ic_menu_send"/>
+            android:icon="@drawable/icon_translate"/>
         <item android:id="@+id/menu_add"
             android:title="Add"
-            android:icon="@android:drawable/ic_menu_add"/>
+            android:icon="@drawable/icon_add"/>
     </menu>

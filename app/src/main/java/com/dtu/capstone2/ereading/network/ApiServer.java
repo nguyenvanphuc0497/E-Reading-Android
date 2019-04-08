@@ -2,6 +2,9 @@ package com.dtu.capstone2.ereading.network;
 
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
+import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
@@ -10,6 +13,7 @@ import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Path;
 
 /**
@@ -24,6 +28,27 @@ public interface ApiServer {
      */
     @POST("login")
     Single<Token> loginForServer(@Body AccountLoginRequest accountLoginRequest);
+
+    /**
+     * @param paraFavorite
+     * @return
+     */
+    @POST("addfavorite")
+    Single<Boolean> AddFavoriteServer(@Body AddFavoriteRequest paraFavorite);
+
+    /**
+     * @param paraReponse
+     * @return
+     */
+    @GET("v1/detectword")
+    Single<DataStringReponse> GetDataStringReponse(@Query("words") String paraReponse);
+
+    /**
+     * @param accountLoginRequest
+     * @return
+     */
+    @POST("signin")
+    Single<DataLoginRequest> GetDataLoginRequest(@Body AccountLoginRequest accountLoginRequest);
 
     @POST("register")
     Single<AccountRegisterRequest> regiterAccount(@Body AccountRegisterRequest accountRegisterRequest);

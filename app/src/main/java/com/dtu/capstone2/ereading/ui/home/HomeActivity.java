@@ -8,14 +8,20 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
+import com.dtu.capstone2.ereading.ui.MainViewModel;
 
+import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -24,7 +30,11 @@ public class HomeActivity extends AppCompatActivity {
     private String tk = "";
     private TextView tvTest;
     private String text;
+    private ArrayList listFavoriteWord = new ArrayList();
+    private ArrayList listFavoriteId = new ArrayList();
+    private Button btnTest;
 
+    MainViewModel.MainActivityViewModel MainActivityVMD = new MainViewModel.MainActivityViewModel();
     //test text selection action
     // Tracks current contextual action mode
     private ActionMode currentActionMode;
@@ -37,13 +47,11 @@ public class HomeActivity extends AppCompatActivity {
             mode.getMenuInflater().inflate(R.menu.actions_textview, menu);
             return true;
         }
-
         // Called each time the action mode is shown.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             return false; // Return false if nothing is done
         }
-
         // Called when the user selects a contextual menu item
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
@@ -61,37 +69,48 @@ public class HomeActivity extends AppCompatActivity {
             // Finish and close the ActionMode
             switch (item.getItemId()) {
                 case R.id.menu_choose:
+                    listFavoriteWord.add(selectedText);
                     Toast.makeText(HomeActivity.this, "Chọn!" + selectedText, Toast.LENGTH_SHORT).show();
-                    mode.finish();
                     return true;
                 case R.id.menu_add:
-                    // Trigger the deletion here
-                    mode.finish();
+                    for (int i = 0; i < listFavoriteWord.size(); i++) {
+                        Log.e("list", String.valueOf(listFavoriteWord.get(i)));
+                    }
                     Toast.makeText(HomeActivity.this, "Add!" + selectedText, Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.menu_request:
-                    mode.finish();
                     Toast.makeText(HomeActivity.this, "Request!" + selectedText, Toast.LENGTH_SHORT).show();
                     return true;
-
                 default:
                     return false;
             }
         }
-
         // Called when the user exits the action mode
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             currentActionMode = null; // Clear current action mode
         }
     };
-
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         tvTest = findViewById(R.id.tvTest);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivityVMD.GetDataStringReponse("Islamic terror group has lost its last territory in Syria, but its breeding ground still thrives")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<DataStringReponse>() {
+                            @Override
+                            public void accept(DataStringReponse dataStringReponse) throws Exception {
+                                Log.e("string", dataStringReponse.getStringData());
+                            }
+                        });
+            }
+        });
         tvTest.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -105,7 +124,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         localRepository.login(new AccountLoginRequest("admin", "admin123456"))
                 .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
+                //                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Token>() {
                     @Override
                     public void accept(Token token) throws Exception {
@@ -115,8 +134,8 @@ public class HomeActivity extends AppCompatActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
                     }
                 });
+        MainActivityVMD.addFavoriteMD(1, 1);
     }
 }
