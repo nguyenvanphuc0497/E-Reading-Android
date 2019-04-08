@@ -61,6 +61,7 @@ public class ListNewFeedFragment extends BaseFragment {
         });
 
         mViewPager.setAdapter(mAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(1);
+        mTabLayout.setupWithViewPager(mViewPager, true);
     }
 }

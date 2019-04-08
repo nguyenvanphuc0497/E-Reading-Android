@@ -29,20 +29,26 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun dismissLoadingDialog() {
-        loadingDialog.dismiss()
+        if (loadingDialog.isVisible) {
+            loadingDialog.dismiss()
+        }
     }
 
     protected fun showApiErrorDialog() {
-        loadingDialog.dismiss()
-        apiErrorDialog.show(fragmentManager, null)
+        dismissLoadingDialog()
+        if (!apiErrorDialog.isVisible) {
+            apiErrorDialog.show(fragmentManager, null)
+        }
     }
 
     protected fun showSuccessDialog() {
-        loadingDialog.dismiss()
-        successDialog.show(fragmentManager, null)
-        Handler().postDelayed({
-            successDialog.dismiss()
-        }, TIME_DELAY_DISMISSS_DIALOG_SUCCESS)
+        dismissLoadingDialog()
+        if (!successDialog.isVisible) {
+            successDialog.show(fragmentManager, null)
+            Handler().postDelayed({
+                successDialog.dismiss()
+            }, TIME_DELAY_DISMISSS_DIALOG_SUCCESS)
+        }
     }
 
     protected fun setCallBakSuccessDialogDismiss(callBack: () -> Unit) {

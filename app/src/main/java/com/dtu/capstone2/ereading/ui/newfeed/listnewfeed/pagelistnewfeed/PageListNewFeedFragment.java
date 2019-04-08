@@ -39,8 +39,6 @@ public class PageListNewFeedFragment extends BaseFragment {
 
         mViewModel = new PageListNewFeedViewModel();
         mAdapter = new PageListNewFeedAdapter(mViewModel.getListRssItemResponse(), getActivity());
-        // Show tiến trình Load data lần đầu
-        showLoadingDialog();
     }
 
     @Nullable
@@ -51,6 +49,7 @@ public class PageListNewFeedFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_list_new_feed_page, container, false);
         mRecyclerViewFeedDisplay = view.findViewById(R.id.recyclerViewPageNewFeedDisplay);
         mSwipeRefresh = view.findViewById(R.id.layoutSwipeRefreshListNewFeed);
+        mSwipeRefresh.setRefreshing(true); // Show tiến trình Load data lần đầu
 
         mSwipeRefresh.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
         initEventsView();
@@ -101,7 +100,6 @@ public class PageListNewFeedFragment extends BaseFragment {
 
             @Override
             public void onSuccess(BBCRssResponse rssResponse) {
-                dismissLoadingDialog();
 
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefresh.setRefreshing(false);
