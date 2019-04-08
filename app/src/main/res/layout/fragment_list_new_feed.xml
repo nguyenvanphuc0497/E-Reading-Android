@@ -34,15 +34,17 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/layoutSwipeRefreshListNewFeed"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayoutListNewFeed"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_below="@id/layoutListNewFeedHeader"
+        android:background="@color/colorMainApp"
+        app:tabTextColor="@color/colorBackgroundMainApp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerListNewFeed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/layoutListNewFeedHeader">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewPageNewFeedDisplay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_below="@id/tabLayoutListNewFeed" />
 </RelativeLayout>

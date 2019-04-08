@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.ListNewFeedFragment;
+import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.pagelistnewfeed.PageListNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +30,7 @@ public class DisplayNewFeedFragment extends BaseFragment {
         mViewModel = new DisplayNewFeedViewModel();
 
         if (getArguments() != null) {
-            String parseUrl = getArguments().getString(ListNewFeedFragment.KEY_URL_NEW_FEED);
+            String parseUrl = getArguments().getString(PageListNewFeedFragment.KEY_URL_NEW_FEED);
             mViewModel.setUrlNewFeed(parseUrl);
         }
     }
