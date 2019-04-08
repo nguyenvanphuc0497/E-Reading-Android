@@ -15,6 +15,9 @@ abstract class BaseFragment : Fragment() {
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var apiErrorDialog: ApiErrorDialog
     private lateinit var successDialog: SuccessDialog
+    private var loadingDialogIsShowing = false
+    private var apiErrorDialogIsShowing = false
+    private var successDialogDialogIsShowing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,28 +28,37 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun showLoadingDialog() {
-        loadingDialog.show(fragmentManager, null)
+        if (!loadingDialogIsShowing) {
+            loadingDialog.show(fragmentManager, null)
+            loadingDialogIsShowing = true
+        }
     }
 
     protected fun dismissLoadingDialog() {
-        if (loadingDialog.isVisible) {
+        if (loadingDialogIsShowing) {
             loadingDialog.dismiss()
+            loadingDialogIsShowing = false
         }
     }
 
     protected fun showApiErrorDialog() {
         dismissLoadingDialog()
-        if (!apiErrorDialog.isVisible) {
+        if (!apiErrorDialogIsShowing) {
             apiErrorDialog.show(fragmentManager, null)
+            apiErrorDialogIsShowing = true
         }
     }
 
     protected fun showSuccessDialog() {
         dismissLoadingDialog()
-        if (!successDialog.isVisible) {
+        if (!successDialogDialogIsShowing) {
             successDialog.show(fragmentManager, null)
+            successDialogDialogIsShowing = false
             Handler().postDelayed({
-                successDialog.dismiss()
+                if (successDialogDialogIsShowing) {
+                    successDialog.dismiss()
+                    successDialogDialogIsShowing = false
+                }
             }, TIME_DELAY_DISMISSS_DIALOG_SUCCESS)
         }
     }
