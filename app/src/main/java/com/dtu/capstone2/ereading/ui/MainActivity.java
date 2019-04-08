@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), mListFragment);
         mViewPagerMain.setAdapter(mMainPagerAdapter);
+        mViewPagerMain.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPagerMain);
     }
 

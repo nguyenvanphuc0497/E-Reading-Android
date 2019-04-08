@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed;
+package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.pagelistnewfeed;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * Create by Nguyen Van Phuc on 4/6/19
  */
-public class ListNewFeedAdapter extends RecyclerView.Adapter<ListNewFeedAdapter.ListNewFeedViewHolder> {
+public class PageListNewFeedAdapter extends RecyclerView.Adapter<PageListNewFeedAdapter.ListNewFeedViewHolder> {
     private List<BBCRssItemResponse> mRssItemResponses;
     private Context mContext;
     private OnItemListener mOnItemListener;
 
-    ListNewFeedAdapter(List<BBCRssItemResponse> rssItemResponses, Context context) {
+    PageListNewFeedAdapter(List<BBCRssItemResponse> rssItemResponses, Context context) {
         mRssItemResponses = rssItemResponses;
         mContext = context;
     }
