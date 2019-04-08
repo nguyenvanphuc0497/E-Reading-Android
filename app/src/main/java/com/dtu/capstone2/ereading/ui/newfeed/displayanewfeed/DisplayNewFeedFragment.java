@@ -1,7 +1,9 @@
 package com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,12 @@ import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.pagelistnewfeed.PageLis
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by Nguyen Van Phuc on 4/7/19
@@ -47,6 +55,7 @@ public class DisplayNewFeedFragment extends BaseFragment {
         return view;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onViewCreated(@NonNull View view, @android.support.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -59,6 +68,20 @@ public class DisplayNewFeedFragment extends BaseFragment {
         });
 
         mWebViewNewFeed.loadUrl(mViewModel.getUrlNewFeed());
-        mWebViewNewFeed.setWebViewClient(new WebViewClient());
+        mWebViewNewFeed.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+            }
+        });
+
+        mViewModel.getDataFromHTML().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.e("xxx",":"+s);
+                    }
+                });
     }
 }
