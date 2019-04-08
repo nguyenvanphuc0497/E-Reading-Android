@@ -9,6 +9,7 @@
     <color name="colorWhite">#FCFDFD</color>
     <color name="colorGrey">#E3E9E9</color>
     <color name="colorTrongSuot">#00000000</color>
+    <color name="colorBlack">#000000</color>
 
     <!--Color swipe refresh layout-->
     <color name="colorPink">#FF4081</color>

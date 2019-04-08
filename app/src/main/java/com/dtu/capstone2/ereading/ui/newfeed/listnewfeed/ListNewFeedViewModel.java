@@ -14,6 +14,7 @@ class ListNewFeedViewModel {
 
     List<ItemListNewFeedPager> getListItemPagers() {
         mListNewFeedPagers.add(new ItemListNewFeedPager(new PageListNewFeedFragment(), "News", ""));
+        mListNewFeedPagers.add(new ItemListNewFeedPager(new PageListNewFeedFragment(), "News", ""));
         return mListNewFeedPagers;
     }
 }
