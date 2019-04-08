@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.ui.newfeed.PageNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 /**
@@ -22,13 +24,17 @@ public class ListNewFeedFragment extends BaseFragment {
     private ImageView mImgActionBarBack;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private TextView mTitle;
 
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ListNewFeedViewModel();
-        mAdapter = new ListNewFeedPagerAdapter(getActivity().getSupportFragmentManager(), mViewModel.getListItemPagers());
+        if (getArguments() != null) {
+            mViewModel.setPositionGroup(getArguments().getInt(PageNewFeedFragment.KEY_POSITION_GROUP_NEW_FEED));
+        }
+        mAdapter = new ListNewFeedPagerAdapter(getActivity().getSupportFragmentManager(), mViewModel.getGroupNewFeed().get(mViewModel.getPositionGroup()));
     }
 
     @Nullable
@@ -41,6 +47,11 @@ public class ListNewFeedFragment extends BaseFragment {
         mImgActionBarBack = view.findViewById(R.id.imgListNewFeedBack);
         mTabLayout = view.findViewById(R.id.tabLayoutListNewFeed);
         mViewPager = view.findViewById(R.id.viewPagerListNewFeed);
+        mTitle = view.findViewById(R.id.tvListNewFeedTitle);
+
+        if (!mViewModel.getGroupNewFeed().get(mViewModel.getPositionGroup()).isEmpty()) {
+            mTitle.setText(mViewModel.getGroupNewFeed().get(mViewModel.getPositionGroup()).get(0).getTitleFragment());
+        }
 
         return view;
     }
@@ -63,5 +74,12 @@ public class ListNewFeedFragment extends BaseFragment {
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager, true);
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mTitle.setText(mViewModel.getGroupNewFeed().get(mViewModel.getPositionGroup()).get(position).getTitleFragment());
+            }
+        });
     }
 }

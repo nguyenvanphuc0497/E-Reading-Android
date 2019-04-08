@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed.DisplayNewFeedFragment;
+import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.ListNewFeedPagerAdapter;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import io.reactivex.SingleObserver;
@@ -38,6 +39,9 @@ public class PageListNewFeedFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new PageListNewFeedViewModel();
+        if (getArguments() != null) {
+            mViewModel.setmUrlEndPoint(getArguments().getString(ListNewFeedPagerAdapter.KEY_URL_END_POINT));
+        }
         mAdapter = new PageListNewFeedAdapter(mViewModel.getListRssItemResponse(), getActivity());
     }
 
