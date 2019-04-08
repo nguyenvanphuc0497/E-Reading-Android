@@ -57,9 +57,11 @@ public class PageNewFeedFragment extends BaseFragment {
     public void initData() {
         mItemPageNewFeeds = new ArrayList<>();
 
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "CNN News"));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "Vietnamnet"));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC News"));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Popular news", ""));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Global and UK news", ""));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Sports news", ""));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "CNN News", ""));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "Vietnamnet", ""));
     }
 
     public void initEventsView() {

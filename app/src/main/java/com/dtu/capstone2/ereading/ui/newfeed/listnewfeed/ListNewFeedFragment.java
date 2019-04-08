@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.network.response.RssResponse;
+import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed.DisplayNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
@@ -101,15 +101,16 @@ public class ListNewFeedFragment extends BaseFragment {
     }
 
     private void loadDataFromServer() {
-        mViewModel.getNewFeedOfServerCNN().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<RssResponse>() {
+        mViewModel.getNewsFeedFromServerBBCPopularTopStories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<BBCRssResponse>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onSuccess(RssResponse rssResponse) {
+            public void onSuccess(BBCRssResponse rssResponse) {
                 dismissLoadingDialog();
 
                 mAdapter.notifyDataSetChanged();

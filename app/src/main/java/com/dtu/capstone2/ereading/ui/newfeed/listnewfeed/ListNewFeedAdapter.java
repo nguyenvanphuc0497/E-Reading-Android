@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.network.response.RssItemResponse;
+import com.dtu.capstone2.ereading.network.response.BBCRssItemResponse;
 
 import java.util.List;
 
@@ -20,16 +20,16 @@ import java.util.List;
  * Create by Nguyen Van Phuc on 4/6/19
  */
 public class ListNewFeedAdapter extends RecyclerView.Adapter<ListNewFeedAdapter.ListNewFeedViewHolder> {
-    private List<RssItemResponse> mRssItemResponses;
+    private List<BBCRssItemResponse> mRssItemResponses;
     private Context mContext;
     private OnItemListener mOnItemListener;
 
-    ListNewFeedAdapter(List<RssItemResponse> rssItemResponses, Context context) {
+    ListNewFeedAdapter(List<BBCRssItemResponse> rssItemResponses, Context context) {
         mRssItemResponses = rssItemResponses;
         mContext = context;
     }
 
-    public void setmOnItemListener(OnItemListener mOnItemListener) {
+    void setmOnItemListener(OnItemListener mOnItemListener) {
         this.mOnItemListener = mOnItemListener;
     }
 
@@ -80,11 +80,9 @@ public class ListNewFeedAdapter extends RecyclerView.Adapter<ListNewFeedAdapter.
             });
         }
 
-        void onBindData(RssItemResponse rssItemResponse) {
-            String urlImage = "";
-            if (!rssItemResponse.getRssItemMediaGroups().isEmpty()) {
-                urlImage = rssItemResponse.getRssItemMediaGroups().get(0).getUrlImage();
-            }
+        void onBindData(BBCRssItemResponse rssItemResponse) {
+            String urlImage = (rssItemResponse.getBbcRssThumbnail().getUrlImage() != null) ?
+                    rssItemResponse.getBbcRssThumbnail().getUrlImage() : "";
 
             //Load Anh tu Url sử dụng thư viện Glide
             Glide.with(mContext).load(urlImage).apply(options).into(imgNewsThumbnail);
