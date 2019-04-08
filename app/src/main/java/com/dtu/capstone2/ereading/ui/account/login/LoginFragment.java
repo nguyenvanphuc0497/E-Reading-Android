@@ -1,17 +1,8 @@
-package com.dtu.capstone2.ereading.ui.login;
+package com.dtu.capstone2.ereading.ui.account.login;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +12,6 @@ import android.widget.EditText;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
-import com.dtu.capstone2.ereading.ui.MainActivity;
-import com.dtu.capstone2.ereading.ui.home.HomeActivity;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

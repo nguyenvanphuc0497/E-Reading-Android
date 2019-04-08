@@ -90,13 +90,7 @@ public class ApiClient {
     }
 
     public ApiServer createServerXml(String baseUrl) {
-
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-
-        String baseUrls = "http://rss.cnn.com/rss/";
-        if (!baseUrl.equals("")) {
-            baseUrls = baseUrl;
-        }
 
         //Show log request
         if (BuildConfig.DEBUG) {
@@ -112,7 +106,7 @@ public class ApiClient {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrls)
+                .baseUrl(baseUrl)
                 .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(new Persister(new AnnotationStrategy())))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
