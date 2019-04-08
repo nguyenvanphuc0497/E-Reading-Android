@@ -16,6 +16,7 @@ import io.reactivex.functions.Consumer;
 class PageListNewFeedViewModel {
     private RssNewFeedRepository mNewFeedRepository = new RssNewFeedRepository();
     private List<BBCRssItemResponse> mRssItemResponses = new ArrayList<>();
+    private String mUrlEndPoint;
 
 //    Single<RssResponse> getNewFeedOfServerCNN() {
 //        return mNewFeedRepository.getNewFeedFromServerCNN().doOnSuccess(new Consumer<RssResponse>() {
@@ -32,12 +33,16 @@ class PageListNewFeedViewModel {
     }
 
     Single<BBCRssResponse> getNewsFeedFromServerBBCPopularTopStories() {
-        return mNewFeedRepository.getNewsFeedFromServerBBC("news/rss.xml").doOnSuccess(new Consumer<BBCRssResponse>() {
+        return mNewFeedRepository.getNewsFeedFromServerBBC(mUrlEndPoint).doOnSuccess(new Consumer<BBCRssResponse>() {
             @Override
             public void accept(BBCRssResponse rssResponse) throws Exception {
                 mRssItemResponses.clear();
                 mRssItemResponses.addAll(rssResponse.getBbcRssItemResponses());
             }
         });
+    }
+
+    void setmUrlEndPoint(String mUrlEndPoint) {
+        this.mUrlEndPoint = mUrlEndPoint;
     }
 }

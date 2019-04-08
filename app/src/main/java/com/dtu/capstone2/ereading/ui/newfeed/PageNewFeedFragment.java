@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.ui.newfeed;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import java.util.List;
  * Create by Nguyen Van Phuc on 3/22/19
  */
 public class PageNewFeedFragment extends BaseFragment {
+    public static final String KEY_POSITION_GROUP_NEW_FEED = "position_group_new_feed";
     private RecyclerView mRecyclerView;
     private PageNewFeedAdapter mAdapter;
     private List<ItemPageNewFeed> mItemPageNewFeeds;
@@ -57,11 +59,10 @@ public class PageNewFeedFragment extends BaseFragment {
     public void initData() {
         mItemPageNewFeeds = new ArrayList<>();
 
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Popular news", ""));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Global and UK news", ""));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Sports news", ""));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "CNN News", ""));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "Vietnamnet", ""));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Popular news"));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Global and UK news"));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Sports news"));
+//        mItemPageNewFeeds.add(new ItemPageNewFeed("", "CNN News"));
     }
 
     public void initEventsView() {
@@ -70,7 +71,11 @@ public class PageNewFeedFragment extends BaseFragment {
             public void onItemClick(int position) {
                 //TODO Send position to Activity để mở fragment
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.layoutPageNewFeedContainer, new ListNewFeedFragment());
+                Bundle bundle = new Bundle();
+                bundle.putInt(KEY_POSITION_GROUP_NEW_FEED, position);
+                Fragment fragment = new ListNewFeedFragment();
+                fragment.setArguments(bundle);
+                ft.add(R.id.layoutPageNewFeedContainer, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
             }
