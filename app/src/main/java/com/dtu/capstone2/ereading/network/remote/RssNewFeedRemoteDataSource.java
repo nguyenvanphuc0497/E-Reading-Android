@@ -11,7 +11,7 @@ import io.reactivex.Single;
  * Create by Nguyen Van Phuc on 4/6/19
  */
 public class RssNewFeedRemoteDataSource {
-    private ApiServer mApiServer = ApiClient.getInstants().createServerXml("");
+    private ApiServer mApiServer = ApiClient.getInstants().createServerXml("http://rss.cnn.com/rss/");
     private ApiServer mApiServerBBC = ApiClient.getInstants().createServerXml("http://feeds.bbci.co.uk/");
 
     public Single<RssResponse> getNewFeedFromServerCNN() {

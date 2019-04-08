@@ -34,6 +34,6 @@ public class EReadingRemoteDataSource {
     }
 
     public Single<AccountRegisterRequest> registerNewAccount(AccountRegisterRequest accountRegisterRequest) {
-        return mApiServer.regiterAccount(accountRegisterRequest);
+        return mApiServer.registerAccount(accountRegisterRequest);
     }
 }

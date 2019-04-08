@@ -9,7 +9,6 @@ import com.dtu.capstone2.ereading.ui.model.MainPage;
 
 import java.util.List;
 
-
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
     private List<MainPage> mFragmentList;
 

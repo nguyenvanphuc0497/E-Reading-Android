@@ -6,8 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
-import com.dtu.capstone2.ereading.ui.login.LoginFragment;
+import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
 
 
 /**
