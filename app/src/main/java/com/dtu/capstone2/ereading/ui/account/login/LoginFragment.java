@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.ui.account.login;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
@@ -33,6 +35,7 @@ public class LoginFragment extends BaseFragment {
     private EditText edtPassword;
     private Button btnLogin;
     private Button btnLoginRegister;
+    private TextInputLayout layoutPassword;
 
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class LoginFragment extends BaseFragment {
         edtUsername = view.findViewById(R.id.tvLoginUsername);
         btnLogin = view.findViewById(R.id.btnSignInAccount);
         btnLoginRegister = view.findViewById(R.id.btnLoginRegister);
+        layoutPassword = view.findViewById(R.id.layoutLoginPassword);
 
         return view;
     }
@@ -83,6 +87,8 @@ public class LoginFragment extends BaseFragment {
             public void onClick(View v) {
                 strUserName = edtUsername.getText().toString();
                 strPassword = edtPassword.getText().toString();
+                layoutPassword.setError(null);
+
                 showLoadingDialog();
                 getManagerSubscribe().add(loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
                         .subscribeOn(Schedulers.io())
@@ -98,7 +104,13 @@ public class LoginFragment extends BaseFragment {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                showApiErrorDialog();
+                                dismissLoadingDialog();
+                                ApiExceptionResponse response = ((ApiExceptionResponse) throwable);
+                                if (response.getStatusCode() != null && response.getStatusCode() == 400) {
+                                    layoutPassword.setError("Tài khoản và mật khẩu nhập vào không chính xác");
+                                } else {
+                                    showApiErrorDialog();
+                                }
                             }
                         }));
             }
