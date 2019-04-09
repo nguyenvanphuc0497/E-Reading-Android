@@ -15,7 +15,7 @@ import io.reactivex.ObservableOnSubscribe;
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
-public class TranslateNewFeedViewModel {
+class TranslateNewFeedViewModel {
     private String urlNewFeed;
 
     String getUrlNewFeed() {

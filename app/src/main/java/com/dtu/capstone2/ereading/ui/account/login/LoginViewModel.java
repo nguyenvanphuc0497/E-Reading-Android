@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.login;
+package com.dtu.capstone2.ereading.ui.account.login;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
