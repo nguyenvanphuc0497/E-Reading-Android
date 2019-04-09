@@ -17,6 +17,7 @@ import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed.DisplayNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.ListNewFeedPagerAdapter;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.dtu.capstone2.ereading.ui.utils.Constants;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,8 +28,6 @@ import io.reactivex.schedulers.Schedulers;
  * Create By Huynh Vu Ha Lan on 21/03/2019
  */
 public class PageListNewFeedFragment extends BaseFragment {
-    public static final String KEY_URL_NEW_FEED = "key_url_new_feed";
-
     private PageListNewFeedViewModel mViewModel;
     private PageListNewFeedAdapter mAdapter;
     private RecyclerView mRecyclerViewFeedDisplay;
@@ -81,7 +80,7 @@ public class PageListNewFeedFragment extends BaseFragment {
             public void onItemClick(int position) {
                 Bundle bundle = new Bundle();
                 String urlNewFeed = mViewModel.getListRssItemResponse().get(position).getLink();
-                bundle.putString(KEY_URL_NEW_FEED, urlNewFeed);
+                bundle.putString(Constants.KEY_URL_NEW_FEED, urlNewFeed);
                 Fragment fragment = new DisplayNewFeedFragment();
                 fragment.setArguments(bundle);
 

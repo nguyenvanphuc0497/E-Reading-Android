@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/colorMainApp"
+    android:background="@color/colorBackgroundMainApp"
     android:clickable="true"
     android:focusable="true">
 
     <RelativeLayout
-        android:id="@+id/layoutDisplayNewFeedHeader"
+        android:id="@+id/layoutTranslateNewFeedHeader"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorMainApp"
@@ -17,27 +17,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imgDisplayNewFeedBack"
+            android:id="@+id/imgTranslateNewFeedBack"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_alignParentLeft="true"
             android:padding="10dp"
             android:src="@drawable/ic_back_default" />
-
-        <ImageView
-            android:id="@+id/imgDisplayNewFeedTranslate"
-            android:layout_width="?android:attr/actionBarSize"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentRight="true"
-            android:padding="15dp"
-            android:src="@drawable/ic_translate_new_feed_white" />
+        <!--các icon title sẽ nằm ở phía sau này-->
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/webViewDisplayNewFeed"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDisplayNewFeedHeader" />
+        app:layout_constraintTop_toBottomOf="@id/layoutTranslateNewFeedHeader">
 
+        <TextView
+            android:id="@+id/tvTranslateNewFeedWordResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="3dp"
+            android:textSize="@dimen/text_size_content_default" />
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

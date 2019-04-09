@@ -6,7 +6,7 @@
     android:animateLayoutChanges="true">
 
     <TextView
-        android:id="@+id/tvPageNewFeedTitle"
+        android:id="@+id/tvPageAccountHeaderTitle"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorMainApp"

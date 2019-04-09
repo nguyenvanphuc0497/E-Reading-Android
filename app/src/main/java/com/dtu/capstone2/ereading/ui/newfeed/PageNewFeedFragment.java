@@ -49,7 +49,7 @@ public class PageNewFeedFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAdapter = new PageNewFeedAdapter(mItemPageNewFeeds);
+        mAdapter = new PageNewFeedAdapter(mItemPageNewFeeds, getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -59,9 +59,9 @@ public class PageNewFeedFragment extends BaseFragment {
     public void initData() {
         mItemPageNewFeeds = new ArrayList<>();
 
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Popular news"));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Global and UK news"));
-        mItemPageNewFeeds.add(new ItemPageNewFeed("", "BCC Sports news"));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("https://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif", "BCC Popular news"));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("https://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif", "BCC Global and UK news"));
+        mItemPageNewFeeds.add(new ItemPageNewFeed("https://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif", "BCC Sports news"));
 //        mItemPageNewFeeds.add(new ItemPageNewFeed("", "CNN News"));
     }
 

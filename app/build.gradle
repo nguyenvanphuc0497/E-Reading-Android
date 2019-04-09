@@ -81,6 +81,9 @@ dependencies {
 
     //Load Image From Url
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+    // Parse Html to object
+    implementation 'org.jsoup:jsoup:1.11.3'
 }
 repositories {
     mavenCentral()

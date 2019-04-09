@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true">
 
     <TextView
-        android:id="@+id/tvPageNewFeedTitle"
+        android:id="@+id/tvPageNewFeedHeaderTitle"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorMainApp"
@@ -20,5 +20,5 @@
         android:id="@+id/recyclerViewPageNewFeed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvPageNewFeedTitle" />
+        android:layout_below="@id/tvPageNewFeedHeaderTitle" />
 </RelativeLayout>
