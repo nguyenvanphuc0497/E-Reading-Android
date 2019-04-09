@@ -16,6 +16,11 @@ import io.reactivex.Single;
 public class EReadingRepository {
     static private EReadingRemoteDataSource eReadingRemoteDataSource = new EReadingRemoteDataSource();
 
+    /**
+     * Day la method dung de request api HomeActivity
+     * @param account
+     * @return
+     */
     public Single<Token> login(AccountLoginRequest account) {
         return eReadingRemoteDataSource.login(account);
     }

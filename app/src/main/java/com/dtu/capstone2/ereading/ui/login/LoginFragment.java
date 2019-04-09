@@ -35,24 +35,24 @@ public class LoginFragment extends BaseFragment {
     private Integer intIduser;
     private String strUserName;
     private String strPassword;
-    private TextInputLayout edtUsername;
-    private TextInputLayout edtPassword;
+    private EditText edtUsername;
+    private EditText edtPassword;
     private Button btnLogin;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view= LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_login,container,false);
-        edtPassword = view.findViewById(R.id.txtPassword);
-        edtUsername = view.findViewById(R.id.txtUsername);
+        edtPassword = view.findViewById(R.id.tvLoginPassword);
+        edtUsername = view.findViewById(R.id.tvLoginUsername);
         btnLogin = view.findViewById(R.id.btnSignInAccount);
         /*
          * this is function event click button login*/
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                strUserName = edtUsername.getEditText().toString();
-                strPassword = edtPassword.getEditText().toString();
+                strUserName = edtUsername.getText().toString();
+                strPassword = edtPassword.getText().toString();
                 showLoadingDialog();
                 loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
                         .subscribeOn(Schedulers.io())
@@ -62,7 +62,7 @@ public class LoginFragment extends BaseFragment {
                             public void accept(DataLoginRequest dataLoginRequest) throws Exception {
                                 strToken = dataLoginRequest.getStringToken();
                                 intIduser = dataLoginRequest.getIntId();
-                                dismissLoadingDialog();
+                                 dismissLoadingDialog();
                                  showSuccessDialog();
                             }
 

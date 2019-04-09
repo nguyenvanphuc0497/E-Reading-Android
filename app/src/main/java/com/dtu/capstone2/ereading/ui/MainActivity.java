@@ -7,17 +7,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.ui.account.AccountFragment;
-import com.dtu.capstone2.ereading.ui.home.HomeFragment;
+import com.dtu.capstone2.ereading.ui.account.PageAccountFragment;
+import com.dtu.capstone2.ereading.ui.home.PageHomeFragment;
 import com.dtu.capstone2.ereading.ui.model.MainPage;
-import com.dtu.capstone2.ereading.ui.news.NewsFragment;
+import com.dtu.capstone2.ereading.ui.newfeed.PageNewFeedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Create by Nguyen Van Phuc on 3/22/19
- */
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerMain;
     private TabLayout mTabLayout;
@@ -34,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), mListFragment);
         mViewPagerMain.setAdapter(mMainPagerAdapter);
+        mViewPagerMain.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPagerMain);
     }
 
@@ -43,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initData() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(new MainPage(new NewsFragment(), "News"));
-        mListFragment.add(new MainPage(new HomeFragment(), "Home"));
-        mListFragment.add(new MainPage(new AccountFragment(), "Account"));
+        mListFragment.add(new MainPage(new PageNewFeedFragment(), "Tin tức"));
+        mListFragment.add(new MainPage(new PageHomeFragment(), "Home"));
+        mListFragment.add(new MainPage(new PageAccountFragment(), "Tài khoản"));
     }
 }

@@ -3,7 +3,6 @@ package com.dtu.capstone2.ereading.ui.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +23,22 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by Nguyen Van Phuc on 3/22/19
  */
-public class HomeFragment extends BaseFragment {
+public class PageHomeFragment extends BaseFragment {
     HomeFragmentViewModal homeFragmentViewModal = new HomeFragmentViewModal();
     private List<ListVocabulary> listWord;
     private String strInputText;
     private String strReponseText;
     private EditText edtInputText;
-    private  EditText edtReponserText;
+    private EditText edtReponserText;
     private Button btnTranslate;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_home,container,false);
-        edtInputText= view.findViewById(R.id.edtInputText);
-        edtReponserText= view.findViewById(R.id.edtReponseText);
+        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_page_home, container, false);
+        edtInputText = view.findViewById(R.id.edtInputText);
+        edtReponserText = view.findViewById(R.id.edtReponseText);
         btnTranslate = view.findViewById(R.id.btnTranslate);
         btnTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,9 +52,8 @@ public class HomeFragment extends BaseFragment {
                             @Override
                             public void accept(DataStringReponse dataStringReponse) throws Exception {
                                 dismissLoadingDialog();
-                                showSuccessDialog();
                                 strReponseText = dataStringReponse.getStringData();
-                                edtReponserText.setText(strInputText);
+                                edtReponserText.setText(strReponseText);
                                 listWord = dataStringReponse.getListWord();
                             }
                         }, new Consumer<Throwable>() {

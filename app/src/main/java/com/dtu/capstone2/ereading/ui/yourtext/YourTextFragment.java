@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.news;
+package com.dtu.capstone2.ereading.ui.yourtext;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 
 import com.dtu.capstone2.ereading.R;
 
+
 /**
- * Create by Nguyen Van Phuc on 3/22/19
+ * Create By Huynh Vu Ha Lan on 20/03/2019
  */
-public class NewsFragment extends Fragment {
+public class YourTextFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        View view = inflater.inflate(R.layout.fragment_your_text, container, false);
+        return view;
     }
 }

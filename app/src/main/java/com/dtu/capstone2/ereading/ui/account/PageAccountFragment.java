@@ -15,14 +15,14 @@ import com.dtu.capstone2.ereading.R;
 /**
  * Create by Nguyen Van Phuc on 3/22/19
  */
-public class AccountFragment extends Fragment {
+public class PageAccountFragment extends Fragment {
     private TextView tvTitle;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         tvTitle = view.findViewById(R.id.tvAccountTitle);
         return view;
     }

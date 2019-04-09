@@ -15,6 +15,9 @@ abstract class BaseFragment : Fragment() {
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var apiErrorDialog: ApiErrorDialog
     private lateinit var successDialog: SuccessDialog
+    private var loadingDialogIsShowing = false
+    private var apiErrorDialogIsShowing = false
+    private var successDialogDialogIsShowing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,22 +28,39 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun showLoadingDialog() {
-        loadingDialog.show(fragmentManager, null)
+        if (!loadingDialogIsShowing) {
+            loadingDialog.show(fragmentManager, null)
+            loadingDialogIsShowing = true
+        }
     }
 
     protected fun dismissLoadingDialog() {
-        loadingDialog.dismiss()
+        if (loadingDialogIsShowing) {
+            loadingDialog.dismiss()
+            loadingDialogIsShowing = false
+        }
     }
 
     protected fun showApiErrorDialog() {
-        apiErrorDialog.show(fragmentManager, null)
+        dismissLoadingDialog()
+        if (!apiErrorDialogIsShowing) {
+            apiErrorDialog.show(fragmentManager, null)
+            apiErrorDialogIsShowing = true
+        }
     }
 
     protected fun showSuccessDialog() {
-        successDialog.show(fragmentManager, null)
-        Handler().postDelayed({
-            successDialog.dismiss()
-        }, TIME_DELAY_DISMISSS_DIALOG_SUCCESS)
+        dismissLoadingDialog()
+        if (!successDialogDialogIsShowing) {
+            successDialog.show(fragmentManager, null)
+            successDialogDialogIsShowing = false
+            Handler().postDelayed({
+                if (!successDialogDialogIsShowing) {
+                    successDialog.dismiss()
+                    successDialogDialogIsShowing = false
+                }
+            }, TIME_DELAY_DISMISSS_DIALOG_SUCCESS)
+        }
     }
 
     protected fun setCallBakSuccessDialogDismiss(callBack: () -> Unit) {

@@ -14,8 +14,6 @@ import io.reactivex.Single;
 public class HomeFragmentViewModal {
     EReadingRepository eReadingRepository = new EReadingRepository();
     private String strReponse;
-    private List<ListWord> listWord;
-
     public Single<DataStringReponse> getDataStringReponse(String para)
     {
         return eReadingRepository.GetDataStringReponse(para);
