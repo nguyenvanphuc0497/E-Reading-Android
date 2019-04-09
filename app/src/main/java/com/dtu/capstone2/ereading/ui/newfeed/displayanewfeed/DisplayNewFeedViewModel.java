@@ -27,8 +27,7 @@ class DisplayNewFeedViewModel {
         return Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-//                Document doc = Jsoup.connect("https://edition.cnn.com/2019/04/07/us/florida-huge-python-captured-trnd/index.html").get();
-                Document doc = Jsoup.connect("https://www.bbc.com/news/world-us-canada-47848619").get();
+                Document doc = Jsoup.connect(urlNewFeed).get();
                 emitter.onNext(doc.title());
                 // Get meta info
                 Elements contents = doc.getElementsByTag("p");
