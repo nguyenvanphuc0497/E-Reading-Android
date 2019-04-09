@@ -54,7 +54,7 @@ public class LoginFragment extends BaseFragment {
 
     private void initEvent() {
         /*
-         * this is function event click button login*/
+         * this is function typeTransport click button login*/
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

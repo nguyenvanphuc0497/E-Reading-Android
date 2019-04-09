@@ -1,7 +1,7 @@
 package com.dtu.capstone2.ereading.ui.account;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
+import com.dtu.capstone2.ereading.ui.utils.Transport;
+import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 
 /**
  * Create by Nguyen Van Phuc on 3/22/19
@@ -33,7 +36,20 @@ public class PageAccountFragment extends Fragment {
         tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
+//                startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
+//                Only Test
+                RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.DIALOG_LOADING, "phuc"));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.DIALOG_SUCCESS, "phuc"));
+                        RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.DISMISS_DIALOG_LOADING, "phuc"));
+                        RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.DISMISS_DIALOG_LOADING, "phuc"));
+                        RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.DISMISS_DIALOG_LOADING, "phuc"));
+                    }
+                }, 3000);
+
             }
         });
     }

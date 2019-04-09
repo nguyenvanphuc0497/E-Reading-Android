@@ -93,14 +93,14 @@ public class FragmentRegister extends BaseFragment {
                             @Override
                             public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
                                 showSuccessDialog();
-                                setCallBakSuccessDialogDismiss(new Function0<Unit>() {
-                                    @Override
-                                    public Unit invoke() {
-                                        getActivity().finish();
-                                        //TODO : Handle follow when login success
-                                        return null;
-                                    }
-                                });
+//                                setCallBakSuccessDialogDismiss(new Function0<Unit>() {
+//                                    @Override
+//                                    public Unit invoke() {
+//                                        getActivity().finish();
+//                                        //TODO : Handle follow when login success
+//                                        return null;
+//                                    }
+//                                });
                             }
 
                             @Override

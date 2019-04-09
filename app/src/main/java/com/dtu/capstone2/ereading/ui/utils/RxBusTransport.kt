@@ -1,0 +1,38 @@
+package com.dtu.capstone2.ereading.ui.utils
+
+import android.util.Log
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+
+/**
+ * Create by Nguyen Van Phuc on 4/9/19
+ */
+object RxBusTransport {
+    private val publisher = PublishSubject.create<Transport>()
+
+    /**
+     * Emit item to listen
+     */
+    fun publish(transport: Transport) {
+        Log.d("RxBusTransport", "$transport")
+        publisher.onNext(transport)
+    }
+
+    /**
+     * Listen should return an Observable and not the publisher
+     * Using ofType we filter only events that match that class type
+     */
+    fun listen(): Observable<Transport> {
+        Log.d("RxBusTransport", "listen")
+        return publisher.ofType(Transport::class.java)
+    }
+}
+
+data class Transport(val typeTransport: TypeTransportBus, val sender: String = "")
+
+enum class TypeTransportBus(val typeValue: String) {
+    DIALOG_LOADING("dialog_loading"),
+    DISMISS_DIALOG_LOADING("dimiss_dialog_loading"),
+    DIALOG_API_ERROR("dialog_api_error"),
+    DIALOG_SUCCESS("dialog_success")
+}

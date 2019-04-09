@@ -80,7 +80,7 @@ public class PageNewFeedAdapter extends RecyclerView.Adapter<PageNewFeedAdapter.
     }
 
     /**
-     * Interface is used listener event of item
+     * Interface is used listener typeTransport of item
      */
     interface OnItemListener {
         void onItemClick(int position);

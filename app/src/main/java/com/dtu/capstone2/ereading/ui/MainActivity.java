@@ -4,18 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.account.PageAccountFragment;
 import com.dtu.capstone2.ereading.ui.home.PageHomeFragment;
 import com.dtu.capstone2.ereading.ui.model.MainPage;
 import com.dtu.capstone2.ereading.ui.newfeed.PageNewFeedFragment;
+import com.dtu.capstone2.ereading.ui.utils.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private ViewPager mViewPagerMain;
     private TabLayout mTabLayout;
     private MainPagerAdapter mMainPagerAdapter;
