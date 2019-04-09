@@ -23,8 +23,6 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
 
 /**
  * Create by Nguyen Van Phuc on 4/1/19
@@ -93,14 +91,7 @@ public class FragmentRegister extends BaseFragment {
                             @Override
                             public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
                                 showSuccessDialog();
-//                                setCallBakSuccessDialogDismiss(new Function0<Unit>() {
-//                                    @Override
-//                                    public Unit invoke() {
-//                                        getActivity().finish();
-//                                        //TODO : Handle follow when login success
-//                                        return null;
-//                                    }
-//                                });
+//                                TODO : Xử lí khi đăng kí thành công
                             }
 
                             @Override

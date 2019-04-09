@@ -13,8 +13,6 @@ class SuccessDialog : BaseDialog() {
         private var isShowing = false
     }
 
-    internal var onDismissCallback: () -> Unit = {}
-
     override fun setContentDialog(dialog: Dialog) {
         dialog.setContentView(R.layout.dialog_success)
     }
@@ -29,13 +27,15 @@ class SuccessDialog : BaseDialog() {
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
-        onDismissCallback()
+        super.onDismiss(dialog)
+        RxBusTransport.publish(Transport(TypeTransportBus.CALL_BACK_DIALOG_SUCCESS_DISMISS, activity?.javaClass?.simpleName
+                ?: ""))
     }
 
     override fun dismiss() {
         if (isShowing) {
             isShowing = false
-            super.onDismiss(dialog)
+            super.dismiss()
         }
     }
 }

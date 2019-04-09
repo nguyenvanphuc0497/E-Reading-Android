@@ -26,27 +26,31 @@ abstract class BaseActivity : AppCompatActivity() {
         apiErrorDialog = ApiErrorDialog()
         successDialog = SuccessDialog()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         initListener()
     }
 
-    override fun onDestroy() {
+    override fun onPause() {
+        super.onPause()
         managerSubscribe.clear()
-        super.onDestroy()
     }
 
     private fun initListener() {
         managerSubscribe.add(RxBusTransport.listen().observeOnUiThread().subscribe({
             when (it.typeTransport) {
                 TypeTransportBus.DIALOG_LOADING -> {
-                    loadingDialog.show(supportFragmentManager, null)
+                    loadingDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_LOADING.typeValue)
                 }
                 TypeTransportBus.DIALOG_API_ERROR -> {
                     loadingDialog.dismiss()
-                    apiErrorDialog.show(supportFragmentManager, null)
+                    apiErrorDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_API_ERROR.typeValue)
                 }
                 TypeTransportBus.DIALOG_SUCCESS -> {
                     loadingDialog.dismiss()
-                    successDialog.show(supportFragmentManager, null)
+                    successDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_SUCCESS.typeValue)
                     Handler().postDelayed({
                         successDialog.dismiss()
                     }, TIME_DELAY_DISMISS_DIALOG_SUCCESS)
@@ -56,11 +60,8 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
             }
         }, {
-            Log.e("BaseActivity", ":$it")
+            Log.w("BaseActivity", ":$it")
         }))
     }
 
-    protected fun setCallBakSuccessDialogDismiss(callBack: () -> Unit) {
-        successDialog.onDismissCallback = callBack
-    }
 }
