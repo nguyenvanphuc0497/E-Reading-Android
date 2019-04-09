@@ -1,7 +1,6 @@
 package com.dtu.capstone2.ereading.ui.utils
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
@@ -50,10 +49,10 @@ class LoadingDialog : DialogFragment() {
         }
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun dismiss() {
         if (isShowing) {
             isShowing = false
-            super.onDismiss(dialog)
+            super.dismiss()
         }
     }
 }

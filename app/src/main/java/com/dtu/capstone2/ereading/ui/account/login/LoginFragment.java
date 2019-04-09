@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.ui.account.login;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,12 @@ import android.widget.EditText;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
+import com.dtu.capstone2.ereading.ui.utils.Transport;
+import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -30,7 +35,28 @@ public class LoginFragment extends BaseFragment {
     private EditText edtPassword;
     private Button btnLogin;
     private Button btnLoginRegister;
+    private TextInputLayout layoutPassword;
 
+    @Override
+    public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getManagerSubscribe().add(RxBusTransport.INSTANCE.listen()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<Transport>() {
+                    @Override
+                    public void accept(Transport transport) throws Exception {
+                        if (transport.getTypeTransport() == TypeTransportBus.CALL_BACK_DIALOG_SUCCESS_DISMISS) {
+                            getActivity().finish();
+                        }
+                    }
+                }));
+    }
 
     @Nullable
     @Override
@@ -41,6 +67,7 @@ public class LoginFragment extends BaseFragment {
         edtUsername = view.findViewById(R.id.tvLoginUsername);
         btnLogin = view.findViewById(R.id.btnSignInAccount);
         btnLoginRegister = view.findViewById(R.id.btnLoginRegister);
+        layoutPassword = view.findViewById(R.id.layoutLoginPassword);
 
         return view;
     }
@@ -54,14 +81,16 @@ public class LoginFragment extends BaseFragment {
 
     private void initEvent() {
         /*
-         * this is function event click button login*/
+         * this is function typeTransport click button login*/
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 strUserName = edtUsername.getText().toString();
                 strPassword = edtPassword.getText().toString();
+                layoutPassword.setError(null);
+
                 showLoadingDialog();
-                loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
+                getManagerSubscribe().add(loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<DataLoginRequest>() {
@@ -69,7 +98,6 @@ public class LoginFragment extends BaseFragment {
                             public void accept(DataLoginRequest dataLoginRequest) throws Exception {
                                 strToken = dataLoginRequest.getStringToken();
                                 intIduser = dataLoginRequest.getIntId();
-                                dismissLoadingDialog();
                                 showSuccessDialog();
                             }
 
@@ -77,9 +105,14 @@ public class LoginFragment extends BaseFragment {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
                                 dismissLoadingDialog();
-                                showApiErrorDialog();
+                                ApiExceptionResponse response = ((ApiExceptionResponse) throwable);
+                                if (response.getStatusCode() != null && response.getStatusCode() == 400) {
+                                    layoutPassword.setError("Tài khoản và mật khẩu nhập vào không chính xác");
+                                } else {
+                                    showApiErrorDialog();
+                                }
                             }
-                        });
+                        }));
             }
         });
 

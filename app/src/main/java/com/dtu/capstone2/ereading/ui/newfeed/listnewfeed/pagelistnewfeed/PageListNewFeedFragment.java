@@ -98,7 +98,7 @@ public class PageListNewFeedFragment extends BaseFragment {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<BBCRssResponse>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                getManagerSubscribe().add(d);
             }
 
             @Override
