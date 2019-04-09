@@ -53,7 +53,6 @@ public class DisplayNewFeedFragment extends BaseFragment {
         return view;
     }
 
-    @SuppressLint("CheckResult")
     @Override
     public void onViewCreated(@NonNull View view, @android.support.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,7 +90,5 @@ public class DisplayNewFeedFragment extends BaseFragment {
                 ft.commit();
             }
         });
-
-
     }
 }
