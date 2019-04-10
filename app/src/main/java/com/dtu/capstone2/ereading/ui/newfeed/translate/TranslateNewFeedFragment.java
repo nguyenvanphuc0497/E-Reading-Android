@@ -12,6 +12,7 @@ import android.text.style.BulletSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
@@ -42,7 +44,7 @@ public class TranslateNewFeedFragment extends BaseFragment {
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new TranslateNewFeedViewModel();
+        mViewModel = new TranslateNewFeedViewModel(new EReadingRepository());
         if (getArguments() != null) {
             mViewModel.setUrlNewFeed(getArguments().getString(Constants.KEY_URL_NEW_FEED));
         }
@@ -64,12 +66,12 @@ public class TranslateNewFeedFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         initEventsView();
-        mViewModel.getDataFromHTML().subscribeOn(Schedulers.io())
+        mViewModel.getDataFromHTMLAndOnNextDetectWord().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LineContentNewFeed>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        getManagerSubscribe().add(d);
                     }
 
                     @Override
@@ -80,10 +82,12 @@ public class TranslateNewFeedFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.w("Translate", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
+
                     }
                 });
     }
