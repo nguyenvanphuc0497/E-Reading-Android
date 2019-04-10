@@ -17,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
@@ -39,9 +41,10 @@ public class TranslateNewFeedFragment extends BaseFragment {
     private TextView mTvWordsResult;
     private TranslateNewFeedViewModel mViewModel;
     private SpannableStringBuilder mTextSpannableResults = new SpannableStringBuilder();
+    private ProgressBar mProgress;
 
     @Override
-    public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new TranslateNewFeedViewModel(new EReadingRepository());
@@ -58,6 +61,7 @@ public class TranslateNewFeedFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_translate_result, container, false);
         mImgBack = view.findViewById(R.id.imgTranslateNewFeedBack);
         mTvWordsResult = view.findViewById(R.id.tvTranslateNewFeedWordResult);
+        mProgress = view.findViewById(R.id.progressTranslateNewFeed);
         return view;
     }
 
@@ -76,6 +80,9 @@ public class TranslateNewFeedFragment extends BaseFragment {
 
                     @Override
                     public void onNext(LineContentNewFeed s) {
+                        if (mProgress.getVisibility() != View.VISIBLE) {
+                            mProgress.setVisibility(View.VISIBLE);
+                        }
                         mTextSpannableResults.append(getStringStyleOfContent(s));
                         mTvWordsResult.setText(mTextSpannableResults);
                     }
@@ -83,11 +90,14 @@ public class TranslateNewFeedFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         Log.w("Translate", e.toString());
+                        mProgress.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "Quá trình dịch gián đoạn! Kiểm tra kết nối Internet.", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mProgress.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "Dịch hoàn tất.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

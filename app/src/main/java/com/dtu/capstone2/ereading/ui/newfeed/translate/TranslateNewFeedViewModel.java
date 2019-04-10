@@ -56,6 +56,8 @@ class TranslateNewFeedViewModel {
                         emitter.onNext(new LineContentNewFeed(TypeContent.TEXT, contentElem.text()));
                     }
                 }
+
+                emitter.onComplete();
             }
         }).flatMapSingle(new Function<LineContentNewFeed, Single<LineContentNewFeed>>() {
             @Override
