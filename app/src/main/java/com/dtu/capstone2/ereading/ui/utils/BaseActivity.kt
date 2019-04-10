@@ -17,6 +17,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var apiErrorDialog: ApiErrorDialog
     private lateinit var successDialog: SuccessDialog
+    private lateinit var errorDialog: ErrorDialog
     private val managerSubscribe: CompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ abstract class BaseActivity : AppCompatActivity() {
         loadingDialog = LoadingDialog()
         apiErrorDialog = ApiErrorDialog()
         successDialog = SuccessDialog()
+        errorDialog = ErrorDialog()
 
     }
 
@@ -57,6 +59,11 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 TypeTransportBus.DISMISS_DIALOG_LOADING -> {
                     loadingDialog.dismiss()
+                }
+                TypeTransportBus.DIALOG_ERROR_MESSAGE -> {
+                    loadingDialog.dismiss()
+                    errorDialog.titleDialog = it.sender
+                    errorDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_API_ERROR.typeValue)
                 }
             }
         }, {
