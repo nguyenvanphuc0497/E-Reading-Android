@@ -1,5 +1,7 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate;
 
+import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
 
@@ -11,12 +13,19 @@ import org.jsoup.select.Elements;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
 
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
 class TranslateNewFeedViewModel {
     private String urlNewFeed;
+    private EReadingRepository mReadingRepository;
+
+    TranslateNewFeedViewModel(EReadingRepository eReadingRepository) {
+        mReadingRepository = eReadingRepository;
+    }
 
     String getUrlNewFeed() {
         return urlNewFeed;
@@ -26,7 +35,8 @@ class TranslateNewFeedViewModel {
         this.urlNewFeed = urlNewFeed;
     }
 
-    Observable<LineContentNewFeed> getDataFromHTML() {
+    Observable<LineContentNewFeed> getDataFromHTMLAndOnNextDetectWord() {
+        // TRường hợp với báo BBC text ok
         return Observable.create(new ObservableOnSubscribe<LineContentNewFeed>() {
             @Override
             public void subscribe(ObservableEmitter<LineContentNewFeed> emitter) throws Exception {
@@ -46,6 +56,18 @@ class TranslateNewFeedViewModel {
                         emitter.onNext(new LineContentNewFeed(TypeContent.TEXT, contentElem.text()));
                     }
                 }
+
+                emitter.onComplete();
+            }
+        }).flatMapSingle(new Function<LineContentNewFeed, Single<LineContentNewFeed>>() {
+            @Override
+            public Single<LineContentNewFeed> apply(final LineContentNewFeed lineContentNewFeed) throws Exception {
+                return mReadingRepository.GetDataStringReponse(lineContentNewFeed.getTextContent()).map(new Function<DataStringReponse, LineContentNewFeed>() {
+                    @Override
+                    public LineContentNewFeed apply(DataStringReponse dataStringReponse) throws Exception {
+                        return new LineContentNewFeed(lineContentNewFeed.getTypeContent(), dataStringReponse.getStringData());
+                    }
+                });
             }
         });
     }

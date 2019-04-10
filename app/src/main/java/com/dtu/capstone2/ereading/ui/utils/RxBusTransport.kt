@@ -35,5 +35,7 @@ enum class TypeTransportBus(val typeValue: String) {
     DISMISS_DIALOG_LOADING("dismiss_dialog_loading"),
     DIALOG_API_ERROR("dialog_api_error"),
     DIALOG_SUCCESS("dialog_success"),
-    CALL_BACK_DIALOG_SUCCESS_DISMISS("call_back_dialog_success_dismiss")
+    CALL_BACK_DIALOG_SUCCESS_DISMISS("call_back_dialog_success_dismiss"),
+    DIALOG_ERROR_MESSAGE("dialog_error_message"),
+    CALL_BACK_DIALOG_ERROR_MESSAGE("call_back_dialog_error_message")
 }
