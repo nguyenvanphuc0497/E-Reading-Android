@@ -14,11 +14,11 @@
         android:text="@string/page_account_header_title"
         android:textSize="@dimen/action_bar_title_text_size" />
 
-    <TextView
-        android:id="@+id/tvAccountTitle"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="This is Account Screen"
-        android:textSize="24sp" />
+        android:layout_below="@id/tvPageAccountHeaderTitle">
+
+        <include layout="@layout/fragment_maneger" />
+    </ScrollView>
 </RelativeLayout>

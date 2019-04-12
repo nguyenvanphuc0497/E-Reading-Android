@@ -1,5 +1,6 @@
 package com.dtu.capstone2.ereading.network;
 
+import com.dtu.capstone2.ereading.App;
 import com.dtu.capstone2.ereading.BuildConfig;
 import com.dtu.capstone2.ereading.network.utils.CustomCallAdapterFactory;
 import com.google.gson.FieldNamingPolicy;
@@ -39,7 +40,7 @@ public class ApiClient {
     }
 
     public ApiServer createServer() {
-        String mBaseUrl = "http://172.245.123.121:8000/api/";
+        String mBaseUrl = "http://172.18.28.23:8000/api/";
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
@@ -54,30 +55,29 @@ public class ApiClient {
                 .serializeNulls()
                 .create();
 
+        // Header for request
+        httpClientBuilder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+                Request.Builder requestBuilder = (original).newBuilder()
+                        .method((original).method(), (original).body());
+
+                // Request customization: add request headers
+                requestBuilder.addHeader("Authorization", App.Companion.getInstant().localRepository.getTokenUser());
+                requestBuilder.addHeader("app-version", BuildConfig.VERSION_NAME);
+                requestBuilder.addHeader("User-Agent", "Android");
+
+                return chain.proceed(requestBuilder.build());
+            }
+        });
+
         // Set time out for request
         OkHttpClient client = httpClientBuilder.connectTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
                 .readTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
                 .protocols(Collections.singletonList(Protocol.HTTP_1_1))
                 .build();
-
-        // Header for request
-        httpClientBuilder.interceptors()
-                .add(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
-                        Request.Builder requestBuilder = (original).newBuilder()
-                                .method((original).method(), (original).body());
-
-                        // Request customization: add request headers
-//                        requestBuilder.addHeader("Authorization", "Token edc116fca3e3c5149b1d9f1842229b5419a8a83d");
-                        requestBuilder.addHeader("app-version", BuildConfig.VERSION_NAME);
-                        requestBuilder.addHeader("User-Agent", "Android");
-
-                        return chain.proceed(requestBuilder.build());
-                    }
-                });
 
         //Pares data
         Retrofit retrofit = new Retrofit.Builder()

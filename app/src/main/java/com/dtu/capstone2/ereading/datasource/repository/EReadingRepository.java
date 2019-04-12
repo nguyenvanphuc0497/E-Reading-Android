@@ -7,6 +7,9 @@ import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
+import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
+
+import java.util.List;
 
 import io.reactivex.Single;
 
@@ -18,6 +21,7 @@ public class EReadingRepository {
 
     /**
      * Day la method dung de request api HomeActivity
+     *
      * @param account
      * @return
      */
@@ -39,5 +43,9 @@ public class EReadingRepository {
 
     public Single<AccountRegisterRequest> registerNewAccount(AccountRegisterRequest accountRegisterRequest) {
         return eReadingRemoteDataSource.registerNewAccount(accountRegisterRequest);
+    }
+
+    public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
+        return eReadingRemoteDataSource.getLevelEnglishFromServer();
     }
 }

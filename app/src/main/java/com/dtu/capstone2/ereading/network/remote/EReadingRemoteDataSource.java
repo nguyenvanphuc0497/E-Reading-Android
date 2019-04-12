@@ -7,9 +7,14 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
+import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.Token;
+import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
+
+import java.util.List;
 
 import io.reactivex.Single;
+import io.reactivex.functions.Function;
 
 /**
  * Create by Nguyen Van Phuc on 3/11/19
@@ -35,5 +40,14 @@ public class EReadingRemoteDataSource {
 
     public Single<AccountRegisterRequest> registerNewAccount(AccountRegisterRequest accountRegisterRequest) {
         return mApiServer.registerAccount(accountRegisterRequest);
+    }
+
+    public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
+        return mApiServer.getListLevelEnglish().map(new Function<LevelEnglishReponse, List<LevelEnglish>>() {
+            @Override
+            public List<LevelEnglish> apply(LevelEnglishReponse levelEnglishReponse) throws Exception {
+                return levelEnglishReponse.getLevels();
+            }
+        });
     }
 }
