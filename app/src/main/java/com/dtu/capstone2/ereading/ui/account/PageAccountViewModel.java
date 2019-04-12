@@ -52,4 +52,13 @@ class PageAccountViewModel {
     String getEmailFromLocal() {
         return mLocalRepository.getEmailUser();
     }
+
+    Single<LevelEnglish> setLevelOfUserToServer(int position) {
+        return mEReadingRepository.setLevelEnglishForUserToServer(position).doOnSuccess(new Consumer<LevelEnglish>() {
+            @Override
+            public void accept(LevelEnglish levelEnglish) throws Exception {
+                mLocalRepository.saveNameLevelUser(levelEnglish.getName());
+            }
+        });
+    }
 }

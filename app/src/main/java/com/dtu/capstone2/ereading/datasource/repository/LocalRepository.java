@@ -10,6 +10,7 @@ public class LocalRepository {
     private final static String E_READING_SHARED_PREFERENCE = "e_reading_shared_preference";
     private final static String KEY_TOKEN_USER = "key_token_user";
     private final static String KEY_EMAIL_USER = "key_email_user";
+    private final static String KEY_NAME_LEVEL_USER = "key_name_level_user";
 
     private Context mContext;
     private SharedPreferences mShaPre;
@@ -43,4 +44,13 @@ public class LocalRepository {
         return mShaPre.getString(KEY_EMAIL_USER, "");
     }
 
+    public void saveNameLevelUser(String nameLevel) {
+        SharedPreferences.Editor editor = mShaPre.edit();
+        editor.putString(KEY_NAME_LEVEL_USER, nameLevel);
+        editor.apply();
+    }
+
+    public String getNameLevelUser() {
+        return mShaPre.getString(KEY_EMAIL_USER, "");
+    }
 }

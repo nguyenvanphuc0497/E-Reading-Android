@@ -8,6 +8,7 @@ import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
+import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -47,6 +48,15 @@ public class EReadingRemoteDataSource {
             @Override
             public List<LevelEnglish> apply(LevelEnglishReponse levelEnglishReponse) throws Exception {
                 return levelEnglishReponse.getLevels();
+            }
+        });
+    }
+
+    public Single<LevelEnglish> setLevelEnglishForUser(int levelPosition) {
+        return mApiServer.setLevelEnglishForUser(levelPosition).map(new Function<LevelUserResponse, LevelEnglish>() {
+            @Override
+            public LevelEnglish apply(LevelUserResponse levelUserResponse) throws Exception {
+                return levelUserResponse.getLevel();
             }
         });
     }
