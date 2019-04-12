@@ -33,8 +33,8 @@ abstract class BaseFragment : Fragment() {
         RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_API_ERROR, nameActivity))
     }
 
-    protected fun showSuccessDialog() {
-        RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_SUCCESS, nameActivity))
+    protected fun showSuccessDialog(senderName: String) {
+        RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_SUCCESS, senderName))
     }
 
     protected fun showLoadingDialogWhiteMessage(message: String) {
