@@ -17,12 +17,12 @@ import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
+import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -41,6 +41,7 @@ public class PageAccountFragment extends BaseFragment {
     private LinearLayout linearLayoutLogin;
     private LinearLayout linearLayoutTrinhDoTiengAnh;
     private TextView tvEmailUser;
+    private int mItemSelect = -1;
 
     @SuppressLint("CheckResult")
     @Override
@@ -123,33 +124,23 @@ public class PageAccountFragment extends BaseFragment {
     }
 
     private void showDialog(final String[] arrayNameLevel) {
-        builder.setSingleChoiceItems(
-                arrayNameLevel, // Items list
-                -1, // Index of checked item (-1 = no selection)
-                new DialogInterface.OnClickListener() // Item click listener
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Get the alert dialog selected item's text
-                        String selectedItem = Arrays.asList(arrayNameLevel).get(i);
-
-                        // Display the selected item's text on snack bar
-
-                    }
-                });
-
+        mItemSelect = -1;
+        builder.setSingleChoiceItems(arrayNameLevel, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mItemSelect = i;
+            }
+        });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Just dismiss the alert dialog after selection
-                // Or do something now
+                if (mItemSelect != -1) {
+                    handelEventSetLevelUserToServer(mItemSelect);
+                }
+                mItemSelect = -1;
             }
         });
-
-        // Create the alert dialog
         AlertDialog dialog = builder.create();
-
-        // Finally, display the alert dialog
         dialog.show();
     }
 
@@ -158,5 +149,28 @@ public class PageAccountFragment extends BaseFragment {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);
         }
+    }
+
+    private void handelEventSetLevelUserToServer(int position) {
+        showLoadingDialog();
+        mViewModel.setLevelOfUserToServer(position)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new SingleObserver<LevelEnglish>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(LevelEnglish levelEnglish) {
+                        showSuccessDialog("");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showApiErrorDialog();
+                    }
+                });
     }
 }

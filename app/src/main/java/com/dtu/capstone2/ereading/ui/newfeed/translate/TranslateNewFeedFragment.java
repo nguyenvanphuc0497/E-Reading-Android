@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
@@ -47,7 +48,7 @@ public class TranslateNewFeedFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new TranslateNewFeedViewModel(new EReadingRepository());
+        mViewModel = new TranslateNewFeedViewModel(new EReadingRepository(), new LocalRepository(getContext()));
         if (getArguments() != null) {
             mViewModel.setUrlNewFeed(getArguments().getString(Constants.KEY_URL_NEW_FEED));
         }

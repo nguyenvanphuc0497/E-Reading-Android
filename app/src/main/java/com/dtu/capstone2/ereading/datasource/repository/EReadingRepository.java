@@ -33,8 +33,8 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.addFavorite(paraFavorite);
     }
 
-    public Single<DataStringReponse> GetDataStringReponse(String paraReponse) {
-        return eReadingRemoteDataSource.GetDataStringReponseRemote(paraReponse);
+    public Single<DataStringReponse> GetDataStringReponse(String paraReponse, String nameLevel) {
+        return eReadingRemoteDataSource.GetDataStringReponseRemote(paraReponse, nameLevel);
     }
 
     public Single<DataLoginRequest> GetDataLoginRequest(AccountLoginRequest accountLoginRequest) {
@@ -47,5 +47,9 @@ public class EReadingRepository {
 
     public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
         return eReadingRemoteDataSource.getLevelEnglishFromServer();
+    }
+
+    public Single<LevelEnglish> setLevelEnglishForUserToServer(int levelPosition) {
+        return eReadingRemoteDataSource.setLevelEnglishForUser(levelPosition);
     }
 }
