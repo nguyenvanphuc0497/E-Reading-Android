@@ -29,7 +29,7 @@ public class MainViewModel {
         /*
          * đây là function nhận reponse sau khi request translate*/
         public Single<DataStringReponse> GetDataStringReponse(String paraString) {
-            return Repository.GetDataStringReponse(paraString);
+            return Repository.GetDataStringReponse(paraString, "");
 
         }
     }

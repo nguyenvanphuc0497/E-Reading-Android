@@ -31,8 +31,8 @@ public class EReadingRemoteDataSource {
         return mApiServer.AddFavoriteServer(paraFavorite);
     }
 
-    public Single<DataStringReponse> GetDataStringReponseRemote(String paraReponse) {
-        return mApiServer.GetDataStringReponse(paraReponse);
+    public Single<DataStringReponse> GetDataStringReponseRemote(String paraReponse, String nameLevel) {
+        return mApiServer.GetDataStringReponse(paraReponse,nameLevel);
     }
 
     public Single<DataLoginRequest> GetDataLoginRequest(AccountLoginRequest accountLoginRequest) {

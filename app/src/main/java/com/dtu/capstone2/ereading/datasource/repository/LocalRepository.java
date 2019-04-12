@@ -51,6 +51,6 @@ public class LocalRepository {
     }
 
     public String getNameLevelUser() {
-        return mShaPre.getString(KEY_EMAIL_USER, "");
+        return mShaPre.getString(KEY_NAME_LEVEL_USER, "");
     }
 }

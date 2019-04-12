@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.ListVocabulary;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
@@ -24,13 +26,20 @@ import io.reactivex.schedulers.Schedulers;
  * Create by Nguyen Van Phuc on 3/22/19
  */
 public class PageHomeFragment extends BaseFragment {
-    HomeFragmentViewModal homeFragmentViewModal = new HomeFragmentViewModal();
+    HomeFragmentViewModal mViewModel;
     private List<ListVocabulary> listWord;
     private String strInputText;
     private String strReponseText;
     private EditText edtInputText;
     private EditText edtReponserText;
     private Button btnTranslate;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mViewModel = new HomeFragmentViewModal(new EReadingRepository(), new LocalRepository(getContext()));
+    }
 
     @Nullable
     @Override
@@ -45,7 +54,7 @@ public class PageHomeFragment extends BaseFragment {
             public void onClick(View v) {
                 strInputText = edtInputText.getText().toString();
                 showLoadingDialog();
-                homeFragmentViewModal.getDataStringReponse(strInputText)
+                mViewModel.getDataStringReponse(strInputText)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<DataStringReponse>() {

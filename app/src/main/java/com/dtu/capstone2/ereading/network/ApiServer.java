@@ -32,7 +32,7 @@ public interface ApiServer {
     Single<Boolean> AddFavoriteServer(@Body AddFavoriteRequest paraFavorite);
 
     @GET("v1/detectword")
-    Single<DataStringReponse> GetDataStringReponse(@Query("words") String paraReponse);
+    Single<DataStringReponse> GetDataStringReponse(@Query("words") String paraReponse, @Query("level_name") String nameLevel);
 
     @POST("signin")
     Single<DataLoginRequest> GetDataLoginRequest(@Body AccountLoginRequest accountLoginRequest);

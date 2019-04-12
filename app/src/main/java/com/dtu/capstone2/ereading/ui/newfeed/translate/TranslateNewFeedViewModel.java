@@ -1,6 +1,7 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
@@ -22,9 +23,11 @@ import io.reactivex.functions.Function;
 class TranslateNewFeedViewModel {
     private String urlNewFeed;
     private EReadingRepository mReadingRepository;
+    private LocalRepository mLocalRepository;
 
-    TranslateNewFeedViewModel(EReadingRepository eReadingRepository) {
+    TranslateNewFeedViewModel(EReadingRepository eReadingRepository, LocalRepository localRepository) {
         mReadingRepository = eReadingRepository;
+        mLocalRepository = localRepository;
     }
 
     String getUrlNewFeed() {
@@ -62,7 +65,7 @@ class TranslateNewFeedViewModel {
         }).flatMapSingle(new Function<LineContentNewFeed, Single<LineContentNewFeed>>() {
             @Override
             public Single<LineContentNewFeed> apply(final LineContentNewFeed lineContentNewFeed) throws Exception {
-                return mReadingRepository.GetDataStringReponse(lineContentNewFeed.getTextContent()).map(new Function<DataStringReponse, LineContentNewFeed>() {
+                return mReadingRepository.GetDataStringReponse(lineContentNewFeed.getTextContent(), mLocalRepository.getNameLevelUser()).map(new Function<DataStringReponse, LineContentNewFeed>() {
                     @Override
                     public LineContentNewFeed apply(DataStringReponse dataStringReponse) throws Exception {
                         return new LineContentNewFeed(lineContentNewFeed.getTypeContent(), dataStringReponse.getStringData());
