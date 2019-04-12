@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
@@ -26,9 +28,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class LoginFragment extends BaseFragment {
-    LoginViewModel loginviewmodel = new LoginViewModel();
-    private String strToken;
-    private Integer intIduser;
+    public final String TAG = getClass().getSimpleName();
+
+    LoginViewModel loginviewmodel;
     private String strUserName;
     private String strPassword;
     private EditText edtUsername;
@@ -40,6 +42,8 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        loginviewmodel = new LoginViewModel(new EReadingRepository(), new LocalRepository(getContext()));
     }
 
     @Override
@@ -96,9 +100,7 @@ public class LoginFragment extends BaseFragment {
                         .subscribe(new Consumer<DataLoginRequest>() {
                             @Override
                             public void accept(DataLoginRequest dataLoginRequest) throws Exception {
-                                strToken = dataLoginRequest.getStringToken();
-                                intIduser = dataLoginRequest.getIntId();
-                                showSuccessDialog();
+                                showSuccessDialog(TAG);
                             }
 
                         }, new Consumer<Throwable>() {

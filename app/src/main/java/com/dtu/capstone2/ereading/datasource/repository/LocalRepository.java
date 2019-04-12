@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 public class LocalRepository {
     private final static String E_READING_SHARED_PREFERENCE = "e_reading_shared_preference";
     private final static String KEY_TOKEN_USER = "key_token_user";
+    private final static String KEY_EMAIL_USER = "key_email_user";
 
     private Context mContext;
     private SharedPreferences mShaPre;
@@ -18,7 +19,7 @@ public class LocalRepository {
         mShaPre = context.getSharedPreferences(E_READING_SHARED_PREFERENCE, Context.MODE_PRIVATE);
     }
 
-    void saveTokenUser(String token) {
+    public void saveTokenUser(String token) {
         SharedPreferences.Editor editor = mShaPre.edit();
         editor.putString(KEY_TOKEN_USER, "Token " + token);
         editor.apply();
@@ -28,7 +29,18 @@ public class LocalRepository {
         return mShaPre.getString(KEY_TOKEN_USER, "");
     }
 
-    void clearTokenUser() {
+    public void clearTokenUser() {
         mShaPre.edit().remove(KEY_TOKEN_USER).apply();
     }
+
+    public void saveEmailUser(String email) {
+        SharedPreferences.Editor editor = mShaPre.edit();
+        editor.putString(KEY_EMAIL_USER, email);
+        editor.apply();
+    }
+
+    public String getEmailUser() {
+        return mShaPre.getString(KEY_EMAIL_USER, "");
+    }
+
 }

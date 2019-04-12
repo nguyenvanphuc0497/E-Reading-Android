@@ -1,6 +1,7 @@
 package com.dtu.capstone2.ereading.ui.account;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ import io.reactivex.functions.Function;
  */
 class PageAccountViewModel {
     private EReadingRepository mEReadingRepository;
+    private LocalRepository mLocalRepository;
     private List<String> nameLevels = new ArrayList<>();
 
-    PageAccountViewModel(EReadingRepository eReadingRepository) {
+    PageAccountViewModel(EReadingRepository eReadingRepository, LocalRepository localRepository) {
         mEReadingRepository = eReadingRepository;
+        mLocalRepository = localRepository;
     }
 
     Single<List<String>> getListLevelFromServer() {
@@ -44,5 +47,9 @@ class PageAccountViewModel {
         } else {
             return Single.just(nameLevels);
         }
+    }
+
+    String getEmailFromLocal() {
+        return mLocalRepository.getEmailUser();
     }
 }

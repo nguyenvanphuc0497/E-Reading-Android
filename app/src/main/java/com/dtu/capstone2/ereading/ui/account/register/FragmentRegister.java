@@ -28,6 +28,8 @@ import io.reactivex.schedulers.Schedulers;
  * Create by Nguyen Van Phuc on 4/1/19
  */
 public class FragmentRegister extends BaseFragment {
+    private final String TAG = getClass().getSimpleName();
+
     private RegisterViewModel viewModel;
 
     private Button btnContinue;
@@ -90,7 +92,7 @@ public class FragmentRegister extends BaseFragment {
 
                             @Override
                             public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
-                                showSuccessDialog();
+                                showSuccessDialog(TAG);
 //                                TODO : Xử lí khi đăng kí thành công
                             }
 
