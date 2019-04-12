@@ -21,6 +21,4 @@ public class RssNewFeedRemoteDataSource {
     public Single<BBCRssResponse> getNewsFeedFromServerBBC(String urlEndpoint) {
         return mApiServerBBC.getNewsFeedFromServerBBC(urlEndpoint);
     }
-
-
 }

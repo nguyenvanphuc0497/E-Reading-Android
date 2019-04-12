@@ -37,8 +37,5 @@ enum class TypeTransportBus(val typeValue: String) {
     DIALOG_SUCCESS("dialog_success"),
     CALL_BACK_DIALOG_SUCCESS_DISMISS("call_back_dialog_success_dismiss"),
     DIALOG_ERROR_MESSAGE("dialog_error_message"),
-    CALL_BACK_DIALOG_ERROR_MESSAGE("call_back_dialog_error_message"),
-
-    // Account
-    RELOAD_WHEN_LOGIN_SUCCESS("reload_data_when_login_success"),
+    CALL_BACK_DIALOG_ERROR_MESSAGE("call_back_dialog_error_message")
 }
