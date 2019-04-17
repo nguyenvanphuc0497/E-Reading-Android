@@ -9,8 +9,8 @@ import io.reactivex.Single;
 /**
  * Create by Vo The Doan on 4/5/2019
  */
-public class HomeFragmentViewModal {
-    EReadingRepository mReadingRepository;
+class HomeFragmentViewModal {
+    private EReadingRepository mReadingRepository;
     private LocalRepository mLocalRepository;
 
     HomeFragmentViewModal(EReadingRepository eReadingRepository, LocalRepository localRepository) {
@@ -18,7 +18,7 @@ public class HomeFragmentViewModal {
         mLocalRepository = localRepository;
     }
 
-    public Single<DataStringReponse> getDataStringReponse(String para) {
+    Single<DataStringReponse> getDataStringReponse(String para) {
         return mReadingRepository.GetDataStringReponse(para, mLocalRepository.getNameLevelUser());
     }
 }

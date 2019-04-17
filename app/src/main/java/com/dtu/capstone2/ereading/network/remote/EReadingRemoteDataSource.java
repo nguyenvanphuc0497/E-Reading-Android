@@ -7,6 +7,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
+import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
@@ -31,8 +32,8 @@ public class EReadingRemoteDataSource {
         return mApiServer.AddFavoriteServer(paraFavorite);
     }
 
-    public Single<DataStringReponse> GetDataStringReponseRemote(String paraReponse, String nameLevel) {
-        return mApiServer.GetDataStringReponse(paraReponse,nameLevel);
+    public Single<DataStringReponse> GetDataStringReponseRemote(DetectWordRequest detectWordRequest, String nameLevel) {
+        return mApiServer.GetDataStringReponse(detectWordRequest, nameLevel);
     }
 
     public Single<DataLoginRequest> GetDataLoginRequest(AccountLoginRequest accountLoginRequest) {
@@ -46,7 +47,7 @@ public class EReadingRemoteDataSource {
     public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
         return mApiServer.getListLevelEnglish().map(new Function<LevelEnglishReponse, List<LevelEnglish>>() {
             @Override
-            public List<LevelEnglish> apply(LevelEnglishReponse levelEnglishReponse) throws Exception {
+            public List<LevelEnglish> apply(LevelEnglishReponse levelEnglishReponse) {
                 return levelEnglishReponse.getLevels();
             }
         });
@@ -55,7 +56,7 @@ public class EReadingRemoteDataSource {
     public Single<LevelEnglish> setLevelEnglishForUser(int levelPosition) {
         return mApiServer.setLevelEnglishForUser(levelPosition).map(new Function<LevelUserResponse, LevelEnglish>() {
             @Override
-            public LevelEnglish apply(LevelUserResponse levelUserResponse) throws Exception {
+            public LevelEnglish apply(LevelUserResponse levelUserResponse) {
                 return levelUserResponse.getLevel();
             }
         });
