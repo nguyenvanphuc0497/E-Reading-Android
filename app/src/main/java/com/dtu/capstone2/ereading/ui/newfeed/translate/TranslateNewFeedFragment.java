@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.style.BulletSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -26,6 +25,7 @@ import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
+import com.dtu.capstone2.ereading.ui.utils.BaseClickableSpan;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.Constants;
 
@@ -126,9 +126,13 @@ public class TranslateNewFeedFragment extends BaseFragment {
         } else if (contentNewFeed.getTypeContent() == TypeContent.HEADER) {
             result.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             result.setSpan(new StyleSpan(Typeface.BOLD), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (contentNewFeed.getTypeContent() == TypeContent.ITEM) {
-            result.setSpan(new BulletSpan(20, Color.BLACK), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            result.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else if (contentNewFeed.getTypeContent() == TypeContent.TEXT) {
+            result.setSpan(new RelativeSizeSpan(1.5F), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        if (contentNewFeed.getListVocabularies() != null && !contentNewFeed.getListVocabularies().isEmpty()) {
+            for (int i = 0; i < contentNewFeed.getListVocabularies().size(); i++) {
+                result.setSpan(new BaseClickableSpan(), contentNewFeed.getListVocabularies().get(i).getStartIndex(), contentNewFeed.getListVocabularies().get(i).getEndIndex(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
         }
         return result;
     }

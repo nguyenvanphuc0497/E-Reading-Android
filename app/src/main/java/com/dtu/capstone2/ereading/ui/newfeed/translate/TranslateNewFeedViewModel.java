@@ -44,19 +44,19 @@ class TranslateNewFeedViewModel {
             @Override
             public void subscribe(ObservableEmitter<LineContentNewFeed> emitter) throws Exception {
                 Document doc = Jsoup.connect(urlNewFeed).get();
-                emitter.onNext(new LineContentNewFeed(TypeContent.TITLE, doc.title()));
+                emitter.onNext(new LineContentNewFeed(TypeContent.TITLE, doc.title(), null));
 
                 Elements contents = doc.getElementsByTag("p");
 
                 for (Element contentElem : contents) {
                     if (contentElem.hasClass(TypeContent.INTRODUCTION.getValueType())) {
-                        emitter.onNext(new LineContentNewFeed(TypeContent.INTRODUCTION, contentElem.text()));
+                        emitter.onNext(new LineContentNewFeed(TypeContent.INTRODUCTION, contentElem.text(), null));
                     } else if (contentElem.hasClass(TypeContent.HEADER.getValueType())) {
-                        emitter.onNext(new LineContentNewFeed(TypeContent.HEADER, contentElem.text()));
+                        emitter.onNext(new LineContentNewFeed(TypeContent.HEADER, contentElem.text(), null));
                     } else if (contentElem.hasClass(TypeContent.ITEM.getValueType())) {
-                        emitter.onNext(new LineContentNewFeed(TypeContent.ITEM, contentElem.text()));
+                        emitter.onNext(new LineContentNewFeed(TypeContent.ITEM, contentElem.text(), null));
                     } else if (contentElem.attributes().size() == 0) {
-                        emitter.onNext(new LineContentNewFeed(TypeContent.TEXT, contentElem.text()));
+                        emitter.onNext(new LineContentNewFeed(TypeContent.TEXT, contentElem.text(), null));
                     }
                 }
 
@@ -65,12 +65,13 @@ class TranslateNewFeedViewModel {
         }).flatMapSingle(new Function<LineContentNewFeed, Single<LineContentNewFeed>>() {
             @Override
             public Single<LineContentNewFeed> apply(final LineContentNewFeed lineContentNewFeed) throws Exception {
-                return mReadingRepository.GetDataStringReponse(lineContentNewFeed.getTextContent(), mLocalRepository.getNameLevelUser()).map(new Function<DataStringReponse, LineContentNewFeed>() {
-                    @Override
-                    public LineContentNewFeed apply(DataStringReponse dataStringReponse) throws Exception {
-                        return new LineContentNewFeed(lineContentNewFeed.getTypeContent(), dataStringReponse.getStringData());
-                    }
-                });
+                return mReadingRepository.GetDataStringReponse(lineContentNewFeed.getTextContent(), mLocalRepository.getNameLevelUser())
+                        .map(new Function<DataStringReponse, LineContentNewFeed>() {
+                            @Override
+                            public LineContentNewFeed apply(DataStringReponse dataStringReponse) throws Exception {
+                                return new LineContentNewFeed(lineContentNewFeed.getTypeContent(), dataStringReponse.getStringData(), dataStringReponse.getListVocabulary());
+                            }
+                        });
             }
         });
     }
