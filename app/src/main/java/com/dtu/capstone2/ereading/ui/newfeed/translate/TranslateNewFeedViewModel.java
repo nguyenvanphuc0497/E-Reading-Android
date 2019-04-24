@@ -30,6 +30,7 @@ class TranslateNewFeedViewModel {
     private EReadingRepository mReadingRepository;
     private LocalRepository mLocalRepository;
     private List<String> mListVocabularyRefresh = new ArrayList<>();
+    private List<String> mListVocabularyAddFavorite = new ArrayList<>();
     private SpannableStringBuilder mTextSpannableResultsContent = new SpannableStringBuilder();
     private SpannableStringBuilder mTextSpannableResultsTitle = new SpannableStringBuilder();
     private SpannableStringBuilder mTextSpannableResultsIntrudustion = new SpannableStringBuilder();
@@ -110,5 +111,18 @@ class TranslateNewFeedViewModel {
 
     public SpannableStringBuilder getmTextSpannableResultsIntrudustion() {
         return mTextSpannableResultsIntrudustion;
+    }
+
+    void addOrRemoveVocabularyToListAddFavorite(String vocabulary) {
+        vocabulary = vocabulary.toLowerCase();
+        if (mListVocabularyAddFavorite.contains(vocabulary)) {
+            mListVocabularyAddFavorite.remove(vocabulary);
+        } else {
+            mListVocabularyAddFavorite.add(vocabulary);
+        }
+    }
+
+    int getSizeListAddFavorite() {
+        return mListVocabularyAddFavorite.size();
     }
 }

@@ -24,7 +24,7 @@ import com.dtu.capstone2.ereading.ui.model.TypeContent;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.Constants;
 import com.dtu.capstone2.ereading.ui.utils.DefaultWordClickableSpan;
-import com.dtu.capstone2.ereading.ui.utils.HighLightWordClickableSpan;
+import com.dtu.capstone2.ereading.ui.utils.FavoriteWordClickableSpan;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
@@ -41,9 +41,12 @@ public class TranslateNewFeedFragment extends BaseFragment {
     private ImageView mImgBack;
     private ImageView mImgHighLight;
     private ImageView mImgRefresh;
+    private ImageView mImgAddFavoriteReview;
     private TextView mTvWordsResultTitle;
     private TextView mTvWordsResultIntroduction;
     private TextView mTvWordsResultContent;
+    private TextView mTvGuideFavorite;
+    private TextView mTvGuideRefresh;
     private TranslateNewFeedViewModel mViewModel;
     private ProgressBar mProgress;
 
@@ -71,8 +74,20 @@ public class TranslateNewFeedFragment extends BaseFragment {
                             mViewModel.addOrRemoveVocabularyToListRefresh(transport.getMessage());
                             if (mViewModel.getSizeListRefresh() > 0) {
                                 mImgRefresh.setVisibility(View.VISIBLE);
+                                mTvGuideRefresh.setVisibility(View.VISIBLE);
                             } else {
                                 mImgRefresh.setVisibility(View.GONE);
+                                mTvGuideRefresh.setVisibility(View.GONE);
+                            }
+                        }
+                        if (transport.getTypeTransport() == TypeTransportBus.SPAN_ON_CLICK && transport.getSender().equals(FavoriteWordClickableSpan.class.getSimpleName())) {
+                            mViewModel.addOrRemoveVocabularyToListAddFavorite(transport.getMessage());
+                            if (mViewModel.getSizeListAddFavorite() > 0) {
+                                mImgAddFavoriteReview.setVisibility(View.VISIBLE);
+                                mTvGuideFavorite.setVisibility(View.VISIBLE);
+                            } else {
+                                mImgAddFavoriteReview.setVisibility(View.GONE);
+                                mTvGuideFavorite.setVisibility(View.GONE);
                             }
                         }
                     }
@@ -102,6 +117,9 @@ public class TranslateNewFeedFragment extends BaseFragment {
         mProgress = view.findViewById(R.id.progressTranslateNewFeed);
         mImgHighLight = view.findViewById(R.id.imgTranslateNewFeedHighLight);
         mImgRefresh = view.findViewById(R.id.imgTranslateNewFeedRefresh);
+        mImgAddFavoriteReview = view.findViewById(R.id.imgTranslateNewFeedFavoriteReview);
+        mTvGuideFavorite = view.findViewById(R.id.tv_new_feed_translate_guide_favorite);
+        mTvGuideRefresh = view.findViewById(R.id.tv_new_feed_translate_guide_refresh);
         return view;
     }
 
@@ -172,7 +190,7 @@ public class TranslateNewFeedFragment extends BaseFragment {
         SpannableString result = new SpannableString(contentNewFeed.getTextContent() + breakLine);
         if (contentNewFeed.getListVocabularies() != null && !contentNewFeed.getListVocabularies().isEmpty()) {
             for (Vocabulary vocabulary : contentNewFeed.getListVocabularies()) {
-                result.setSpan(new HighLightWordClickableSpan(), vocabulary.getStartIndex(), vocabulary.getEndIndex(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                result.setSpan(new FavoriteWordClickableSpan(), vocabulary.getStartIndex(), vocabulary.getEndIndex(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
         if (contentNewFeed.getListVocabulariesNotTranslate() != null && !contentNewFeed.getListVocabulariesNotTranslate().isEmpty()) {
