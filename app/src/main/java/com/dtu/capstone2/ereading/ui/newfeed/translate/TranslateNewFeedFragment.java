@@ -1,16 +1,11 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +18,16 @@ import android.widget.Toast;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
+import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
-import com.dtu.capstone2.ereading.ui.utils.BaseClickableSpan;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.Constants;
+import com.dtu.capstone2.ereading.ui.utils.DefaultWordClickableSpan;
+import com.dtu.capstone2.ereading.ui.utils.HighLightWordClickableSpan;
+import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
+import com.dtu.capstone2.ereading.ui.utils.Transport;
+import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,9 +39,12 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class TranslateNewFeedFragment extends BaseFragment {
     private ImageView mImgBack;
-    private TextView mTvWordsResult;
+    private ImageView mImgHighLight;
+    private ImageView mImgRefresh;
+    private TextView mTvWordsResultTitle;
+    private TextView mTvWordsResultIntroduction;
+    private TextView mTvWordsResultContent;
     private TranslateNewFeedViewModel mViewModel;
-    private SpannableStringBuilder mTextSpannableResults = new SpannableStringBuilder();
     private ProgressBar mProgress;
 
     @Override
@@ -52,6 +55,38 @@ public class TranslateNewFeedFragment extends BaseFragment {
         if (getArguments() != null) {
             mViewModel.setUrlNewFeed(getArguments().getString(Constants.KEY_URL_NEW_FEED));
         }
+
+        RxBusTransport.INSTANCE.listen()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Transport>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Transport transport) {
+                        if (transport.getTypeTransport() == TypeTransportBus.SPAN_ON_CLICK && transport.getSender().equals(DefaultWordClickableSpan.class.getSimpleName())) {
+                            mViewModel.addOrRemoveVocabularyToListRefresh(transport.getMessage());
+                            if (mViewModel.getSizeListRefresh() > 0) {
+                                mImgRefresh.setVisibility(View.VISIBLE);
+                            } else {
+                                mImgRefresh.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Nullable
@@ -61,8 +96,12 @@ public class TranslateNewFeedFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_translate_result, container, false);
         mImgBack = view.findViewById(R.id.imgTranslateNewFeedBack);
-        mTvWordsResult = view.findViewById(R.id.tvTranslateNewFeedWordResult);
+        mTvWordsResultTitle = view.findViewById(R.id.tvTranslateNewFeedWordResultTitle);
+        mTvWordsResultIntroduction = view.findViewById(R.id.tvTranslateNewFeedWordResultIntroduction);
+        mTvWordsResultContent = view.findViewById(R.id.tvTranslateNewFeedWordResultContent);
         mProgress = view.findViewById(R.id.progressTranslateNewFeed);
+        mImgHighLight = view.findViewById(R.id.imgTranslateNewFeedHighLight);
+        mImgRefresh = view.findViewById(R.id.imgTranslateNewFeedRefresh);
         return view;
     }
 
@@ -84,8 +123,15 @@ public class TranslateNewFeedFragment extends BaseFragment {
                         if (mProgress.getVisibility() != View.VISIBLE) {
                             mProgress.setVisibility(View.VISIBLE);
                         }
-                        mTextSpannableResults.append(getStringStyleOfContent(s));
-                        mTvWordsResult.setText(mTextSpannableResults);
+                        if (s.getTypeContent() == TypeContent.TITLE) {
+                            mViewModel.getmTextSpannableResultsTitle().append(setSpannableClick(s, ""));
+                            mTvWordsResultTitle.setText(mViewModel.getmTextSpannableResultsTitle());
+                        } else if (s.getTypeContent() == TypeContent.INTRODUCTION) {
+                            mTvWordsResultIntroduction.setText(setSpannableClick(s, ""));
+                        } else if (s.getTypeContent() == TypeContent.TEXT) {
+                            mViewModel.getmTextSpannableResultsContent().append(setSpannableClick(s, "\n\n"));
+                            mTvWordsResultContent.setText(mViewModel.getmTextSpannableResultsContent());
+                        }
                     }
 
                     @Override
@@ -110,28 +156,28 @@ public class TranslateNewFeedFragment extends BaseFragment {
                 getActivity().onBackPressed();
             }
         });
+        mImgHighLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mTextSpannableResults.removeSpan(new);
+//                mTvWordsResultTitle.setText(mTextSpannableResults);
+            }
+        });
+        mTvWordsResultContent.setMovementMethod(LinkMovementMethod.getInstance());
+        mTvWordsResultIntroduction.setMovementMethod(LinkMovementMethod.getInstance());
+        mTvWordsResultTitle.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private SpannableString getStringStyleOfContent(LineContentNewFeed contentNewFeed) {
-        SpannableString result = new SpannableString(contentNewFeed.getTextContent() + "\n\n");
-        int sizeContent = contentNewFeed.getTextContent().length();
-        if (contentNewFeed.getTypeContent() == TypeContent.TITLE) {
-            result.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            result.setSpan(new StyleSpan(Typeface.BOLD), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            result.setSpan(new RelativeSizeSpan(1.8F), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (contentNewFeed.getTypeContent() == TypeContent.INTRODUCTION) {
-            result.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            result.setSpan(new StyleSpan(Typeface.BOLD), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            result.setSpan(new RelativeSizeSpan(1.3F), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (contentNewFeed.getTypeContent() == TypeContent.HEADER) {
-            result.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            result.setSpan(new StyleSpan(Typeface.BOLD), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (contentNewFeed.getTypeContent() == TypeContent.TEXT) {
-            result.setSpan(new RelativeSizeSpan(1.5F), 0, sizeContent, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
+    private SpannableString setSpannableClick(LineContentNewFeed contentNewFeed, String breakLine) {
+        SpannableString result = new SpannableString(contentNewFeed.getTextContent() + breakLine);
         if (contentNewFeed.getListVocabularies() != null && !contentNewFeed.getListVocabularies().isEmpty()) {
-            for (int i = 0; i < contentNewFeed.getListVocabularies().size(); i++) {
-                result.setSpan(new BaseClickableSpan(), contentNewFeed.getListVocabularies().get(i).getStartIndex(), contentNewFeed.getListVocabularies().get(i).getEndIndex(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            for (Vocabulary vocabulary : contentNewFeed.getListVocabularies()) {
+                result.setSpan(new HighLightWordClickableSpan(), vocabulary.getStartIndex(), vocabulary.getEndIndex(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        if (contentNewFeed.getListVocabulariesNotTranslate() != null && !contentNewFeed.getListVocabulariesNotTranslate().isEmpty()) {
+            for (Vocabulary vocabulary : contentNewFeed.getListVocabulariesNotTranslate()) {
+                result.setSpan(new DefaultWordClickableSpan(), vocabulary.getStartIndex(), vocabulary.getEndIndex(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
         return result;

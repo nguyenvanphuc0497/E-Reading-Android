@@ -5,7 +5,10 @@ import com.dtu.capstone2.ereading.network.request.Vocabulary
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
-data class LineContentNewFeed(val typeContent: TypeContent, val textContent: String, val listVocabularies: List<Vocabulary>? = null)
+data class LineContentNewFeed(val typeContent: TypeContent,
+                              val textContent: String,
+                              val listVocabularies: List<Vocabulary>? = null,
+                              val listVocabulariesNotTranslate: List<Vocabulary>? = null)
 
 enum class TypeContent(val valueType: String) {
     TITLE("title"),

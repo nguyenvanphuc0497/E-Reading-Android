@@ -9,9 +9,9 @@ import android.view.View
 /**
  * Create by Nguyen Van Phuc on 2019-04-22
  */
-class BaseClickableSpan : ClickableSpan() {
+class HighLightWordClickableSpan : ClickableSpan() {
     override fun onClick(widget: View) {
-        Log.e("BaseClickableSpan", "click")
+        Log.e("ClickableSpan", "click")
     }
 
     override fun updateDrawState(ds: TextPaint) {

@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName
  * Create by Vo The Doan on 3/22/2019
  */
 data class DataStringReponse(@SerializedName("text") val stringData: String,
-                             @SerializedName("listWords") val listVocabulary: List<Vocabulary>)
+                             @SerializedName("listWords") val listVocabulary: List<Vocabulary>,
+                             @SerializedName("list_word_not_translate") val listVocabularyNotTranslate: List<Vocabulary>)
 
 data class Vocabulary(@SerializedName("id") val idVocabulary: Int,
                       val word: String,

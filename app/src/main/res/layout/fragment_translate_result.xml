@@ -24,6 +24,25 @@
             android:layout_alignParentLeft="true"
             android:padding="10dp"
             android:src="@drawable/ic_back_default" />
+
+        <ImageView
+            android:id="@+id/imgTranslateNewFeedHighLight"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:src="@drawable/ic_high_light_open" />
+
+        <ImageView
+            android:id="@+id/imgTranslateNewFeedRefresh"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_toLeftOf="@id/imgTranslateNewFeedHighLight"
+            android:padding="15dp"
+            android:src="@drawable/ic_refesh"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
         <!--các icon title sẽ nằm ở phía sau này-->
     </RelativeLayout>
 
@@ -40,15 +59,46 @@
             android:animateLayoutChanges="true">
 
             <TextView
-                android:id="@+id/tvTranslateNewFeedWordResult"
+                android:id="@+id/tvTranslateNewFeedWordResultTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:lineSpacingExtra="3dp"
                 android:padding="2dp"
-                android:textSize="@dimen/text_size_content_default"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_new_feed_title"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Title New Feed" />
+
+            <TextView
+                android:id="@+id/tvTranslateNewFeedWordResultIntroduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="3dp"
+                android:padding="2dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_new_feed_introduction"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResultTitle"
+                tools:text="Introduction new feed" />
+
+            <TextView
+                android:id="@+id/tvTranslateNewFeedWordResultContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="3dp"
+                android:padding="2dp"
+                android:textSize="@dimen/text_size_new_feed_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResultIntroduction"
+                tools:text="Detail new feed" />
 
             <ProgressBar
                 android:id="@+id/progressTranslateNewFeed"
@@ -56,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:indeterminateDrawable="@drawable/bg_progress_bar_circle"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResult"
+                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResultContent"
                 tools:visibility="visible" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
