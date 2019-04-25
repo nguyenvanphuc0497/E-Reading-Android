@@ -1,8 +1,10 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -37,7 +39,10 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
-public class TranslateNewFeedFragment extends BaseFragment {
+public class TranslateNewFeedFragment extends BaseFragment implements View.OnClickListener, DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnClickListener {
+    private static final String TITLE_DIALOG_FAVORITE = "favorite";
+    private static final String TITLE_DIALOG_REFRESH = "refresh";
+
     private ImageView mImgBack;
     private ImageView mImgHighLight;
     private ImageView mImgRefresh;
@@ -49,6 +54,7 @@ public class TranslateNewFeedFragment extends BaseFragment {
     private TextView mTvGuideRefresh;
     private TranslateNewFeedViewModel mViewModel;
     private ProgressBar mProgress;
+    private AlertDialog.Builder mAlertDialogBuilder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,23 +78,11 @@ public class TranslateNewFeedFragment extends BaseFragment {
                     public void onNext(Transport transport) {
                         if (transport.getTypeTransport() == TypeTransportBus.SPAN_ON_CLICK && transport.getSender().equals(DefaultWordClickableSpan.class.getSimpleName())) {
                             mViewModel.addOrRemoveVocabularyToListRefresh(transport.getMessage());
-                            if (mViewModel.getSizeListRefresh() > 0) {
-                                mImgRefresh.setVisibility(View.VISIBLE);
-                                mTvGuideRefresh.setVisibility(View.VISIBLE);
-                            } else {
-                                mImgRefresh.setVisibility(View.GONE);
-                                mTvGuideRefresh.setVisibility(View.GONE);
-                            }
+                            reloadIconRefresh();
                         }
                         if (transport.getTypeTransport() == TypeTransportBus.SPAN_ON_CLICK && transport.getSender().equals(FavoriteWordClickableSpan.class.getSimpleName())) {
                             mViewModel.addOrRemoveVocabularyToListAddFavorite(transport.getMessage());
-                            if (mViewModel.getSizeListAddFavorite() > 0) {
-                                mImgAddFavoriteReview.setVisibility(View.VISIBLE);
-                                mTvGuideFavorite.setVisibility(View.VISIBLE);
-                            } else {
-                                mImgAddFavoriteReview.setVisibility(View.GONE);
-                                mTvGuideFavorite.setVisibility(View.GONE);
-                            }
+                            reloadIconFavorite();
                         }
                     }
 
@@ -102,6 +96,8 @@ public class TranslateNewFeedFragment extends BaseFragment {
 
                     }
                 });
+
+        mAlertDialogBuilder = new AlertDialog.Builder(getContext());
     }
 
     @Nullable
@@ -167,20 +163,68 @@ public class TranslateNewFeedFragment extends BaseFragment {
                 });
     }
 
-    private void initEventsView() {
-        mImgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgTranslateNewFeedBack: {
                 getActivity().onBackPressed();
+                break;
             }
-        });
-        mImgHighLight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            case R.id.imgTranslateNewFeedHighLight: {
 //                mTextSpannableResults.removeSpan(new);
 //                mTvWordsResultTitle.setText(mTextSpannableResults);
+                break;
             }
-        });
+            case R.id.imgTranslateNewFeedRefresh: {
+                mViewModel.setNameListDialogShowing(TITLE_DIALOG_REFRESH);
+                showDialog("Danh sách các từ đã chọn.", mViewModel.getArrayWordRefresh(), mViewModel.getArraySelectedRefresh());
+                break;
+            }
+            case R.id.imgTranslateNewFeedFavoriteReview: {
+                mViewModel.setNameListDialogShowing(TITLE_DIALOG_FAVORITE);
+                showDialog("Danh sách các từ yêu thích đã chọn.", mViewModel.getArrayWordAddFavorite(), mViewModel.getArraySelectedAddFavorite());
+                break;
+            }
+
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE: {
+                Log.e("xxx", "BUTTON_POSITIVE");
+                break;
+            }
+            case DialogInterface.BUTTON_NEGATIVE: {
+                break;
+            }
+            case DialogInterface.BUTTON_NEUTRAL: {
+                switch (mViewModel.getNameListDialogShowing()) {
+                    case TITLE_DIALOG_REFRESH: {
+                        deleteListRefresh();
+                        break;
+                    }
+                    case TITLE_DIALOG_FAVORITE: {
+                        deleteListFavorite();
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void initEventsView() {
+        mImgBack.setOnClickListener(this);
+        mImgHighLight.setOnClickListener(this);
+        mImgRefresh.setOnClickListener(this);
+        mImgAddFavoriteReview.setOnClickListener(this);
         mTvWordsResultContent.setMovementMethod(LinkMovementMethod.getInstance());
         mTvWordsResultIntroduction.setMovementMethod(LinkMovementMethod.getInstance());
         mTvWordsResultTitle.setMovementMethod(LinkMovementMethod.getInstance());
@@ -199,5 +243,45 @@ public class TranslateNewFeedFragment extends BaseFragment {
             }
         }
         return result;
+    }
+
+    private void showDialog(String title, String[] arrayVocabulary, boolean[] arraySelect) {
+        mAlertDialogBuilder.setTitle(title);
+        mAlertDialogBuilder.setMultiChoiceItems(arrayVocabulary, arraySelect, this);
+        mAlertDialogBuilder.setPositiveButton("Xác nhận", this);
+        mAlertDialogBuilder.setNegativeButton("Quay lại", this);
+        mAlertDialogBuilder.setNeutralButton("Xoá tất cả", this);
+        mAlertDialogBuilder.setCancelable(false);
+        mAlertDialogBuilder.show();
+    }
+
+    private void reloadIconFavorite() {
+        if (mViewModel.getSizeListAddFavorite() > 0) {
+            mImgAddFavoriteReview.setVisibility(View.VISIBLE);
+            mTvGuideFavorite.setVisibility(View.VISIBLE);
+        } else {
+            mImgAddFavoriteReview.setVisibility(View.GONE);
+            mTvGuideFavorite.setVisibility(View.GONE);
+        }
+    }
+
+    private void reloadIconRefresh() {
+        if (mViewModel.getSizeListRefresh() > 0) {
+            mImgRefresh.setVisibility(View.VISIBLE);
+            mTvGuideRefresh.setVisibility(View.VISIBLE);
+        } else {
+            mImgRefresh.setVisibility(View.GONE);
+            mTvGuideRefresh.setVisibility(View.GONE);
+        }
+    }
+
+    private void deleteListFavorite() {
+        mViewModel.resetListVocabularyAddFavorite();
+        reloadIconFavorite();
+    }
+
+    private void deleteListRefresh() {
+        mViewModel.resetListVocabularyRefresh();
+        reloadIconRefresh();
     }
 }
