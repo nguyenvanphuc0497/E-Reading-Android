@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
+import com.dtu.capstone2.ereading.ui.MainActivity;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
@@ -40,6 +42,7 @@ public class PageAccountFragment extends BaseFragment {
     AlertDialog.Builder builder;
     private LinearLayout linearLayoutLogin;
     private LinearLayout linearLayoutTrinhDoTiengAnh;
+    private LinearLayout linnearLayoutLogout;
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
@@ -74,6 +77,7 @@ public class PageAccountFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
+        linnearLayoutLogout=view.findViewById(R.id.tvLogout);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
@@ -89,6 +93,49 @@ public class PageAccountFragment extends BaseFragment {
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
             }
+        });
+        linnearLayoutLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mViewModel.getEmailFromLocal().equals("")) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                    dialog.setCancelable(false);
+                    dialog.setTitle("Thông báo!");
+                    dialog.setMessage("Bạn có muốn đăng xuất?");
+                    dialog.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            mViewModel.clearToken();
+                            mViewModel.clearEmail();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvEmailUser.setText("Ðăng Nhập");
+                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    })
+                            .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Action for "Cancel".
+                                }
+                            });
+
+                    final AlertDialog alert = dialog.create();
+                    alert.show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),
+                            "Bạn chưa đăng nhập",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
         });
         linearLayoutTrinhDoTiengAnh.setOnClickListener(new View.OnClickListener() {
             @Override

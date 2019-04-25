@@ -48,7 +48,13 @@ class PageAccountViewModel {
             return Single.just(nameLevels);
         }
     }
-
+    public void clearToken()
+    {
+        mLocalRepository.clearTokenUser();
+    }
+    public void clearEmail(){
+        mLocalRepository.clearEmailUser();
+    }
     String getEmailFromLocal() {
         return mLocalRepository.getEmailUser();
     }
