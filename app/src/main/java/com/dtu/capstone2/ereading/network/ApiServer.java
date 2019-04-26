@@ -5,6 +5,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
+import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
@@ -31,8 +32,8 @@ public interface ApiServer {
     @POST("addfavorite")
     Single<Boolean> AddFavoriteServer(@Body AddFavoriteRequest paraFavorite);
 
-    @GET("v1/detectword")
-    Single<DataStringReponse> GetDataStringReponse(@Query("words") String paraReponse, @Query("level_name") String nameLevel);
+    @POST("v1/detectword")
+    Single<DataStringReponse> GetDataStringReponse(@Body DetectWordRequest detectWordRequest, @Query("level_name") String nameLevel);
 
     @POST("signin")
     Single<DataLoginRequest> GetDataLoginRequest(@Body AccountLoginRequest accountLoginRequest);
