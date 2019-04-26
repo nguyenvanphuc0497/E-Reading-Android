@@ -4,13 +4,11 @@ import retrofit2.CallAdapter
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
-import java.io.InputStream
 import java.lang.reflect.Type
 import java.net.ConnectException
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.nio.charset.Charset
 import javax.net.ssl.HttpsURLConnection
 
 
@@ -25,6 +23,12 @@ class RxCallAdapterWrapper<R>(type: Type, retrofit: Retrofit, wrapped: CallAdapt
                     val messageError = it.string()
                     val apiException = ApiExceptionResponse(messageError)
                     apiException.statusCode = HttpsURLConnection.HTTP_BAD_REQUEST
+                    return apiException
+                }
+                HttpsURLConnection.HTTP_UNAUTHORIZED -> response.errorBody()?.let {
+                    val messageError = it.string()
+                    val apiException = ApiExceptionResponse(messageError)
+                    apiException.statusCode = HttpsURLConnection.HTTP_UNAUTHORIZED
                     return apiException
                 }
             }
@@ -45,9 +49,4 @@ class RxCallAdapterWrapper<R>(type: Type, retrofit: Retrofit, wrapped: CallAdapt
 
         return throwable
     }
-}
-
-
-fun InputStream.readTextAndClose(charset: Charset = Charsets.UTF_8): String {
-    return this.bufferedReader(charset).use { it.readText() }
 }

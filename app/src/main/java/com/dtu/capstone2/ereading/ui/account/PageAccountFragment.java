@@ -16,14 +16,19 @@ import android.widget.TextView;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
+import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
+import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
+import com.google.gson.Gson;
 
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -111,7 +116,14 @@ public class PageAccountFragment extends BaseFragment {
 
                             @Override
                             public void onError(Throwable e) {
-                                showApiErrorDialog();
+                                ApiExceptionResponse response = ((ApiExceptionResponse) e);
+                                if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                                    Gson gson = new Gson();
+                                    ErrorUnauthorizedRespone dataError = gson.fromJson(response.getMessageError(), ErrorUnauthorizedRespone.class);
+                                    showMessageErrorDialog(dataError.getDetail());
+                                } else {
+                                    showApiErrorDialog();
+                                }
                             }
                         });
             }

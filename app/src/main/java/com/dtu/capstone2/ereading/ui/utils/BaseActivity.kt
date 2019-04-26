@@ -62,7 +62,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 TypeTransportBus.DIALOG_ERROR_MESSAGE -> {
                     loadingDialog.dismiss()
-                    errorDialog.titleDialog = it.sender
+                    errorDialog.titleDialog = it.message
                     errorDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_API_ERROR.typeValue)
                 }
             }
@@ -70,5 +70,4 @@ abstract class BaseActivity : AppCompatActivity() {
             Log.w("BaseActivity", ":$it")
         }))
     }
-
 }
