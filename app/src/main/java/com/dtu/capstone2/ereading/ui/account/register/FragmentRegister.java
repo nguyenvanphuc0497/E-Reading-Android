@@ -19,6 +19,8 @@ import com.dtu.capstone2.ereading.ui.model.AccountRegisterErrorResponse;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.google.gson.Gson;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -100,7 +102,7 @@ public class FragmentRegister extends BaseFragment {
                             public void onError(Throwable e) {
                                 dismissLoadingDialog();
                                 ApiExceptionResponse response = ((ApiExceptionResponse) e);
-                                if (response.getStatusCode() != null && response.getStatusCode() == 400) {
+                                if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
                                     Gson gson = new Gson();
                                     AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
 

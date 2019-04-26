@@ -23,6 +23,8 @@ import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -108,7 +110,7 @@ public class LoginFragment extends BaseFragment {
                             public void accept(Throwable throwable) throws Exception {
                                 dismissLoadingDialog();
                                 ApiExceptionResponse response = ((ApiExceptionResponse) throwable);
-                                if (response.getStatusCode() != null && response.getStatusCode() == 400) {
+                                if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
                                     layoutPassword.setError("Tài khoản và mật khẩu nhập vào không chính xác");
                                 } else {
                                     showApiErrorDialog();
