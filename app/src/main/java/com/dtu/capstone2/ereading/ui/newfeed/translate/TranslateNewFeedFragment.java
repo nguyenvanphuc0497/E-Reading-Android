@@ -55,6 +55,8 @@ public class TranslateNewFeedFragment extends BaseFragment implements View.OnCli
     private TranslateNewFeedViewModel mViewModel;
     private ProgressBar mProgress;
     private AlertDialog.Builder mAlertDialogBuilder;
+    private TextView tvFavoriteCount;
+    private TextView tvRefreshCount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,6 +118,8 @@ public class TranslateNewFeedFragment extends BaseFragment implements View.OnCli
         mImgAddFavoriteReview = view.findViewById(R.id.imgTranslateNewFeedFavoriteReview);
         mTvGuideFavorite = view.findViewById(R.id.tv_new_feed_translate_guide_favorite);
         mTvGuideRefresh = view.findViewById(R.id.tv_new_feed_translate_guide_refresh);
+        tvFavoriteCount = view.findViewById(R.id.tvTranslateNewFeedFavoriteReviewCount);
+        tvRefreshCount = view.findViewById(R.id.tvTranslateNewFeedRefreshCount);
         return view;
     }
 
@@ -259,9 +263,16 @@ public class TranslateNewFeedFragment extends BaseFragment implements View.OnCli
         if (mViewModel.getSizeListAddFavorite() > 0) {
             mImgAddFavoriteReview.setVisibility(View.VISIBLE);
             mTvGuideFavorite.setVisibility(View.VISIBLE);
+            tvFavoriteCount.setVisibility(View.VISIBLE);
+            String count = String.valueOf(mViewModel.getSizeListAddFavorite());
+            if (mViewModel.getSizeListAddFavorite() > 99) {
+                count = "99+";
+            }
+            tvFavoriteCount.setText(count);
         } else {
             mImgAddFavoriteReview.setVisibility(View.GONE);
             mTvGuideFavorite.setVisibility(View.GONE);
+            tvFavoriteCount.setVisibility(View.GONE);
         }
     }
 
@@ -269,9 +280,16 @@ public class TranslateNewFeedFragment extends BaseFragment implements View.OnCli
         if (mViewModel.getSizeListRefresh() > 0) {
             mImgRefresh.setVisibility(View.VISIBLE);
             mTvGuideRefresh.setVisibility(View.VISIBLE);
+            tvRefreshCount.setVisibility(View.VISIBLE);
+            String count = String.valueOf(mViewModel.getSizeListRefresh());
+            if (mViewModel.getSizeListRefresh() > 99) {
+                count = "99+";
+            }
+            tvRefreshCount.setText(count);
         } else {
             mImgRefresh.setVisibility(View.GONE);
             mTvGuideRefresh.setVisibility(View.GONE);
+            tvRefreshCount.setVisibility(View.GONE);
         }
     }
 
