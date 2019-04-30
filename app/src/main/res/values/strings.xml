@@ -15,5 +15,6 @@
 
     <!--Pager Account-->
     <string name="page_account_header_title">Tài khoản</string>
+    <string name="page_account_login_info_default">Đăng nhập</string>
 
 </resources>
