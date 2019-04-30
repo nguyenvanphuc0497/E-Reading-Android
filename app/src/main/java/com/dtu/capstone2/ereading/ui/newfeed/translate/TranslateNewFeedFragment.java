@@ -23,6 +23,7 @@ import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed;
 import com.dtu.capstone2.ereading.ui.model.TypeContent;
+import com.dtu.capstone2.ereading.ui.model.VocabularyLocation;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.Constants;
 import com.dtu.capstone2.ereading.ui.utils.DefaultWordClickableSpan;
@@ -79,11 +80,11 @@ public class TranslateNewFeedFragment extends BaseFragment implements View.OnCli
                     @Override
                     public void onNext(Transport transport) {
                         if (transport.getTypeTransport() == TypeTransportBus.SPAN_ON_CLICK && transport.getSender().equals(DefaultWordClickableSpan.class.getSimpleName())) {
-                            mViewModel.addOrRemoveVocabularyToListRefresh(transport.getMessage());
+                            mViewModel.addOrRemoveVocabularyToListRefresh((VocabularyLocation) transport.getMessage());
                             reloadIconRefresh();
                         }
                         if (transport.getTypeTransport() == TypeTransportBus.SPAN_ON_CLICK && transport.getSender().equals(FavoriteWordClickableSpan.class.getSimpleName())) {
-                            mViewModel.addOrRemoveVocabularyToListAddFavorite(transport.getMessage());
+                            mViewModel.addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary((VocabularyLocation) transport.getMessage());
                             reloadIconFavorite();
                         }
                     }
