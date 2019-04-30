@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Đăng Nhập"
+            android:text="@string/page_account_login_info_default"
             android:textSize="40dp" />
     </LinearLayout>
 
@@ -261,6 +261,7 @@
             android:layout_marginBottom="5dp"
             android:src="@drawable/ic_navigate_next_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/tvLogout"
         android:layout_width="match_parent"

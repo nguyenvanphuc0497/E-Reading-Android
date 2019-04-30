@@ -25,36 +25,34 @@ class PageAccountViewModel {
     }
 
     Single<List<String>> getListLevelFromServer() {
-        if (nameLevels.isEmpty()) {
-            return mEReadingRepository.getLevelEnglishFromServer().doOnSuccess(new Consumer<List<LevelEnglish>>() {
-                @Override
-                public void accept(List<LevelEnglish> levelEnglishes) throws Exception {
-                    nameLevels.clear();
-                    for (LevelEnglish e : levelEnglishes) {
-                        nameLevels.add(e.getName());
-                    }
+        return mEReadingRepository.getLevelEnglishFromServer().doOnSuccess(new Consumer<List<LevelEnglish>>() {
+            @Override
+            public void accept(List<LevelEnglish> levelEnglishes) throws Exception {
+                nameLevels.clear();
+                for (LevelEnglish e : levelEnglishes) {
+                    nameLevels.add(e.getName());
                 }
-            }).map(new Function<List<LevelEnglish>, List<String>>() {
-                @Override
-                public List<String> apply(List<LevelEnglish> levelEnglishes) throws Exception {
-                    List<String> lists = new ArrayList<>();
-                    for (LevelEnglish e : levelEnglishes) {
-                        lists.add(e.getName());
-                    }
-                    return lists;
+            }
+        }).map(new Function<List<LevelEnglish>, List<String>>() {
+            @Override
+            public List<String> apply(List<LevelEnglish> levelEnglishes) throws Exception {
+                List<String> lists = new ArrayList<>();
+                for (LevelEnglish e : levelEnglishes) {
+                    lists.add(e.getName());
                 }
-            });
-        } else {
-            return Single.just(nameLevels);
-        }
+                return lists;
+            }
+        });
     }
-    public void clearToken()
-    {
+
+    public void clearToken() {
         mLocalRepository.clearTokenUser();
     }
-    public void clearEmail(){
+
+    public void clearEmail() {
         mLocalRepository.clearEmailUser();
     }
+
     String getEmailFromLocal() {
         return mLocalRepository.getEmailUser();
     }
@@ -66,5 +64,9 @@ class PageAccountViewModel {
                 mLocalRepository.saveNameLevelUser(levelEnglish.getName());
             }
         });
+    }
+
+    String getTokenFromLocal() {
+        return mLocalRepository.getTokenUser();
     }
 }

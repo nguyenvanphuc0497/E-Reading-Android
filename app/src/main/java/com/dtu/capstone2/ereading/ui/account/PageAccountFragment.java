@@ -18,7 +18,6 @@ import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
-import com.dtu.capstone2.ereading.ui.MainActivity;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
@@ -82,7 +81,7 @@ public class PageAccountFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
-        linnearLayoutLogout=view.findViewById(R.id.tvLogout);
+        linnearLayoutLogout = view.findViewById(R.id.tvLogout);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
@@ -112,15 +111,7 @@ public class PageAccountFragment extends BaseFragment {
                         public void onClick(DialogInterface dialog, int id) {
                             mViewModel.clearToken();
                             mViewModel.clearEmail();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvEmailUser.setText("Ðăng Nhập");
-                                    Intent intent = new Intent(getContext(), MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                }
-                            });
+                            loadDataUserToView();
                         }
                     })
                             .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -132,9 +123,7 @@ public class PageAccountFragment extends BaseFragment {
 
                     final AlertDialog alert = dialog.create();
                     alert.show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getContext(),
                             "Bạn chưa đăng nhập",
                             Toast.LENGTH_SHORT).show();
@@ -204,9 +193,12 @@ public class PageAccountFragment extends BaseFragment {
     }
 
     private void loadDataUserToView() {
-        if (!mViewModel.getEmailFromLocal().equals("")) {
+        if (!mViewModel.getEmailFromLocal().equals("") && !mViewModel.getTokenFromLocal().equals("")) {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);
+        } else {
+            tvEmailUser.setText(getString(R.string.page_account_login_info_default));
+            linearLayoutLogin.setEnabled(true);
         }
     }
 
