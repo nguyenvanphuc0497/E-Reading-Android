@@ -42,7 +42,7 @@ public class FavoriteFragment extends BaseFragment {
                     @Override
                     public void accept(DataFavoriteReponse dataFavoriteReponse) throws Exception {
                         listFavorite =dataFavoriteReponse.getListData();
-                        ArrayAdapter<String> adap = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listFavorite);
+                        ArrayAdapter adap = new ArrayAdapter (getContext(), android.R.layout.simple_list_item_1, listFavorite);
                         lvFavorite.setAdapter(adap);
                     }
                 });
