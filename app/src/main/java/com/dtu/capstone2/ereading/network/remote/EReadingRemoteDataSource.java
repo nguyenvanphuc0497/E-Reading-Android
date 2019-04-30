@@ -62,8 +62,8 @@ public class EReadingRemoteDataSource {
             }
         });
     }
-    public Single<DataFavoriteReponse> getDataFavorite(int iduser)
+    public Single<DataFavoriteReponse> getDataFavorite()
     {
-        return  mApiServer.getDataFavorite(iduser);
+        return  mApiServer.getDataFavorite();
     }
 }

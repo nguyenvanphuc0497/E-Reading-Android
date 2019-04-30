@@ -54,6 +54,6 @@ public interface ApiServer {
     @POST("v1/portal/level")
     Single<LevelUserResponse> setLevelEnglishForUser(@Query("level_position") int levelPosition);
 
-    @GET("url")
-    Single<DataFavoriteReponse> getDataFavorite (@Query("id_user") int id_user);
+    @GET("api/v1/portal/favorite")
+    Single<DataFavoriteReponse> getDataFavorite();
 }

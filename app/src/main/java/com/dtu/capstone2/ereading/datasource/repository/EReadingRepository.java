@@ -51,8 +51,8 @@ public class EReadingRepository {
     public Single<LevelEnglish> setLevelEnglishForUserToServer(int levelPosition) {
         return eReadingRemoteDataSource.setLevelEnglishForUser(levelPosition);
     }
-    public  Single<DataFavoriteReponse> getDataFavorite(int iduser)
+    public  Single<DataFavoriteReponse> getDataFavorite()
     {
-        return  eReadingRemoteDataSource.getDataFavorite(iduser);
+        return  eReadingRemoteDataSource.getDataFavorite();
     }
 }

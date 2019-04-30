@@ -35,7 +35,7 @@ public class FavoriteFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         lvFavorite = view.findViewById(R.id.lvFavorite);
-        favoriteViewModal.getDataFavorite(iduser)
+        favoriteViewModal.getDataFavorite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<DataFavoriteReponse>() {

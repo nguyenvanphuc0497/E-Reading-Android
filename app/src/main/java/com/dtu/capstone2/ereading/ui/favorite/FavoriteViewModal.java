@@ -11,8 +11,8 @@ import io.reactivex.Single;
 public class FavoriteViewModal {
     EReadingRemoteDataSource eReadingRemoteDataSource = new EReadingRemoteDataSource();
 
-    public Single<DataFavoriteReponse> getDataFavorite(int iduser)
+    public Single<DataFavoriteReponse> getDataFavorite()
     {
-        return eReadingRemoteDataSource.getDataFavorite(iduser);
+        return eReadingRemoteDataSource.getDataFavorite();
     }
 }
