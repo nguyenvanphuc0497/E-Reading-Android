@@ -81,7 +81,7 @@ public class PageAccountFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
-        linnearLayoutLogout = view.findViewById(R.id.tvLogout);
+        linnearLayoutLogout = view.findViewById(R.id.layoutLogout);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
@@ -196,9 +196,11 @@ public class PageAccountFragment extends BaseFragment {
         if (!mViewModel.getEmailFromLocal().equals("") && !mViewModel.getTokenFromLocal().equals("")) {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);
+            linnearLayoutLogout.setVisibility(View.VISIBLE);
         } else {
             tvEmailUser.setText(getString(R.string.page_account_login_info_default));
             linearLayoutLogin.setEnabled(true);
+            linnearLayoutLogout.setVisibility(View.GONE);
         }
     }
 
