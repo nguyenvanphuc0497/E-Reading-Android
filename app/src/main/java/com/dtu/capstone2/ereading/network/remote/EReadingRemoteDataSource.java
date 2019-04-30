@@ -5,6 +5,7 @@ import com.dtu.capstone2.ereading.network.ApiServer;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
@@ -60,5 +61,9 @@ public class EReadingRemoteDataSource {
                 return levelUserResponse.getLevel();
             }
         });
+    }
+    public Single<DataFavoriteReponse> getDataFavorite(int iduser)
+    {
+        return  mApiServer.getDataFavorite(iduser);
     }
 }
