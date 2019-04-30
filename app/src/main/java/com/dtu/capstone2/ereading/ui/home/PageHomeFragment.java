@@ -13,7 +13,7 @@ import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
-import com.dtu.capstone2.ereading.network.request.ListVocabulary;
+import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PageHomeFragment extends BaseFragment {
     HomeFragmentViewModal mViewModel;
-    private List<ListVocabulary> listWord;
+    private List<Vocabulary> listWord;
     private String strInputText;
     private String strReponseText;
     private EditText edtInputText;
@@ -63,7 +63,7 @@ public class PageHomeFragment extends BaseFragment {
                                 dismissLoadingDialog();
                                 strReponseText = dataStringReponse.getStringData();
                                 edtReponserText.setText(strReponseText);
-                                listWord = dataStringReponse.getListWord();
+                                listWord = dataStringReponse.getListVocabulary();
                             }
                         }, new Consumer<Throwable>() {
                             @Override

@@ -6,6 +6,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
+import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -21,9 +22,6 @@ public class EReadingRepository {
 
     /**
      * Day la method dung de request api HomeActivity
-     *
-     * @param account
-     * @return
      */
     public Single<Token> login(AccountLoginRequest account) {
         return eReadingRemoteDataSource.login(account);
@@ -34,7 +32,7 @@ public class EReadingRepository {
     }
 
     public Single<DataStringReponse> GetDataStringReponse(String paraReponse, String nameLevel) {
-        return eReadingRemoteDataSource.GetDataStringReponseRemote(paraReponse, nameLevel);
+        return eReadingRemoteDataSource.GetDataStringReponseRemote(new DetectWordRequest(paraReponse), nameLevel);
     }
 
     public Single<DataLoginRequest> GetDataLoginRequest(AccountLoginRequest accountLoginRequest) {

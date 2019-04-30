@@ -28,7 +28,7 @@ object RxBusTransport {
     }
 }
 
-data class Transport(val typeTransport: TypeTransportBus, val sender: String = "")
+data class Transport(val typeTransport: TypeTransportBus, val sender: String = "", val message: String = "")
 
 enum class TypeTransportBus(val typeValue: String) {
     DIALOG_LOADING("dialog_loading"),
@@ -37,5 +37,6 @@ enum class TypeTransportBus(val typeValue: String) {
     DIALOG_SUCCESS("dialog_success"),
     CALL_BACK_DIALOG_SUCCESS_DISMISS("call_back_dialog_success_dismiss"),
     DIALOG_ERROR_MESSAGE("dialog_error_message"),
-    CALL_BACK_DIALOG_ERROR_MESSAGE("call_back_dialog_error_message")
+    CALL_BACK_DIALOG_ERROR_MESSAGE("call_back_dialog_error_message"),
+    SPAN_ON_CLICK("span_on_click"),
 }
