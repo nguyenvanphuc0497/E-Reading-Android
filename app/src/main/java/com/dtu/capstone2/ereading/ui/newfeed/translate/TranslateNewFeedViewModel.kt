@@ -28,6 +28,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
     private var mNameListDialogShowing: String = ""
     private val mListVocabularyTranslateResponse = mutableListOf<Vocabulary>()
     private val mListVocabularyNotTranslateResponse = mutableListOf<Vocabulary>()
+    internal val dataRecyclerView = mutableListOf<LineContentNewFeed>()
 
     // TRường hợp với báo BBC text ok
     fun getDataFromHTMLAndOnNextDetectWord(): Observable<LineContentNewFeed> = Observable.create(ObservableOnSubscribe<LineContentNewFeed> { emitter ->
@@ -54,6 +55,10 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
                 .doOnSuccess {
                     mListVocabularyTranslateResponse.addAll(it.listVocabulary)
                     mListVocabularyNotTranslateResponse.addAll(it.listVocabularyNotTranslate)
+                    dataRecyclerView.add(LineContentNewFeed(typeContent,
+                            it.stringData,
+                            it.listVocabulary,
+                            it.listVocabularyNotTranslate))
                 }
                 .map { (stringData, listVocabulary, listVocabularyNotTranslate) ->
                     LineContentNewFeed(typeContent,
@@ -161,5 +166,5 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
     }
 
 //    fun setListVocabularyFavoriteToServer() = mReadingRepository.setListVocabularyFavorite()
-
+fun getPositionItemInsertedOfRV() = dataRecyclerView.size
 }
