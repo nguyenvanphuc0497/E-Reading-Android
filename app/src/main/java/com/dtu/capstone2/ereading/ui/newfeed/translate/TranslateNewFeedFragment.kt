@@ -4,25 +4,16 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
-import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed
 import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
 import com.dtu.capstone2.ereading.ui.utils.*
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_translate_result.*
 
 /**
@@ -34,74 +25,35 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         const val TITLE_DIALOG_REFRESH = "refresh"
     }
 
-    private var mImgBack: ImageView? = null
-    private var mImgHighLight: ImageView? = null
-    private var mImgRefresh: ImageView? = null
-    private var mImgAddFavoriteReview: ImageView? = null
-    private var mTvGuideFavorite: TextView? = null
-    private var mTvGuideRefresh: TextView? = null
+    private lateinit var mAlertDialogBuilder: AlertDialog.Builder
     private lateinit var viewModel: TranslateNewFeedViewModel
-    private var mProgress: ProgressBar? = null
-    private var mAlertDialogBuilder: AlertDialog.Builder? = null
-    private var tvFavoriteCount: TextView? = null
-    private var tvRefreshCount: TextView? = null
-    private var recyclerViewContent: RecyclerView? = null
     private lateinit var adapter: TranslateNewFeedAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = TranslateNewFeedViewModel(EReadingRepository(), LocalRepository(context))
-        if (arguments != null) {
-            viewModel!!.urlNewFeed = arguments!!.getString(Constants.KEY_URL_NEW_FEED)
-        }
-
-        RxBusTransport.listen()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(object : Observer<Transport> {
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
-
-                    override fun onNext(transport: Transport) {
-                        if (transport.typeTransport === TypeTransportBus.SPAN_ON_CLICK && transport.sender == DefaultWordClickableSpan::class.java.simpleName) {
-                            viewModel!!.addOrRemoveVocabularyToListRefresh((transport.message as VocabularyLocation?)!!)
-                            reloadIconRefresh()
-                        }
-                        if (transport.typeTransport === TypeTransportBus.SPAN_ON_CLICK && transport.sender == FavoriteWordClickableSpan::class.java.simpleName) {
-                            viewModel!!.addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary((transport.message as VocabularyLocation?)!!)
-                            reloadIconFavorite()
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-
-                    }
-
-                    override fun onComplete() {
-
-                    }
-                })
-
+        viewModel.urlNewFeed = arguments?.getString(Constants.KEY_URL_NEW_FEED)
         mAlertDialogBuilder = AlertDialog.Builder(context!!)
+
+        managerSubscribe.add(RxBusTransport.listen()
+                .observeOnUiThread()
+                .subscribe({
+                    if (it.typeTransport == TypeTransportBus.SPAN_ON_CLICK && it.sender == DefaultWordClickableSpan::class.java.simpleName) {
+                        viewModel.addOrRemoveVocabularyToListRefresh(it.message as VocabularyLocation)
+                        reloadIconRefresh()
+                    }
+                    if (it.typeTransport == TypeTransportBus.SPAN_ON_CLICK && it.sender == FavoriteWordClickableSpan::class.java.simpleName) {
+                        viewModel.addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary(it.message as VocabularyLocation)
+                        reloadIconFavorite()
+                    }
+                }, {}, {}))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_translate_result, container, false)
-        mImgBack = view.findViewById(R.id.imgTranslateNewFeedBack)
-        mProgress = view.findViewById(R.id.progressTranslateNewFeed)
-        mImgHighLight = view.findViewById(R.id.imgTranslateNewFeedHighLight)
-        mImgRefresh = view.findViewById(R.id.imgTranslateNewFeedRefresh)
-        mImgAddFavoriteReview = view.findViewById(R.id.imgTranslateNewFeedFavoriteReview)
-        mTvGuideFavorite = view.findViewById(R.id.tv_new_feed_translate_guide_favorite)
-        mTvGuideRefresh = view.findViewById(R.id.tv_new_feed_translate_guide_refresh)
-        tvFavoriteCount = view.findViewById(R.id.tvTranslateNewFeedFavoriteReviewCount)
-        tvRefreshCount = view.findViewById(R.id.tvTranslateNewFeedRefreshCount)
-        recyclerViewContent = view.findViewById(R.id.recyclerViewTranslateNewFeed)
-        return view
+        return inflater.inflate(R.layout.fragment_translate_result, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,15 +61,10 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
 
         initView()
         initEventsView()
-        viewModel!!.getDataFromHTMLAndOnNextDetectWord().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<LineContentNewFeed> {
-                    override fun onSubscribe(d: Disposable) {
-                        managerSubscribe.add(d)
-                    }
-
-                    override fun onNext(s: LineContentNewFeed) {
-//                        if (mProgress!!.visibility != View.VISIBLE) {
+        managerSubscribe.add(viewModel.getDataFromHTMLAndOnNextDetectWord()
+                .observeOnUiThread()
+                .subscribe({
+                    //                        if (mProgress!!.visibility != View.VISIBLE) {
 //                            mProgress!!.visibility = View.VISIBLE
 //                        }
 //                        if (s.typeContent === TypeContent.TITLE) {
@@ -129,37 +76,36 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
 //                            viewModel!!.getmTextSpannableResultsContent().append(setSpannableClick(s, "\n\n"))
 //                            mTvWordsResultContent!!.text = viewModel!!.getmTextSpannableResultsContent()
 //                        }
-                        adapter.notifyItemInserted(viewModel.getPositionItemInsertedOfRV())
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.w("Translate", e.toString())
+                    adapter.notifyItemInserted(viewModel.getPositionItemInsertedOfRV())
+                }, {
+                    Log.w("Translate", it.toString())
 //                        mProgress!!.visibility = View.GONE
-                        Toast.makeText(context, "Quá trình dịch gián đoạn! Kiểm tra kết nối Internet.", Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onComplete() {
-//                        mProgress!!.visibility = View.GONE
-                        Toast.makeText(context, "Dịch hoàn tất.", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                    Toast.makeText(context, "Quá trình dịch gián đoạn! Kiểm tra kết nối Internet.", Toast.LENGTH_LONG).show()
+                }, {
+                    //                        mProgress!!.visibility = View.GONE
+                    Toast.makeText(context, "Dịch hoàn tất.", Toast.LENGTH_SHORT).show()
+                }))
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.imgTranslateNewFeedBack -> {
-                activity!!.onBackPressed()
+                activity?.onBackPressed()
             }
             R.id.imgTranslateNewFeedHighLight -> {
             }//                mTextSpannableResults.removeSpan(new);
             //                mTvWordsResultTitle.setText(mTextSpannableResults);
             R.id.imgTranslateNewFeedRefresh -> {
-                viewModel!!.setNameListDialogShowing(TITLE_DIALOG_REFRESH)
-                showDialog("Danh sách các từ đã chọn.", viewModel!!.getArrayWordRefresh(), viewModel!!.getArraySelectedRefresh())
+                with(viewModel) {
+                    this.setNameListDialogShowing(TITLE_DIALOG_REFRESH)
+                    showDialog("Danh sách các từ đã chọn.", this.getArrayWordRefresh(), this.getArraySelectedRefresh())
+                }
             }
             R.id.imgTranslateNewFeedFavoriteReview -> {
-                viewModel!!.setNameListDialogShowing(TITLE_DIALOG_FAVORITE)
-                showDialog("Danh sách các từ yêu thích đã chọn.", viewModel!!.getArrayWordAddFavorite(), viewModel!!.getArraySelectedAddFavorite())
+                with(viewModel) {
+                    this.setNameListDialogShowing(TITLE_DIALOG_FAVORITE)
+                    showDialog("Danh sách các từ yêu thích đã chọn.", this.getArrayWordAddFavorite(), this.getArraySelectedAddFavorite())
+                }
             }
         }
     }
@@ -176,7 +122,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             DialogInterface.BUTTON_NEGATIVE -> {
             }
             DialogInterface.BUTTON_NEUTRAL -> {
-                when (viewModel!!.getNameListDialogShowing()) {
+                when (viewModel.getNameListDialogShowing()) {
                     TITLE_DIALOG_REFRESH -> {
                         deleteListRefresh()
                     }
@@ -195,63 +141,63 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
     }
 
     private fun initEventsView() {
-        mImgBack!!.setOnClickListener(this)
-        mImgHighLight!!.setOnClickListener(this)
-        mImgRefresh!!.setOnClickListener(this)
-        mImgAddFavoriteReview!!.setOnClickListener(this)
+        imgTranslateNewFeedBack?.setOnClickListener(this)
+        imgTranslateNewFeedHighLight?.setOnClickListener(this)
+        imgTranslateNewFeedRefresh?.setOnClickListener(this)
+        imgTranslateNewFeedFavoriteReview?.setOnClickListener(this)
     }
 
     private fun showDialog(title: String, arrayVocabulary: Array<String>, arraySelect: BooleanArray) {
-        mAlertDialogBuilder!!.setTitle(title)
-        mAlertDialogBuilder!!.setMultiChoiceItems(arrayVocabulary, arraySelect, this)
-        mAlertDialogBuilder!!.setPositiveButton("Xác nhận", this)
-        mAlertDialogBuilder!!.setNegativeButton("Quay lại", this)
-        mAlertDialogBuilder!!.setNeutralButton("Xoá tất cả", this)
-        mAlertDialogBuilder!!.setCancelable(false)
-        mAlertDialogBuilder!!.show()
+        mAlertDialogBuilder.setTitle(title)
+        mAlertDialogBuilder.setMultiChoiceItems(arrayVocabulary, arraySelect, this)
+        mAlertDialogBuilder.setPositiveButton("Xác nhận", this)
+        mAlertDialogBuilder.setNegativeButton("Quay lại", this)
+        mAlertDialogBuilder.setNeutralButton("Xoá tất cả", this)
+        mAlertDialogBuilder.setCancelable(false)
+        mAlertDialogBuilder.show()
     }
 
     private fun reloadIconFavorite() {
-        if (viewModel!!.getSizeListAddFavorite() > 0) {
-            mImgAddFavoriteReview!!.visibility = View.VISIBLE
-            mTvGuideFavorite!!.visibility = View.VISIBLE
-            tvFavoriteCount!!.visibility = View.VISIBLE
-            var count = viewModel!!.getSizeListAddFavorite().toString()
-            if (viewModel!!.getSizeListAddFavorite() > 99) {
+        if (viewModel.getSizeListAddFavorite() > 0) {
+            imgTranslateNewFeedFavoriteReview?.visibility = View.VISIBLE
+            tv_new_feed_translate_guide_favorite?.visibility = View.VISIBLE
+            tvTranslateNewFeedFavoriteReviewCount?.visibility = View.VISIBLE
+            var count = viewModel.getSizeListAddFavorite().toString()
+            if (viewModel.getSizeListAddFavorite() > 99) {
                 count = "99+"
             }
-            tvFavoriteCount!!.text = count
+            tvTranslateNewFeedFavoriteReviewCount?.text = count
         } else {
-            mImgAddFavoriteReview!!.visibility = View.GONE
-            mTvGuideFavorite!!.visibility = View.GONE
-            tvFavoriteCount!!.visibility = View.GONE
+            imgTranslateNewFeedFavoriteReview.visibility = View.GONE
+            tv_new_feed_translate_guide_refresh.visibility = View.GONE
+            tvTranslateNewFeedFavoriteReviewCount.visibility = View.GONE
         }
     }
 
     private fun reloadIconRefresh() {
-        if (viewModel!!.getSizeListRefresh() > 0) {
-            mImgRefresh!!.visibility = View.VISIBLE
-            mTvGuideRefresh!!.visibility = View.VISIBLE
-            tvRefreshCount!!.visibility = View.VISIBLE
-            var count = viewModel!!.getSizeListRefresh().toString()
-            if (viewModel!!.getSizeListRefresh() > 99) {
+        if (viewModel.getSizeListRefresh() > 0) {
+            imgTranslateNewFeedRefresh?.visibility = View.VISIBLE
+            tv_new_feed_translate_guide_refresh?.visibility = View.VISIBLE
+            tvTranslateNewFeedRefreshCount.visibility = View.VISIBLE
+            var count = viewModel.getSizeListRefresh().toString()
+            if (viewModel.getSizeListRefresh() > 99) {
                 count = "99+"
             }
-            tvRefreshCount!!.text = count
+            tvTranslateNewFeedRefreshCount?.text = count
         } else {
-            mImgRefresh!!.visibility = View.GONE
-            mTvGuideRefresh!!.visibility = View.GONE
-            tvRefreshCount!!.visibility = View.GONE
+            imgTranslateNewFeedRefresh?.visibility = View.GONE
+            tv_new_feed_translate_guide_refresh?.visibility = View.GONE
+            tvTranslateNewFeedRefreshCount?.visibility = View.GONE
         }
     }
 
     private fun deleteListFavorite() {
-        viewModel!!.resetListVocabularyAddFavorite()
+        viewModel.resetListVocabularyAddFavorite()
         reloadIconFavorite()
     }
 
     private fun deleteListRefresh() {
-        viewModel!!.resetListVocabularyRefresh()
+        viewModel.resetListVocabularyRefresh()
         reloadIconRefresh()
     }
 }

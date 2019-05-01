@@ -1,8 +1,8 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate
 
-import android.text.SpannableStringBuilder
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
+import com.dtu.capstone2.ereading.network.request.DataStringReponse
 import com.dtu.capstone2.ereading.network.request.Vocabulary
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed
 import com.dtu.capstone2.ereading.ui.model.TypeContent
@@ -22,29 +22,23 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
     var urlNewFeed: String? = null
     private val mListVocabularyRefresh = mutableListOf<VocabularySelected>()
     private val mListVocabularyAddFavorite = mutableListOf<VocabularySelected>()
-    private val mTextSpannableResultsContent = SpannableStringBuilder()
-    private val mTextSpannableResultsTitle = SpannableStringBuilder()
-    private val mTextSpannableResultsIntrodustion = SpannableStringBuilder()
     private var mNameListDialogShowing: String = ""
     private val mListVocabularyTranslateResponse = mutableListOf<Vocabulary>()
     private val mListVocabularyNotTranslateResponse = mutableListOf<Vocabulary>()
     internal val dataRecyclerView = mutableListOf<LineContentNewFeed>()
 
     // TRường hợp với báo BBC text ok
-    fun getDataFromHTMLAndOnNextDetectWord(): Observable<LineContentNewFeed> = Observable.create(ObservableOnSubscribe<LineContentNewFeed> { emitter ->
+    fun getDataFromHTMLAndOnNextDetectWord(): Observable<DataStringReponse> = Observable.create(ObservableOnSubscribe<LineContentNewFeed> { emitter ->
         with(Jsoup.connect(urlNewFeed).get()) {
             emitter.onNext(LineContentNewFeed(TypeContent.TITLE, this.title()))
 
             with(this.getElementsByTag("p")) contentElem@{
                 this@contentElem.forEach { element ->
-                    if (element.hasClass(TypeContent.INTRODUCTION.valueType)) {
-                        emitter.onNext(LineContentNewFeed(TypeContent.INTRODUCTION, element.text()))
-                    } else if (element.hasClass(TypeContent.HEADER.valueType)) {
-                        emitter.onNext(LineContentNewFeed(TypeContent.HEADER, element.text()))
-                    } else if (element.hasClass(TypeContent.ITEM.valueType)) {
-                        emitter.onNext(LineContentNewFeed(TypeContent.ITEM, element.text()))
-                    } else if (element.attributes().size() == 0) {
-                        emitter.onNext(LineContentNewFeed(TypeContent.TEXT, element.text()))
+                    when {
+                        element.hasClass(TypeContent.INTRODUCTION.valueType) -> emitter.onNext(LineContentNewFeed(TypeContent.INTRODUCTION, element.text()))
+                        element.hasClass(TypeContent.HEADER.valueType) -> emitter.onNext(LineContentNewFeed(TypeContent.HEADER, element.text()))
+                        element.hasClass(TypeContent.ITEM.valueType) -> emitter.onNext(LineContentNewFeed(TypeContent.ITEM, element.text()))
+                        element.attributes().size() == 0 -> emitter.onNext(LineContentNewFeed(TypeContent.TEXT, element.text()))
                     }
                 }
             }
@@ -59,12 +53,6 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
                             it.stringData,
                             it.listVocabulary,
                             it.listVocabularyNotTranslate))
-                }
-                .map { (stringData, listVocabulary, listVocabularyNotTranslate) ->
-                    LineContentNewFeed(typeContent,
-                            stringData,
-                            listVocabulary,
-                            listVocabularyNotTranslate)
                 }
     }
 
@@ -100,12 +88,6 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
             }
         }
     }
-
-    fun getmTextSpannableResultsContent(): SpannableStringBuilder = mTextSpannableResultsContent
-
-    fun getmTextSpannableResultsTitle(): SpannableStringBuilder = mTextSpannableResultsTitle
-
-    fun getmTextSpannableResultsIntrudustion() = mTextSpannableResultsIntrodustion
 
     fun addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary(vocabularyLocation: VocabularyLocation) {
         mListVocabularyTranslateResponse.firstOrNull {
@@ -165,6 +147,5 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         mNameListDialogShowing = name
     }
 
-//    fun setListVocabularyFavoriteToServer() = mReadingRepository.setListVocabularyFavorite()
-fun getPositionItemInsertedOfRV() = dataRecyclerView.size
+    fun getPositionItemInsertedOfRV() = dataRecyclerView.size
 }
