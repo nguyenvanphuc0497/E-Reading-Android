@@ -12,9 +12,13 @@ import android.widget.Toast
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
+import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse
+import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
 import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
 import com.dtu.capstone2.ereading.ui.utils.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_translate_result.*
+import javax.net.ssl.HttpsURLConnection
 
 /**
  * Create by Nguyen Van Phuc on 4/9/19
@@ -117,7 +121,25 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
     override fun onClick(dialog: DialogInterface, which: Int) {
         when (which) {
             DialogInterface.BUTTON_POSITIVE -> {
-                Log.e("xxx", "BUTTON_POSITIVE")
+                when (viewModel.getNameListDialogShowing()) {
+                    TITLE_DIALOG_REFRESH -> {
+                    }
+                    TITLE_DIALOG_FAVORITE -> {
+                        managerSubscribe.add(viewModel.addFavoriteToServer()
+                                .publishDialogLoading()
+                                .observeOnUiThread()
+                                .subscribe({
+                                    deleteListFavorite()
+                                }, {
+                                    (it as? ApiExceptionResponse)?.let { exception ->
+                                        if (exception.statusCode == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                                            val dataError = Gson().fromJson(exception.messageError, ErrorUnauthorizedRespone::class.java)
+                                            showMessageErrorDialog(dataError.detail)
+                                        }
+                                    }
+                                }))
+                    }
+                }
             }
             DialogInterface.BUTTON_NEGATIVE -> {
             }
@@ -168,9 +190,9 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             }
             tvTranslateNewFeedFavoriteReviewCount?.text = count
         } else {
-            imgTranslateNewFeedFavoriteReview.visibility = View.GONE
-            tv_new_feed_translate_guide_refresh.visibility = View.GONE
-            tvTranslateNewFeedFavoriteReviewCount.visibility = View.GONE
+            imgTranslateNewFeedFavoriteReview?.visibility = View.GONE
+            tv_new_feed_translate_guide_favorite?.visibility = View.GONE
+            tvTranslateNewFeedFavoriteReviewCount?.visibility = View.GONE
         }
     }
 
@@ -178,7 +200,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         if (viewModel.getSizeListRefresh() > 0) {
             imgTranslateNewFeedRefresh?.visibility = View.VISIBLE
             tv_new_feed_translate_guide_refresh?.visibility = View.VISIBLE
-            tvTranslateNewFeedRefreshCount.visibility = View.VISIBLE
+            tvTranslateNewFeedRefreshCount?.visibility = View.VISIBLE
             var count = viewModel.getSizeListRefresh().toString()
             if (viewModel.getSizeListRefresh() > 99) {
                 count = "99+"

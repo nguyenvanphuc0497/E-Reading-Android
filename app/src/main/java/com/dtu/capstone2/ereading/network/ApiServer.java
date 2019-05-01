@@ -8,6 +8,7 @@ import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
+import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
@@ -55,5 +56,5 @@ public interface ApiServer {
     Single<LevelUserResponse> setLevelEnglishForUser(@Query("level_position") int levelPosition);
 
     @POST("v1/portal/favorite")
-    Single<Void> setListVocabularyFavorite(@Body ListVocabularyFavoriteRequest listVocabularyFavoriteRequest);
+    Single<DetailResponse> setListVocabularyFavorite(@Body ListVocabularyFavoriteRequest listVocabularyFavoriteRequest);
 }

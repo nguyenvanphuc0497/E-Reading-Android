@@ -4,6 +4,7 @@ import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.request.DataStringReponse
 import com.dtu.capstone2.ereading.network.request.Vocabulary
+import com.dtu.capstone2.ereading.network.response.DetailResponse
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed
 import com.dtu.capstone2.ereading.ui.model.TypeContent
 import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
@@ -13,6 +14,7 @@ import com.dtu.capstone2.ereading.ui.utils.Transport
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Single
 import org.jsoup.Jsoup
 
 /**
@@ -148,4 +150,10 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
     }
 
     fun getPositionItemInsertedOfRV() = dataRecyclerView.size
+
+    fun addFavoriteToServer(): Single<DetailResponse> = mReadingRepository.setListVocabularyFavorite(mListVocabularyAddFavorite.filter {
+        it.isChecked
+    }.map {
+        it.vocabulary
+    })
 }
