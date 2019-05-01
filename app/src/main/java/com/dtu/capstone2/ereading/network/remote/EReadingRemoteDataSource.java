@@ -8,6 +8,9 @@ import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
+import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.Vocabulary;
+import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
@@ -60,5 +63,9 @@ public class EReadingRemoteDataSource {
                 return levelUserResponse.getLevel();
             }
         });
+    }
+
+    public Single<DetailResponse> setListVocabularyFavorite(List<Vocabulary> vocabularyList) {
+        return mApiServer.setListVocabularyFavorite(new ListVocabularyFavoriteRequest(vocabularyList));
     }
 }

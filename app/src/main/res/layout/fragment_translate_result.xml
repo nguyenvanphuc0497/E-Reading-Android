@@ -122,68 +122,10 @@
         app:layout_constraintTop_toBottomOf="@id/tv_new_feed_translate_guide_refresh"
         tools:visibility="visible" />
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewTranslateNewFeed"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:animateLayoutChanges="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_new_feed_translate_guide_favorite">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
-
-            <TextView
-                android:id="@+id/tvTranslateNewFeedWordResultTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="3dp"
-                android:padding="2dp"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_new_feed_title"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Title New Feed" />
-
-            <TextView
-                android:id="@+id/tvTranslateNewFeedWordResultIntroduction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="3dp"
-                android:padding="2dp"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_new_feed_introduction"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResultTitle"
-                tools:text="Introduction new feed" />
-
-            <TextView
-                android:id="@+id/tvTranslateNewFeedWordResultContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="3dp"
-                android:padding="2dp"
-                android:textSize="@dimen/text_size_new_feed_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResultIntroduction"
-                tools:text="Detail new feed" />
-
-            <ProgressBar
-                android:id="@+id/progressTranslateNewFeed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminateDrawable="@drawable/bg_progress_bar_circle"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tvTranslateNewFeedWordResultContent"
-                tools:visibility="visible" />
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@id/tv_new_feed_translate_guide_favorite" />
 </android.support.constraint.ConstraintLayout>
