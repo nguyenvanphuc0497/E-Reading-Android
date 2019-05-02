@@ -1,14 +1,10 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
-import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.request.DataStringReponse
 import com.dtu.capstone2.ereading.network.request.Vocabulary
 import com.dtu.capstone2.ereading.network.response.DetailResponse
-import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed
-import com.dtu.capstone2.ereading.ui.model.TypeContent
-import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
-import com.dtu.capstone2.ereading.ui.model.VocabularySelected
+import com.dtu.capstone2.ereading.ui.model.*
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport
 import com.dtu.capstone2.ereading.ui.utils.Transport
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus
@@ -20,14 +16,18 @@ import org.jsoup.Jsoup
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
-internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadingRepository, private val mLocalRepository: LocalRepository) {
+internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadingRepository) {
+    companion object {
+        internal const val NO_ITEM_CHANGE = -1
+    }
+
     internal var urlNewFeed: String? = null
+    internal val dataRecyclerView = mutableListOf<LineContentNewFeed>()
+    internal var nameListDialogShowing: String = ""
     private val mListVocabularyToTranslateRefresh = mutableListOf<VocabularySelected>()
     private val mListVocabularyToAddFavorite = mutableListOf<VocabularySelected>()
-    private var mNameListDialogShowing: String = ""
-    private val mListVocabularyTranslateResponse = hashMapOf<Int, List<Vocabulary>>()
-    private val mListVocabularyNotTranslateResponse = hashMapOf<Int, List<Vocabulary>>()
-    internal val dataRecyclerView = mutableListOf<LineContentNewFeed>()
+    private val listVocabularyTranslatedResponse = hashMapOf<Int, List<Vocabulary>>()
+    private val listVocabularyUntranslatedResponse = hashMapOf<Int, List<Vocabulary>>()
     private val listContentSource = hashMapOf<Int, String>()
 
     // TRường hợp với báo BBC text ok
@@ -55,8 +55,8 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
                     setListVocabularyFromSeverByPosition(positionContent, it.listVocabulary, it.listVocabularyNotTranslate)
                     dataRecyclerView.add(LineContentNewFeed(typeContent,
                             it.stringData,
-                            it.listVocabulary,
-                            it.listVocabularyNotTranslate))
+                            it.listVocabulary.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) },
+                            it.listVocabularyNotTranslate.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) }))
                 }
     }
 
@@ -64,8 +64,9 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
 
     fun getSizeListAddFavorite() = mListVocabularyToAddFavorite.size
 
-    fun addOrRemoveVocabularyToListRefresh(vocabularyLocation: VocabularyLocation) {
-        mListVocabularyNotTranslateResponse[vocabularyLocation.positionContent]?.firstOrNull {
+    fun addOrRemoveVocabularyToListRefresh(vocabularyLocation: VocabularyLocation): Int {
+        var isAdd = true
+        listVocabularyUntranslatedResponse[vocabularyLocation.positionContent]?.firstOrNull {
             it.startIndex == vocabularyLocation.startIndex && it.endIndex == vocabularyLocation.endIndex
         }?.let {
             mListVocabularyToTranslateRefresh.firstOrNull { checking ->
@@ -73,20 +74,30 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
             }?.let { checking ->
                 RxBusTransport.publish(Transport(TypeTransportBus.TOAST_WITH_MESSAGE_SELECT_WORD,
                         message = checking.vocabulary.word))
-                return
+                isAdd = false
+                return NO_ITEM_CHANGE
             }
             with(VocabularySelected(vocabulary = it, positionContent = vocabularyLocation.positionContent)) {
-                if (mListVocabularyToTranslateRefresh.contains(this))
+                if (mListVocabularyToTranslateRefresh.contains(this)) {
                     mListVocabularyToTranslateRefresh.remove(this)
-                else {
+                    isAdd = false
+                } else {
                     mListVocabularyToTranslateRefresh.add(this)
+                    isAdd = true
                 }
             }
         }
+        dataRecyclerView[vocabularyLocation.positionContent].vocabulariesUntranslated?.firstOrNull {
+            it.startIndex == vocabularyLocation.startIndex && it.endIndex == vocabularyLocation.endIndex
+        }?.let {
+            it.isSelected = isAdd
+        }
+        return vocabularyLocation.positionContent
     }
 
-    fun addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary(vocabularyLocation: VocabularyLocation) {
-        mListVocabularyTranslateResponse[vocabularyLocation.positionContent]?.firstOrNull {
+    fun addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary(vocabularyLocation: VocabularyLocation): Int {
+        var isAdd = true
+        listVocabularyTranslatedResponse[vocabularyLocation.positionContent]?.firstOrNull {
             it.startIndex == vocabularyLocation.startIndex && it.endIndex == vocabularyLocation.endIndex
         }?.let {
             mListVocabularyToAddFavorite.firstOrNull { checking ->
@@ -94,16 +105,25 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
             }?.let { checking ->
                 RxBusTransport.publish(Transport(TypeTransportBus.TOAST_WITH_MESSAGE_SELECT_WORD,
                         message = checking.vocabulary.word))
-                return
+                isAdd = false
+                return NO_ITEM_CHANGE
             }
             with(VocabularySelected(vocabulary = it, positionContent = vocabularyLocation.positionContent)) {
-                if (mListVocabularyToAddFavorite.contains(this))
+                if (mListVocabularyToAddFavorite.contains(this)) {
                     mListVocabularyToAddFavorite.remove(this)
-                else {
+                    isAdd = false
+                } else {
                     mListVocabularyToAddFavorite.add(this)
+                    isAdd = true
                 }
             }
         }
+        dataRecyclerView[vocabularyLocation.positionContent].vocabulariesTranslated?.firstOrNull {
+            it.startIndex == vocabularyLocation.startIndex && it.endIndex == vocabularyLocation.endIndex
+        }?.let {
+            it.isSelected = isAdd
+        }
+        return vocabularyLocation.positionContent
     }
 
     fun getArrayWordRefresh() = mListVocabularyToTranslateRefresh.map {
@@ -124,16 +144,20 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
 
     fun resetListVocabularyRefresh() {
         mListVocabularyToTranslateRefresh.clear()
+        dataRecyclerView.forEach {
+            it.vocabulariesUntranslated?.forEach { wordHighLight ->
+                wordHighLight.isSelected = false
+            }
+        }
     }
 
     fun resetListVocabularyAddFavorite() {
         mListVocabularyToAddFavorite.clear()
-    }
-
-    fun getNameListDialogShowing() = mNameListDialogShowing
-
-    fun setNameListDialogShowing(name: String) {
-        mNameListDialogShowing = name
+        dataRecyclerView.forEach {
+            it.vocabulariesTranslated?.forEach { wordHighLight ->
+                wordHighLight.isSelected = false
+            }
+        }
     }
 
     fun getPositionItemInsertedOfRV() = dataRecyclerView.size
@@ -160,8 +184,8 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
             val oldTypeContent = dataRecyclerView[map.key].typeContent
             dataRecyclerView[map.key] = LineContentNewFeed(oldTypeContent,
                     it.stringData,
-                    it.listVocabulary,
-                    it.listVocabularyNotTranslate)
+                    it.listVocabulary.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) },
+                    it.listVocabularyNotTranslate.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) })
             // Xoá các từ được dịch thành công khỏi danh sách
             mListVocabularyToTranslateRefresh.removeAll(map.value)
         }.map {
@@ -169,8 +193,8 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         }
     }
 
-    private fun setListVocabularyFromSeverByPosition(positionContent: Int, vocabulariesTranslated: List<Vocabulary>, vocabulariesNotTranslate: List<Vocabulary>) {
-        mListVocabularyTranslateResponse[positionContent] = vocabulariesTranslated
-        mListVocabularyNotTranslateResponse[positionContent] = vocabulariesNotTranslate
+    private fun setListVocabularyFromSeverByPosition(positionContent: Int, vocabulariesTranslated: List<Vocabulary>, vocabulariesUntranslated: List<Vocabulary>) {
+        listVocabularyTranslatedResponse[positionContent] = vocabulariesTranslated
+        listVocabularyUntranslatedResponse[positionContent] = vocabulariesUntranslated
     }
 }
