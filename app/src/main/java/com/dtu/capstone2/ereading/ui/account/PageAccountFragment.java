@@ -45,6 +45,7 @@ public class PageAccountFragment extends BaseFragment {
     AlertDialog.Builder builder;
     private LinearLayout linearLayoutLogin;
     private LinearLayout linearLayoutTrinhDoTiengAnh;
+    private LinearLayout linearLayoutFavorite;
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
@@ -79,6 +80,7 @@ public class PageAccountFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
+        linearLayoutFavorite= view.findViewById(R.id.tvFavorite);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
@@ -93,6 +95,12 @@ public class PageAccountFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
+            }
+        });
+        linearLayoutFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         linearLayoutTrinhDoTiengAnh.setOnClickListener(new View.OnClickListener() {

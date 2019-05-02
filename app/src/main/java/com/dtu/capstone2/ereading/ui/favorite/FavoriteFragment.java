@@ -35,6 +35,7 @@ public class FavoriteFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         lvFavorite = view.findViewById(R.id.lvFavorite);
+        listFavorite=new ArrayList<>();
         favoriteViewModal.getDataFavorite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -42,8 +43,8 @@ public class FavoriteFragment extends BaseFragment {
                     @Override
                     public void accept(DataFavoriteReponse dataFavoriteReponse) throws Exception {
                         listFavorite =dataFavoriteReponse.getListData();
-                        ArrayAdapter adap = new ArrayAdapter (getContext(), android.R.layout.simple_list_item_1, listFavorite);
-                        lvFavorite.setAdapter(adap);
+                        CustomListFavorite arrayAdapter = new CustomListFavorite(getContext(),R.layout.item_list_favorite ,listFavorite);
+                        lvFavorite.setAdapter(arrayAdapter);
                     }
                 });
         return view;
