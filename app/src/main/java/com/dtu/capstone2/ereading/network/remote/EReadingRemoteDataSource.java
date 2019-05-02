@@ -9,6 +9,7 @@ import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
@@ -72,5 +73,9 @@ public class EReadingRemoteDataSource {
 
     public Single<DataStringReponse> translateNewFeed(TranslateNewFeedRequest translateNewFeedRequest) {
         return mApiServer.translateNewFeed(translateNewFeedRequest);
+    }
+
+    public Single<DataStringReponse> translateNewFeedAgain(TranslateNewFeedAgainRequest translateNewFeedAgainRequest) {
+        return mApiServer.translateNewFeedAgain(translateNewFeedAgainRequest);
     }
 }

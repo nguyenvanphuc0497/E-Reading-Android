@@ -68,25 +68,13 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         managerSubscribe.add(viewModel.getDataFromHTMLAndOnNextDetectWord()
                 .observeOnUiThread()
                 .subscribe({
-                    //                        if (mProgress!!.visibility != View.VISIBLE) {
-//                            mProgress!!.visibility = View.VISIBLE
-//                        }
-//                        if (s.typeContent === TypeContent.TITLE) {
-//                            viewModel!!.getmTextSpannableResultsTitle().append(setSpannableClick(s, ""))
-//                            mTvWordsResultTitle.setText(viewModel!!.getmTextSpannableResultsTitle())
-//                        } else if (s.typeContent === TypeContent.INTRODUCTION) {
-//                            mTvWordsResultIntroduction.setText(setSpannableClick(s, ""))
-//                        } else if (s.typeContent === TypeContent.TEXT) {
-//                            viewModel!!.getmTextSpannableResultsContent().append(setSpannableClick(s, "\n\n"))
-//                            mTvWordsResultContent!!.text = viewModel!!.getmTextSpannableResultsContent()
-//                        }
                     adapter.notifyItemInserted(viewModel.getPositionItemInsertedOfRV())
                 }, {
                     Log.w("Translate", it.toString())
-//                        mProgress!!.visibility = View.GONE
+//                    mProgress!!.visibility = View.GONE
                     Toast.makeText(context, "Quá trình dịch gián đoạn! Kiểm tra kết nối Internet.", Toast.LENGTH_LONG).show()
                 }, {
-                    //                        mProgress!!.visibility = View.GONE
+                    //                    mProgress!!.visibility = View.GONE
                     Toast.makeText(context, "Dịch hoàn tất.", Toast.LENGTH_SHORT).show()
                 }))
     }
@@ -124,6 +112,13 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
                 when (viewModel.getNameListDialogShowing()) {
                     TITLE_DIALOG_REFRESH -> {
                         viewModel.sendVocabularySelectedToServerToTranslateAgain()
+                                .observeOnUiThread()
+                                .subscribe({
+                                    adapter.notifyItemChanged(it)
+                                    reloadIconRefresh()
+                                }, {
+                                    Toast.makeText(context, "Lỗi trong quá trình dich. Vui lòng thử lại.", Toast.LENGTH_SHORT)
+                                }, {})
                     }
                     TITLE_DIALOG_FAVORITE -> {
                         managerSubscribe.add(viewModel.addFavoriteToServer()

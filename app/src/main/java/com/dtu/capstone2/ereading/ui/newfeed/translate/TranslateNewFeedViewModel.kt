@@ -160,12 +160,28 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         it.vocabulary
     })
 
-    fun sendVocabularySelectedToServerToTranslateAgain() {
-        mListVocabularyToTranslateRefresh.groupBy {
-            it.positionContent
-        }.forEach {
-            //            Log.e("xxx",listContentSource[it.key])
-
+    fun sendVocabularySelectedToServerToTranslateAgain(): Observable<Int> = Observable.create(ObservableOnSubscribe<Map.Entry<Int, List<VocabularySelected>>> {
+        mListVocabularyToTranslateRefresh.groupBy { selected ->
+            selected.positionContent
+        }.forEach { map ->
+            it.onNext(map)
+        }
+    }).flatMapSingle { map ->
+        mReadingRepository.translateNewFeedAgain(urlNewFeed,
+                map.key,
+                listContentSource[map.key]
+                , mListVocabularyToTranslateRefresh.map { vocabularySelected ->
+            vocabularySelected.vocabulary
+        }).doOnSuccess {
+            val oldTypeContent = dataRecyclerView[map.key].typeContent
+            dataRecyclerView[map.key] = LineContentNewFeed(oldTypeContent,
+                    it.stringData,
+                    it.listVocabulary,
+                    it.listVocabularyNotTranslate)
+            // Xoá các từ được dịch thành công khỏi danh sách
+            mListVocabularyToTranslateRefresh.removeAll(map.value)
+        }.map {
+            map.key
         }
     }
 }
