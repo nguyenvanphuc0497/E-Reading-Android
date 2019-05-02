@@ -9,7 +9,7 @@ import java.util.*
 data class DataFavoriteReponse(@SerializedName("vocabulary_favorite") val listData: ArrayList<listFavorite> )
 
 data class listFavorite (@SerializedName ("id") val intId: Int,
-                         @SerializedName("time_create") val dateCreate: Date,
+                         @SerializedName("time_create") val dateCreate: String,
                          @SerializedName( "is_hard") val isHard: Boolean,
                          @SerializedName ("vocabulary_id") val intIdVocabulary : Int,
                          @SerializedName("vocabulary_word") val strWord: String,

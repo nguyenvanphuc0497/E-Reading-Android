@@ -3,11 +3,13 @@ package com.dtu.capstone2.ereading.ui.favorite;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
@@ -25,8 +27,9 @@ import io.reactivex.schedulers.Schedulers;
  * Create by Vo The Doan on 04/30/2019
  */
 public class FavoriteFragment extends BaseFragment {
-    private ListView lvFavorite;
-    private ArrayList<listFavorite> listFavorite;
+    private RecyclerView recycleListView;
+    private List<listFavorite> listFavorite;
+    private ImageView imageListFavoriteBack;
     private int iduser;
     FavoriteViewModal favoriteViewModal = new FavoriteViewModal();
     @Nullable
@@ -34,7 +37,8 @@ public class FavoriteFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        lvFavorite = view.findViewById(R.id.lvFavorite);
+        recycleListView = view.findViewById(R.id.recycleviewFavorite);
+        imageListFavoriteBack = view.findViewById(R.id.imgListFavoriteBack);
         listFavorite=new ArrayList<>();
         favoriteViewModal.getDataFavorite()
                 .subscribeOn(Schedulers.io())
@@ -42,11 +46,27 @@ public class FavoriteFragment extends BaseFragment {
                 .subscribe(new Consumer<DataFavoriteReponse>() {
                     @Override
                     public void accept(DataFavoriteReponse dataFavoriteReponse) throws Exception {
-                        listFavorite =dataFavoriteReponse.getListData();
-                        CustomListFavorite arrayAdapter = new CustomListFavorite(getContext(),R.layout.item_list_favorite ,listFavorite);
-                        lvFavorite.setAdapter(arrayAdapter);
+                        listFavorite = dataFavoriteReponse.getListData();
+                        Log.e("xxx", listFavorite.toString());
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+                        recycleListView.setLayoutManager(layoutManager);
+                        CustomListFavorite arrayAdapter = new CustomListFavorite(listFavorite,getContext());
+                        recycleListView.setAdapter(arrayAdapter);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("xxx", throwable.toString()+"bug neef");
                     }
                 });
+        imageListFavoriteBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return view;
     }
 }
