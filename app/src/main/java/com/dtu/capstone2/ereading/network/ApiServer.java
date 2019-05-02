@@ -60,5 +60,5 @@ public interface ApiServer {
     Single<DetailResponse> setListVocabularyFavorite(@Body ListVocabularyFavoriteRequest listVocabularyFavoriteRequest);
 
     @POST("v1/translate/feed")
-    Single<DataStringReponse> translateNewFeed(@Body TranslateNewFeedRequest translateNewFeedRequest, @Query("level_name") String nameLevel);
+    Single<DataStringReponse> translateNewFeed(@Body TranslateNewFeedRequest translateNewFeedRequest);
 }

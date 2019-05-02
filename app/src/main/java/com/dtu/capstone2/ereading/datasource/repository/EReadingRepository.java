@@ -58,7 +58,7 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.setListVocabularyFavorite(vocabularyList);
     }
 
-    public Single<DataStringReponse> translateNewFeed(String urlNewFeed, int positionContent, String wordContent, String nameLevel) {
-        return eReadingRemoteDataSource.translateNewFeed(new TranslateNewFeedRequest(urlNewFeed, positionContent, wordContent), nameLevel);
+    public Single<DataStringReponse> translateNewFeed(String urlNewFeed, int positionContent, String wordContent) {
+        return eReadingRemoteDataSource.translateNewFeed(new TranslateNewFeedRequest(urlNewFeed, positionContent, wordContent));
     }
 }

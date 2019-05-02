@@ -123,6 +123,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             DialogInterface.BUTTON_POSITIVE -> {
                 when (viewModel.getNameListDialogShowing()) {
                     TITLE_DIALOG_REFRESH -> {
+                        viewModel.sendVocabularySelectedToServerToTranslateAgain()
                     }
                     TITLE_DIALOG_FAVORITE -> {
                         managerSubscribe.add(viewModel.addFavoriteToServer()

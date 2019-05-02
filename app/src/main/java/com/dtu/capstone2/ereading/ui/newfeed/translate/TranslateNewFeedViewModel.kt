@@ -21,13 +21,14 @@ import org.jsoup.Jsoup
  * Create by Nguyen Van Phuc on 4/9/19
  */
 internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadingRepository, private val mLocalRepository: LocalRepository) {
-    var urlNewFeed: String? = null
-    private val mListVocabularyRefresh = mutableListOf<VocabularySelected>()
+    internal var urlNewFeed: String? = null
+    private val mListVocabularyToTranslateRefresh = mutableListOf<VocabularySelected>()
     private val mListVocabularyAddFavorite = mutableListOf<VocabularySelected>()
     private var mNameListDialogShowing: String = ""
     private val mListVocabularyTranslateResponse = mutableListOf<Vocabulary>()
     private val mListVocabularyNotTranslateResponse = mutableListOf<Vocabulary>()
     internal val dataRecyclerView = mutableListOf<LineContentNewFeed>()
+    private val listContentSource = hashMapOf<Int, String>()
 
     // TRường hợp với báo BBC text ok
     fun getDataFromHTMLAndOnNextDetectWord(): Observable<DataStringReponse> = Observable.create(ObservableOnSubscribe<LineContentNewFeed> { emitter ->
@@ -47,7 +48,9 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         }
         emitter.onComplete()
     }).flatMapSingle { (typeContent, textContent) ->
-        mReadingRepository.translateNewFeed(urlNewFeed, dataRecyclerView.size, textContent, mLocalRepository.nameLevelUser)
+        val positionContent = dataRecyclerView.size
+        listContentSource[positionContent] = textContent
+        mReadingRepository.translateNewFeed(urlNewFeed, positionContent, textContent)
                 .doOnSuccess {
                     mListVocabularyTranslateResponse.addAll(it.listVocabulary)
                     mListVocabularyNotTranslateResponse.addAll(it.listVocabularyNotTranslate)
@@ -58,7 +61,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
                 }
     }
 
-    fun getSizeListRefresh() = mListVocabularyRefresh.size
+    fun getSizeListRefresh() = mListVocabularyToTranslateRefresh.size
 
     fun getSizeListAddFavorite() = mListVocabularyAddFavorite.size
 
@@ -66,24 +69,24 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         mListVocabularyNotTranslateResponse.firstOrNull {
             it.startIndex == vocabularyLocation.startIndex && it.endIndex == vocabularyLocation.endIndex
         }?.let {
-            with(VocabularySelected(vocabulary = it)) {
-                mListVocabularyRefresh.firstOrNull { vocabularySelected ->
+            with(VocabularySelected(vocabulary = it, positionContent = vocabularyLocation.positionContent)) {
+                mListVocabularyToTranslateRefresh.firstOrNull { vocabularySelected ->
                     vocabularySelected.vocabulary.word == this.vocabulary.word
                 }.let { vocabularySelected ->
                     when {
                         vocabularySelected == null -> {
-                            mListVocabularyRefresh.add(this)
+                            mListVocabularyToTranslateRefresh.add(this)
                         }
                         vocabularySelected.vocabulary.type != it.type -> {
-                            mListVocabularyRefresh.add(this)
+                            mListVocabularyToTranslateRefresh.add(this)
                         }
-                        vocabularySelected.vocabulary.startIndex != vocabularyLocation.startIndex &&
-                                vocabularySelected.vocabulary.endIndex != vocabularyLocation.endIndex -> {
+                        vocabularySelected.positionContent != vocabularyLocation.positionContent ||
+                                vocabularySelected.vocabulary.startIndex != vocabularyLocation.startIndex -> {
                             RxBusTransport.publish(Transport(TypeTransportBus.TOAST_WITH_MESSAGE_SELECT_WORD,
                                     message = vocabularySelected.vocabulary.word))
                         }
                         else -> {
-                            mListVocabularyRefresh.remove(this)
+                            mListVocabularyToTranslateRefresh.remove(this)
                         }
                     }
                 }
@@ -95,7 +98,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         mListVocabularyTranslateResponse.firstOrNull {
             it.startIndex == vocabularyLocation.startIndex && it.endIndex == vocabularyLocation.endIndex
         }?.let {
-            with(VocabularySelected(vocabulary = it)) {
+            with(VocabularySelected(vocabulary = it, positionContent = vocabularyLocation.positionContent)) {
                 mListVocabularyAddFavorite.firstOrNull { vocabularySelected ->
                     vocabularySelected.vocabulary.word == this.vocabulary.word
                 }.let { vocabularySelected ->
@@ -106,8 +109,8 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
                         vocabularySelected.vocabulary.type != it.type -> {
                             mListVocabularyAddFavorite.add(this)
                         }
-                        vocabularySelected.vocabulary.startIndex != vocabularyLocation.startIndex &&
-                                vocabularySelected.vocabulary.endIndex != vocabularyLocation.endIndex -> {
+                        vocabularySelected.positionContent != vocabularyLocation.positionContent ||
+                                vocabularySelected.vocabulary.startIndex != vocabularyLocation.startIndex -> {
                             RxBusTransport.publish(Transport(TypeTransportBus.TOAST_WITH_MESSAGE_SELECT_WORD, message = vocabularySelected.vocabulary.word))
                         }
                         else -> {
@@ -119,7 +122,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         }
     }
 
-    fun getArrayWordRefresh() = mListVocabularyRefresh.map {
+    fun getArrayWordRefresh() = mListVocabularyToTranslateRefresh.map {
         it.vocabulary.word
     }.toTypedArray()
 
@@ -127,7 +130,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         it.vocabulary.word
     }.toTypedArray()
 
-    fun getArraySelectedRefresh() = mListVocabularyRefresh.map {
+    fun getArraySelectedRefresh() = mListVocabularyToTranslateRefresh.map {
         it.isChecked
     }.toBooleanArray()
 
@@ -136,7 +139,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
     }.toBooleanArray()
 
     fun resetListVocabularyRefresh() {
-        mListVocabularyRefresh.clear()
+        mListVocabularyToTranslateRefresh.clear()
     }
 
     fun resetListVocabularyAddFavorite() {
@@ -156,4 +159,13 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
     }.map {
         it.vocabulary
     })
+
+    fun sendVocabularySelectedToServerToTranslateAgain() {
+        mListVocabularyToTranslateRefresh.groupBy {
+            it.positionContent
+        }.forEach {
+            //            Log.e("xxx",listContentSource[it.key])
+
+        }
+    }
 }

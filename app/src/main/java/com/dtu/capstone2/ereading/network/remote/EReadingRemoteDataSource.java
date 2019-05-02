@@ -70,7 +70,7 @@ public class EReadingRemoteDataSource {
         return mApiServer.setListVocabularyFavorite(new ListVocabularyFavoriteRequest(vocabularyList));
     }
 
-    public Single<DataStringReponse> translateNewFeed(TranslateNewFeedRequest translateNewFeedRequest, String nameLevel) {
-        return mApiServer.translateNewFeed(translateNewFeedRequest, nameLevel);
+    public Single<DataStringReponse> translateNewFeed(TranslateNewFeedRequest translateNewFeedRequest) {
+        return mApiServer.translateNewFeed(translateNewFeedRequest);
     }
 }
