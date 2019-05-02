@@ -47,7 +47,7 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         }
         emitter.onComplete()
     }).flatMapSingle { (typeContent, textContent) ->
-        mReadingRepository.GetDataStringReponse(textContent, mLocalRepository.nameLevelUser)
+        mReadingRepository.translateNewFeed(urlNewFeed, dataRecyclerView.size, textContent, mLocalRepository.nameLevelUser)
                 .doOnSuccess {
                     mListVocabularyTranslateResponse.addAll(it.listVocabulary)
                     mListVocabularyNotTranslateResponse.addAll(it.listVocabularyNotTranslate)

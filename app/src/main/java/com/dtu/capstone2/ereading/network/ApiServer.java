@@ -7,6 +7,7 @@ import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
@@ -34,7 +35,7 @@ public interface ApiServer {
     @POST("addfavorite")
     Single<Boolean> AddFavoriteServer(@Body AddFavoriteRequest paraFavorite);
 
-    @POST("v1/detectword")
+    @POST("v1/translate/word")
     Single<DataStringReponse> GetDataStringReponse(@Body DetectWordRequest detectWordRequest, @Query("level_name") String nameLevel);
 
     @POST("signin")
@@ -57,4 +58,7 @@ public interface ApiServer {
 
     @POST("v1/portal/favorite")
     Single<DetailResponse> setListVocabularyFavorite(@Body ListVocabularyFavoriteRequest listVocabularyFavoriteRequest);
+
+    @POST("v1/translate/feed")
+    Single<DataStringReponse> translateNewFeed(@Body TranslateNewFeedRequest translateNewFeedRequest, @Query("level_name") String nameLevel);
 }
