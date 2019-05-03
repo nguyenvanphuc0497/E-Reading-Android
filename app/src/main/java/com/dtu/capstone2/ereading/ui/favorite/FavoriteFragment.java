@@ -31,7 +31,7 @@ public class FavoriteFragment extends BaseFragment {
     private List<listFavorite> listFavorite;
     private ImageView imageListFavoriteBack;
     private int iduser;
-    FavoriteViewModal favoriteViewModal = new FavoriteViewModal();
+    FavoriteViewModel favoriteViewModal = new FavoriteViewModel();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
