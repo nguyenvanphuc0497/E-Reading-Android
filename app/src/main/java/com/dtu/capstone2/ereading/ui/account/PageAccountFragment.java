@@ -138,10 +138,18 @@ public class PageAccountFragment extends BaseFragment {
         linearLayoutFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-                ft.replace(R.id.layoutPageAccountContainer, new FavoriteFragment());
-                ft.commit();
+                if (!mViewModel.getEmailFromLocal().equals("")) {
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.layoutPageAccountContainer, new FavoriteFragment());
+                    ft.commit();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),
+                            "Bạn chưa đăng nhập",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         linearLayoutTrinhDoTiengAnh.setOnClickListener(new View.OnClickListener() {
