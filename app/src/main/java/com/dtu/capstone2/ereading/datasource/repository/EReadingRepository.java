@@ -8,6 +8,8 @@ import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
+import com.dtu.capstone2.ereading.network.request.Vocabulary;
+import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -50,6 +52,10 @@ public class EReadingRepository {
 
     public Single<LevelEnglish> setLevelEnglishForUserToServer(int levelPosition) {
         return eReadingRemoteDataSource.setLevelEnglishForUser(levelPosition);
+    }
+
+    public Single<DetailResponse> setListVocabularyFavorite(List<Vocabulary> vocabularyList) {
+        return eReadingRemoteDataSource.setListVocabularyFavorite(vocabularyList);
     }
     public  Single<DataFavoriteReponse> getDataFavorite()
     {

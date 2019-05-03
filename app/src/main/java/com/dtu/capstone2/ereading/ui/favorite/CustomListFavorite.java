@@ -27,12 +27,14 @@ public class CustomListFavorite extends RecyclerView.Adapter<CustomListFavorite.
         mArrContact = data;
         mcontext = context;
     }
+
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_list_favorite, parent, false);
         return new RecyclerViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         listFavorite contact = mArrContact.get(position);
@@ -44,35 +46,6 @@ public class CustomListFavorite extends RecyclerView.Adapter<CustomListFavorite.
     public int getItemCount() {
         return mArrContact.size();
     }
-
-//    public CustomListFavorite(Context context, int resource, ArrayList<listFavorite> arrContact) {
-//        super(context, resource, arrContact);
-//        this.context = context;
-//        this.resource = resource;
-//        this.arrContact = arrContact;
-//    }
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        ViewHolder viewHolder;
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(context).inflate(R.layout.item_list_favorite, parent, false);
-//            viewHolder = new ViewHolder();
-//            viewHolder.tvword = (TextView) convertView.findViewById(R.id.tvWord);
-//            viewHolder.tvnghia = (TextView) convertView.findViewById(R.id.tvNghia);
-//            convertView.setTag(viewHolder);
-//        } else {
-//            viewHolder = (ViewHolder) convertView.getTag();
-//        }
-//        listFavorite contact = arrContact.get(position);
-//        viewHolder.tvword.setText(contact.getStrWord());
-//        viewHolder.tvnghia.setText(contact.getStrMeanShort());
-//        return convertView;
-//    }
-//
-//    public class ViewHolder {
-//        TextView tvword, tvnghia;
-//    }
-
     public class RecyclerViewHolder  extends RecyclerView.ViewHolder {
         TextView txtWord, txtNgia;
         public RecyclerViewHolder(View itemView) {

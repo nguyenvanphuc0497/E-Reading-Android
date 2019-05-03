@@ -28,6 +28,7 @@ public class PageNewFeedAdapter extends RecyclerView.Adapter<PageNewFeedAdapter.
         mItemPageNewFeeds = itemPageNewFeeds;
         mContext = context;
     }
+
     void setmItemPageNewFeeds(OnItemListener onItemListener) {
         mOnItemListener = onItemListener;
     }

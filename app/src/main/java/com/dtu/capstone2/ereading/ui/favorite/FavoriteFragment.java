@@ -46,8 +46,7 @@ public class FavoriteFragment extends BaseFragment {
                 .subscribe(new Consumer<DataFavoriteReponse>() {
                     @Override
                     public void accept(DataFavoriteReponse dataFavoriteReponse) throws Exception {
-                        listFavorite = dataFavoriteReponse.getListData();
-                        Log.e("xxx", listFavorite.toString());
+                        listFavorite = dataFavoriteReponse.getListData();Log.e("xxx", listFavorite.toString());
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -58,7 +57,7 @@ public class FavoriteFragment extends BaseFragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e("xxx", throwable.toString()+"bug neef");
+                        showApiErrorDialog();
                     }
                 });
         imageListFavoriteBack.setOnClickListener(new View.OnClickListener() {

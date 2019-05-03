@@ -33,6 +33,7 @@ public class LocalRepository {
     public void clearTokenUser() {
         mShaPre.edit().remove(KEY_TOKEN_USER).apply();
     }
+    public void clearEmailUser() { mShaPre.edit().remove(KEY_EMAIL_USER).apply();}
 
     public void saveEmailUser(String email) {
         SharedPreferences.Editor editor = mShaPre.edit();

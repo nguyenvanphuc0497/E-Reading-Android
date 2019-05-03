@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
+import com.dtu.capstone2.ereading.R
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -62,8 +64,11 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 TypeTransportBus.DIALOG_ERROR_MESSAGE -> {
                     loadingDialog.dismiss()
-                    errorDialog.titleDialog = it.message
+                    errorDialog.titleDialog = it.message.toString()
                     errorDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_API_ERROR.typeValue)
+                }
+                TypeTransportBus.TOAST_WITH_MESSAGE_SELECT_WORD -> {
+                    Toast.makeText(this, getString(R.string.translate_new_feed_toast_select_word, it.message.toString()), Toast.LENGTH_SHORT).show()
                 }
             }
         }, {
