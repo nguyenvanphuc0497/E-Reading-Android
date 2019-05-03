@@ -70,6 +70,10 @@ abstract class BaseActivity : AppCompatActivity() {
                 TypeTransportBus.TOAST_WITH_MESSAGE_SELECT_WORD -> {
                     Toast.makeText(this, getString(R.string.translate_new_feed_toast_select_word, it.message.toString()), Toast.LENGTH_SHORT).show()
                 }
+                TypeTransportBus.TOAST_REQUIREMENT_LOGIN -> {
+                    loadingDialog.dismiss()
+                    Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
+                }
             }
         }, {
             Log.w("BaseActivity", ":$it")

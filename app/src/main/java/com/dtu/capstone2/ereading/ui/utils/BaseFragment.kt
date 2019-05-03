@@ -40,4 +40,8 @@ abstract class BaseFragment : Fragment() {
     protected fun showMessageErrorDialog(message: String) {
         RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_ERROR_MESSAGE, message = message))
     }
+
+    protected fun showToastRequirementLogin(message: String) {
+        RxBusTransport.publish(Transport(TypeTransportBus.TOAST_REQUIREMENT_LOGIN, message = message))
+    }
 }

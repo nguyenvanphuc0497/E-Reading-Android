@@ -156,7 +156,7 @@ public class PageAccountFragment extends BaseFragment {
                                 if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
                                     Gson gson = new Gson();
                                     ErrorUnauthorizedRespone dataError = gson.fromJson(response.getMessageError(), ErrorUnauthorizedRespone.class);
-                                    showMessageErrorDialog(dataError.getDetail());
+                                    showToastRequirementLogin(dataError.getDetail());
                                 } else {
                                     showApiErrorDialog();
                                 }
