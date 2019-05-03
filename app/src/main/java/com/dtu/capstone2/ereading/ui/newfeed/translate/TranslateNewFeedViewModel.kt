@@ -5,9 +5,7 @@ import com.dtu.capstone2.ereading.network.request.DataStringReponse
 import com.dtu.capstone2.ereading.network.request.Vocabulary
 import com.dtu.capstone2.ereading.network.response.DetailResponse
 import com.dtu.capstone2.ereading.ui.model.*
-import com.dtu.capstone2.ereading.ui.utils.RxBusTransport
-import com.dtu.capstone2.ereading.ui.utils.Transport
-import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus
+import com.dtu.capstone2.ereading.ui.utils.*
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
@@ -47,18 +45,20 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
             }
         }
         emitter.onComplete()
-    }).flatMapSingle { (typeContent, textContent) ->
-        val positionContent = dataRecyclerView.size
-        listContentSource[positionContent] = textContent
-        mReadingRepository.translateNewFeed(urlNewFeed, positionContent, textContent)
-                .doOnSuccess {
-                    setListVocabularyFromSeverByPosition(positionContent, it.listVocabulary, it.listVocabularyNotTranslate)
-                    dataRecyclerView.add(LineContentNewFeed(typeContent,
-                            it.stringData,
-                            it.listVocabulary.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) },
-                            it.listVocabularyNotTranslate.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) }))
-                }
-    }
+    }).publishDialogLoading()
+            .dismissDialogLoadingWhenOnNext()
+            .flatMapSingle { (typeContent, textContent) ->
+                val positionContent = dataRecyclerView.size
+                listContentSource[positionContent] = textContent
+                mReadingRepository.translateNewFeed(urlNewFeed, positionContent, textContent)
+                        .doOnSuccess {
+                            setListVocabularyFromSeverByPosition(positionContent, it.listVocabulary, it.listVocabularyNotTranslate)
+                            dataRecyclerView.add(LineContentNewFeed(typeContent,
+                                    it.stringData,
+                                    it.listVocabulary.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) },
+                                    it.listVocabularyNotTranslate.map { vocabulary -> WordSpannableHighLight(vocabulary.startIndex, vocabulary.endIndex) }))
+                        }
+            }
 
     fun getSizeListRefresh() = mListVocabularyToTranslateRefresh.size
 

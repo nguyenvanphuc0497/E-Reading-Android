@@ -18,6 +18,16 @@ import javax.net.ssl.HttpsURLConnection
 internal fun <T> Observable<T>.observeOnUiThread(): Observable<T> =
         this.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
+internal fun <T> Observable<T>.publishDialogLoading(): Observable<T> = this.doOnSubscribe {
+    RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_LOADING))
+}
+
+internal fun <T> Observable<T>.dismissDialogLoadingWhenOnNext(): Observable<T> = this.doOnNext {
+    RxBusTransport.publish(Transport(TypeTransportBus.DISMISS_DIALOG_LOADING))
+}.doOnError {
+    RxBusTransport.publish(Transport(TypeTransportBus.DISMISS_DIALOG_LOADING))
+}
+
 internal fun <T> Single<T>.observeOnUiThread(): Single<T> =
         this.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 

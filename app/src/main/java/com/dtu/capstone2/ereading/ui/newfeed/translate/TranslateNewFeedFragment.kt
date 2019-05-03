@@ -78,10 +78,8 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
                     adapter.notifyItemInserted(viewModel.getPositionItemInsertedOfRV())
                 }, {
                     Log.w("Translate", it.toString())
-//                    mProgress!!.visibility = View.GONE
                     Toast.makeText(context, "Quá trình dịch gián đoạn! Kiểm tra kết nối Internet.", Toast.LENGTH_LONG).show()
                 }, {
-                    //                    mProgress!!.visibility = View.GONE
                     Toast.makeText(context, "Dịch hoàn tất.", Toast.LENGTH_SHORT).show()
                 }))
     }
