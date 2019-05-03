@@ -11,8 +11,8 @@ import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
-import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
+import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -47,13 +47,8 @@ public class EReadingRemoteDataSource {
         return mApiServer.registerAccount(accountRegisterRequest);
     }
 
-    public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
-        return mApiServer.getListLevelEnglish().map(new Function<LevelEnglishReponse, List<LevelEnglish>>() {
-            @Override
-            public List<LevelEnglish> apply(LevelEnglishReponse levelEnglishReponse) {
-                return levelEnglishReponse.getLevels();
-            }
-        });
+    public Single<ListLevelEnglishResponse> getLevelEnglishFromServer() {
+        return mApiServer.getListLevelEnglish();
     }
 
     public Single<LevelEnglish> setLevelEnglishForUser(int levelPosition) {

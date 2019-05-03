@@ -46,7 +46,7 @@ public class PageAccountFragment extends BaseFragment {
     AlertDialog.Builder builder;
     private LinearLayout linearLayoutLogin;
     private LinearLayout linearLayoutTrinhDoTiengAnh;
-    private LinearLayout linnearLayoutLogout;
+    private LinearLayout linearLayoutLogout;
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
@@ -81,7 +81,7 @@ public class PageAccountFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
-        linnearLayoutLogout = view.findViewById(R.id.layoutLogout);
+        linearLayoutLogout = view.findViewById(R.id.layoutLogout);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
@@ -98,7 +98,7 @@ public class PageAccountFragment extends BaseFragment {
                 startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
             }
         });
-        linnearLayoutLogout.setOnClickListener(new View.OnClickListener() {
+        linearLayoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mViewModel.getEmailFromLocal().equals("")) {
@@ -147,7 +147,7 @@ public class PageAccountFragment extends BaseFragment {
                             @Override
                             public void onSuccess(List<String> strings) {
                                 dismissLoadingDialog();
-                                showDialog(strings.toArray(new String[]{}));
+                                showDialog(strings.toArray(new String[]{}), mViewModel.getLevelSelected());
                             }
 
                             @Override
@@ -171,9 +171,9 @@ public class PageAccountFragment extends BaseFragment {
         builder.setTitle("Trình độ tiếng anh của bạn ?");
     }
 
-    private void showDialog(final String[] arrayNameLevel) {
+    private void showDialog(final String[] arrayNameLevel, int levelSelected) {
         mItemSelect = -1;
-        builder.setSingleChoiceItems(arrayNameLevel, -1, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(arrayNameLevel, levelSelected, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 mItemSelect = i;
@@ -196,11 +196,11 @@ public class PageAccountFragment extends BaseFragment {
         if (!mViewModel.getEmailFromLocal().equals("") && !mViewModel.getTokenFromLocal().equals("")) {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);
-            linnearLayoutLogout.setVisibility(View.VISIBLE);
+            linearLayoutLogout.setVisibility(View.VISIBLE);
         } else {
             tvEmailUser.setText(getString(R.string.page_account_login_info_default));
             linearLayoutLogin.setEnabled(true);
-            linnearLayoutLogout.setVisibility(View.GONE);
+            linearLayoutLogout.setVisibility(View.GONE);
         }
     }
 

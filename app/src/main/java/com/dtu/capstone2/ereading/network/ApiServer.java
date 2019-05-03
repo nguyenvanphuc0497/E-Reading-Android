@@ -9,8 +9,8 @@ import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
-import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
+import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 
@@ -50,7 +50,7 @@ public interface ApiServer {
     Single<BBCRssResponse> getNewsFeedFromServerBBC(@Path(value = "endpoint", encoded = true) String url);
 
     @GET("v1/portal/level")
-    Single<LevelEnglishReponse> getListLevelEnglish();
+    Single<ListLevelEnglishResponse> getListLevelEnglish();
 
     @POST("v1/portal/level")
     Single<LevelUserResponse> setLevelEnglishForUser(@Query("level_position") int levelPosition);
