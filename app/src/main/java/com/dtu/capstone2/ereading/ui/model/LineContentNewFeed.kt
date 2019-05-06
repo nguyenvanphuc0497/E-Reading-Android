@@ -1,14 +1,12 @@
 package com.dtu.capstone2.ereading.ui.model
 
-import com.dtu.capstone2.ereading.network.request.Vocabulary
-
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
-data class LineContentNewFeed(val typeContent: TypeContent,
-                              val textContent: String,
-                              val listVocabularies: List<Vocabulary>? = null,
-                              val listVocabulariesNotTranslate: List<Vocabulary>? = null)
+data class LineContentNewFeed(val typeContent: TypeContent? = null,
+                              val textContent: String = "",
+                              val vocabulariesTranslated: List<WordSpannableHighLight>? = null,
+                              val vocabulariesUntranslated: List<WordSpannableHighLight>? = null)
 
 enum class TypeContent(val valueType: String) {
     TITLE("title"),

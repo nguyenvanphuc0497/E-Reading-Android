@@ -8,6 +8,8 @@ import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
+import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
+import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
@@ -61,5 +63,13 @@ public class EReadingRepository {
 
     public Single<DataFavoriteReponse> getDataFavorite() {
         return eReadingRemoteDataSource.getDataFavorite();
+    }
+
+    public Single<DataStringReponse> translateNewFeed(String urlNewFeed, int positionContent, String wordContent) {
+        return eReadingRemoteDataSource.translateNewFeed(new TranslateNewFeedRequest(urlNewFeed, positionContent, wordContent));
+    }
+
+    public Single<DataStringReponse> translateNewFeedAgain(String urlNewFeed, int positionContent, String wordContent, List<Vocabulary> vocabularies) {
+        return eReadingRemoteDataSource.translateNewFeedAgain(new TranslateNewFeedAgainRequest(urlNewFeed, positionContent, wordContent, vocabularies));
     }
 }

@@ -1,11 +1,13 @@
 package com.dtu.capstone2.ereading.ui.account;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +52,14 @@ public class PageAccountFragment extends BaseFragment {
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
+    @SuppressLint("CheckResult")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new PageAccountViewModel(new EReadingRepository(), new LocalRepository(getContext()));
         initDialog();
-        getManagerSubscribe().add(RxBusTransport.INSTANCE.listen()
+        RxBusTransport.INSTANCE.listen()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<Transport>() {
@@ -71,7 +74,7 @@ public class PageAccountFragment extends BaseFragment {
                     public void accept(Throwable throwable) throws Exception {
 
                     }
-                }));
+                });
     }
 
     @Nullable
@@ -123,6 +126,7 @@ public class PageAccountFragment extends BaseFragment {
     }
 
     private void loadInfoLoginToView() {
+        Log.e("xxx", mViewModel.isLogin().toString());
         if (mViewModel.isLogin()) {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);

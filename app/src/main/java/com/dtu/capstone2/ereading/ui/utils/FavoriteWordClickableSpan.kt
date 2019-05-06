@@ -15,7 +15,8 @@ class FavoriteWordClickableSpan : ClickableSpan() {
 
     override fun onClick(widget: View) {
         with(widget as AppCompatTextView) {
-            RxBusTransport.publish(Transport(TypeTransportBus.SPAN_ON_CLICK, TAG, VocabularyLocation(this.selectionStart, this.selectionEnd)))
+            RxBusTransport.publish(Transport(TypeTransportBus.SPAN_ON_CLICK, TAG, VocabularyLocation((this.tag as? Int?)
+                    ?: -1, this.selectionStart, this.selectionEnd)))
         }
     }
 

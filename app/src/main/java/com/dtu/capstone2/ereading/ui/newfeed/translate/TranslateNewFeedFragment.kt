@@ -44,11 +44,19 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
                 .observeOnUiThread()
                 .subscribe({
                     if (it.typeTransport == TypeTransportBus.SPAN_ON_CLICK && it.sender == DefaultWordClickableSpan::class.java.simpleName) {
-                        viewModel.addOrRemoveVocabularyToListRefresh(it.message as VocabularyLocation)
+                        viewModel.addOrRemoveVocabularyToListRefresh(it.message as VocabularyLocation).also { positionItemChange ->
+                            if (positionItemChange != TranslateNewFeedViewModel.NO_ITEM_CHANGE) {
+                                adapter.notifyItemChanged(positionItemChange)
+                            }
+                        }
                         reloadIconRefresh()
                     }
                     if (it.typeTransport == TypeTransportBus.SPAN_ON_CLICK && it.sender == FavoriteWordClickableSpan::class.java.simpleName) {
-                        viewModel.addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary(it.message as VocabularyLocation)
+                        viewModel.addOrRemoveVocabularyToListAddFavoriteByLocationVocabulary(it.message as VocabularyLocation).also { positionItemChange ->
+                            if (positionItemChange != TranslateNewFeedViewModel.NO_ITEM_CHANGE) {
+                                adapter.notifyItemChanged(positionItemChange)
+                            }
+                        }
                         reloadIconFavorite()
                     }
                 }, {}, {}))
@@ -68,25 +76,11 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         managerSubscribe.add(viewModel.getDataFromHTMLAndOnNextDetectWord()
                 .observeOnUiThread()
                 .subscribe({
-                    //                        if (mProgress!!.visibility != View.VISIBLE) {
-//                            mProgress!!.visibility = View.VISIBLE
-//                        }
-//                        if (s.typeContent === TypeContent.TITLE) {
-//                            viewModel!!.getmTextSpannableResultsTitle().append(setSpannableClick(s, ""))
-//                            mTvWordsResultTitle.setText(viewModel!!.getmTextSpannableResultsTitle())
-//                        } else if (s.typeContent === TypeContent.INTRODUCTION) {
-//                            mTvWordsResultIntroduction.setText(setSpannableClick(s, ""))
-//                        } else if (s.typeContent === TypeContent.TEXT) {
-//                            viewModel!!.getmTextSpannableResultsContent().append(setSpannableClick(s, "\n\n"))
-//                            mTvWordsResultContent!!.text = viewModel!!.getmTextSpannableResultsContent()
-//                        }
                     adapter.notifyItemInserted(viewModel.getPositionItemInsertedOfRV())
                 }, {
                     Log.w("Translate", it.toString())
-//                        mProgress!!.visibility = View.GONE
                     Toast.makeText(context, "Quá trình dịch gián đoạn! Kiểm tra kết nối Internet.", Toast.LENGTH_LONG).show()
                 }, {
-                    //                        mProgress!!.visibility = View.GONE
                     Toast.makeText(context, "Dịch hoàn tất.", Toast.LENGTH_SHORT).show()
                 }))
     }
@@ -101,13 +95,21 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             //                mTvWordsResultTitle.setText(mTextSpannableResults);
             R.id.imgTranslateNewFeedRefresh -> {
                 with(viewModel) {
-                    this.setNameListDialogShowing(TITLE_DIALOG_REFRESH)
+                    if (!isLogin()) {
+                        showToastRequirementLogin()
+                        return
+                    }
+                    this.nameListDialogShowing = TITLE_DIALOG_REFRESH
                     showDialog("Danh sách các từ đã chọn.", this.getArrayWordRefresh(), this.getArraySelectedRefresh())
                 }
             }
             R.id.imgTranslateNewFeedFavoriteReview -> {
                 with(viewModel) {
-                    this.setNameListDialogShowing(TITLE_DIALOG_FAVORITE)
+                    if (!isLogin()) {
+                        showToastRequirementLogin()
+                        return
+                    }
+                    this.nameListDialogShowing = TITLE_DIALOG_FAVORITE
                     showDialog("Danh sách các từ yêu thích đã chọn.", this.getArrayWordAddFavorite(), this.getArraySelectedAddFavorite())
                 }
             }
@@ -121,8 +123,16 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
     override fun onClick(dialog: DialogInterface, which: Int) {
         when (which) {
             DialogInterface.BUTTON_POSITIVE -> {
-                when (viewModel.getNameListDialogShowing()) {
+                when (viewModel.nameListDialogShowing) {
                     TITLE_DIALOG_REFRESH -> {
+                        viewModel.sendVocabularySelectedToServerToTranslateAgain()
+                                .observeOnUiThread()
+                                .subscribe({
+                                    adapter.notifyItemChanged(it)
+                                    reloadIconRefresh()
+                                }, {
+                                    Toast.makeText(context, "Lỗi trong quá trình dich. Vui lòng thử lại.", Toast.LENGTH_SHORT).show()
+                                }, {})
                     }
                     TITLE_DIALOG_FAVORITE -> {
                         managerSubscribe.add(viewModel.addFavoriteToServer()
@@ -130,6 +140,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
                                 .observeOnUiThread()
                                 .subscribe({
                                     deleteListFavorite()
+                                    adapter.notifyDataSetChanged()
                                 }, {
                                     (it as? ApiExceptionResponse)?.let { exception ->
                                         if (exception.statusCode == HttpsURLConnection.HTTP_UNAUTHORIZED) {
@@ -144,12 +155,14 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             DialogInterface.BUTTON_NEGATIVE -> {
             }
             DialogInterface.BUTTON_NEUTRAL -> {
-                when (viewModel.getNameListDialogShowing()) {
+                when (viewModel.nameListDialogShowing) {
                     TITLE_DIALOG_REFRESH -> {
                         deleteListRefresh()
+                        adapter.notifyDataSetChanged()
                     }
                     TITLE_DIALOG_FAVORITE -> {
                         deleteListFavorite()
+                        adapter.notifyDataSetChanged()
                     }
                 }
             }

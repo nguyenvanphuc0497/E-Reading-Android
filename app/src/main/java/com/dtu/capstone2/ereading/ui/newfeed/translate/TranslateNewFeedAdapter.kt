@@ -33,6 +33,7 @@ class TranslateNewFeedAdapter(private val data: List<LineContentNewFeed>) : Recy
 
         fun onBindData(newFeed: LineContentNewFeed) {
             itemView.tv_item_translate_new_feed_content?.text = newFeed.setSpannerEvent()
+            itemView.tv_item_translate_new_feed_content?.tag = adapterPosition
         }
     }
 }
