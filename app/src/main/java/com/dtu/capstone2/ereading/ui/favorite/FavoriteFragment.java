@@ -30,8 +30,8 @@ public class FavoriteFragment extends BaseFragment {
     private RecyclerView recycleListView;
     private List<listFavorite> listFavorite;
     private ImageView imageListFavoriteBack;
-    private int iduser;
     FavoriteViewModel favoriteViewModal = new FavoriteViewModel();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,19 +39,21 @@ public class FavoriteFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         recycleListView = view.findViewById(R.id.recycleviewFavorite);
         imageListFavoriteBack = view.findViewById(R.id.imgListFavoriteBack);
-        listFavorite=new ArrayList<>();
-        favoriteViewModal.getDataFavorite()
+        listFavorite = new ArrayList<>();
+
+        getManagerSubscribe().add(favoriteViewModal.getDataFavorite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<DataFavoriteReponse>() {
                     @Override
                     public void accept(DataFavoriteReponse dataFavoriteReponse) throws Exception {
-                        listFavorite = dataFavoriteReponse.getListData();Log.e("xxx", listFavorite.toString());
+                        listFavorite = dataFavoriteReponse.getListData();
+                        Log.e("xxx", listFavorite.toString());
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
                         recycleListView.setLayoutManager(layoutManager);
-                        CustomListFavorite arrayAdapter = new CustomListFavorite(listFavorite,getContext());
+                        FavoriteAdapter arrayAdapter = new FavoriteAdapter(listFavorite);
                         recycleListView.setAdapter(arrayAdapter);
                     }
                 }, new Consumer<Throwable>() {
@@ -59,7 +61,8 @@ public class FavoriteFragment extends BaseFragment {
                     public void accept(Throwable throwable) throws Exception {
                         showApiErrorDialog();
                     }
-                });
+                }));
+
         imageListFavoriteBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
