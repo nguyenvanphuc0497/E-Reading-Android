@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
 import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
@@ -35,7 +36,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = TranslateNewFeedViewModel(EReadingRepository())
+        viewModel = TranslateNewFeedViewModel(EReadingRepository(), LocalRepository(context))
         viewModel.urlNewFeed = arguments?.getString(Constants.KEY_URL_NEW_FEED)
         mAlertDialogBuilder = AlertDialog.Builder(context!!)
 
@@ -94,12 +95,20 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             //                mTvWordsResultTitle.setText(mTextSpannableResults);
             R.id.imgTranslateNewFeedRefresh -> {
                 with(viewModel) {
+                    if (!isLogin()) {
+                        showToastRequirementLogin()
+                        return
+                    }
                     this.nameListDialogShowing = TITLE_DIALOG_REFRESH
                     showDialog("Danh sách các từ đã chọn.", this.getArrayWordRefresh(), this.getArraySelectedRefresh())
                 }
             }
             R.id.imgTranslateNewFeedFavoriteReview -> {
                 with(viewModel) {
+                    if (!isLogin()) {
+                        showToastRequirementLogin()
+                        return
+                    }
                     this.nameListDialogShowing = TITLE_DIALOG_FAVORITE
                     showDialog("Danh sách các từ yêu thích đã chọn.", this.getArrayWordAddFavorite(), this.getArraySelectedAddFavorite())
                 }

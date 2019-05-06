@@ -1,6 +1,7 @@
 package com.dtu.capstone2.ereading.ui.newfeed.translate
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.request.DataStringReponse
 import com.dtu.capstone2.ereading.network.request.Vocabulary
 import com.dtu.capstone2.ereading.network.response.DetailResponse
@@ -14,7 +15,7 @@ import org.jsoup.Jsoup
 /**
  * Create by Nguyen Van Phuc on 4/9/19
  */
-internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadingRepository) {
+internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadingRepository, private val localRepository: LocalRepository) {
     companion object {
         internal const val NO_ITEM_CHANGE = -1
     }
@@ -192,6 +193,8 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
             map.key
         }
     }
+
+    fun isLogin() = localRepository.isLogin()
 
     private fun setListVocabularyFromSeverByPosition(positionContent: Int, vocabulariesTranslated: List<Vocabulary>, vocabulariesUntranslated: List<Vocabulary>) {
         listVocabularyTranslatedResponse[positionContent] = vocabulariesTranslated
