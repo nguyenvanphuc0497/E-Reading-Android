@@ -70,8 +70,8 @@ class PageAccountViewModel {
         });
     }
 
-    String getTokenFromLocal() {
-        return mLocalRepository.getTokenUser();
+    Boolean isLogin() {
+        return mLocalRepository.isLogin();
     }
 
     int getLevelSelected() {

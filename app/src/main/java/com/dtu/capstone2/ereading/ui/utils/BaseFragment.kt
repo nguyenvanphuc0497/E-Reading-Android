@@ -44,4 +44,14 @@ abstract class BaseFragment : Fragment() {
     protected fun showToastRequirementLogin(message: String) {
         RxBusTransport.publish(Transport(TypeTransportBus.TOAST_REQUIREMENT_LOGIN, message = message))
     }
+
+    protected fun replaceFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true) {
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            if (addBackStack) {
+                this.addToBackStack(null)
+            }
+            this.replace(container, fragment)
+            this.commit()
+        }
+    }
 }

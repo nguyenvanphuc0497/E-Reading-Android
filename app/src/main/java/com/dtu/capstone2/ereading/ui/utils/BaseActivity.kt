@@ -72,7 +72,13 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 TypeTransportBus.TOAST_REQUIREMENT_LOGIN -> {
                     loadingDialog.dismiss()
-                    Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
+                    it.message.toString().let { message ->
+                        if (message.isEmpty()) {
+                            Toast.makeText(this, getString(R.string.toast_requirement_login), Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
         }, {

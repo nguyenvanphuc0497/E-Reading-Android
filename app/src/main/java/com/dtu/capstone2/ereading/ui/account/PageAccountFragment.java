@@ -1,6 +1,5 @@
 package com.dtu.capstone2.ereading.ui.account;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
+import com.dtu.capstone2.ereading.ui.favorite.FavoriteFragment;
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
@@ -47,24 +46,24 @@ public class PageAccountFragment extends BaseFragment {
     private LinearLayout linearLayoutLogin;
     private LinearLayout linearLayoutTrinhDoTiengAnh;
     private LinearLayout linearLayoutLogout;
+    private LinearLayout linearLayoutFavorite;
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
-    @SuppressLint("CheckResult")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new PageAccountViewModel(new EReadingRepository(), new LocalRepository(getContext()));
         initDialog();
-        RxBusTransport.INSTANCE.listen()
+        getManagerSubscribe().add(RxBusTransport.INSTANCE.listen()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<Transport>() {
                     @Override
                     public void accept(Transport transport) throws Exception {
                         if (transport.getTypeTransport() == TypeTransportBus.DIALOG_SUCCESS && transport.getSender().equals(LoginFragment.class.getSimpleName())) {
-                            loadDataUserToView();
+                            loadInfoLoginToView();
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -72,7 +71,7 @@ public class PageAccountFragment extends BaseFragment {
                     public void accept(Throwable throwable) throws Exception {
 
                     }
-                });
+                }));
     }
 
     @Nullable
@@ -82,88 +81,19 @@ public class PageAccountFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
         linearLayoutLogout = view.findViewById(R.id.layoutLogout);
+        linearLayoutFavorite = view.findViewById(R.id.tvFavorite);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
-        loadDataUserToView();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        linearLayoutLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
-            }
-        });
-        linearLayoutLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mViewModel.getEmailFromLocal().equals("")) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-                    dialog.setCancelable(false);
-                    dialog.setTitle("Thông báo!");
-                    dialog.setMessage("Bạn có muốn đăng xuất?");
-                    dialog.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            mViewModel.clearToken();
-                            mViewModel.clearEmail();
-                            loadDataUserToView();
-                        }
-                    })
-                            .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //Action for "Cancel".
-                                }
-                            });
 
-                    final AlertDialog alert = dialog.create();
-                    alert.show();
-                } else {
-                    Toast.makeText(getContext(),
-                            "Bạn chưa đăng nhập",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
-        linearLayoutTrinhDoTiengAnh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLoadingDialog();
-                mViewModel.getListLevelFromServer()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(new SingleObserver<List<String>>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(List<String> strings) {
-                                dismissLoadingDialog();
-                                showDialog(strings.toArray(new String[]{}), mViewModel.getLevelSelected());
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                ApiExceptionResponse response = ((ApiExceptionResponse) e);
-                                if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
-                                    Gson gson = new Gson();
-                                    ErrorUnauthorizedRespone dataError = gson.fromJson(response.getMessageError(), ErrorUnauthorizedRespone.class);
-                                    showToastRequirementLogin(dataError.getDetail());
-                                } else {
-                                    showApiErrorDialog();
-                                }
-                            }
-                        });
-            }
-        });
+        loadInfoLoginToView();
+        initEventView();
     }
 
     private void initDialog() {
@@ -192,8 +122,8 @@ public class PageAccountFragment extends BaseFragment {
         dialog.show();
     }
 
-    private void loadDataUserToView() {
-        if (!mViewModel.getEmailFromLocal().equals("") && !mViewModel.getTokenFromLocal().equals("")) {
+    private void loadInfoLoginToView() {
+        if (mViewModel.isLogin()) {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);
             linearLayoutLogout.setVisibility(View.VISIBLE);
@@ -225,5 +155,92 @@ public class PageAccountFragment extends BaseFragment {
                         showApiErrorDialog();
                     }
                 });
+    }
+
+    private void initEventView() {
+        linearLayoutLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
+            }
+        });
+        linearLayoutLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewModel.isLogin()) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                    dialog.setCancelable(false);
+                    dialog.setTitle("Thông báo!");
+                    dialog.setMessage("Bạn có muốn đăng xuất?");
+                    dialog.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            mViewModel.clearToken();
+                            mViewModel.clearEmail();
+                            loadInfoLoginToView();
+                        }
+                    })
+                            .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Action for "Cancel".
+                                }
+                            });
+
+                    final AlertDialog alert = dialog.create();
+                    alert.show();
+                } else {
+                    showToastRequirementLogin("");
+                }
+            }
+
+        });
+        linearLayoutFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewModel.isLogin()) {
+                    replaceFragment(R.id.layoutPageAccountContainer, new FavoriteFragment(), true);
+                } else {
+                    showToastRequirementLogin("");
+                }
+            }
+        });
+        linearLayoutTrinhDoTiengAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mViewModel.isLogin()) {
+                    showToastRequirementLogin("");
+                    return;
+                }
+                showLoadingDialog();
+                mViewModel.getListLevelFromServer()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new SingleObserver<List<String>>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(List<String> strings) {
+                                dismissLoadingDialog();
+                                showDialog(strings.toArray(new String[]{}), mViewModel.getLevelSelected());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ApiExceptionResponse response = ((ApiExceptionResponse) e);
+                                if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                                    Gson gson = new Gson();
+                                    ErrorUnauthorizedRespone dataError = gson.fromJson(response.getMessageError(), ErrorUnauthorizedRespone.class);
+                                    showToastRequirementLogin(dataError.getDetail());
+                                } else {
+                                    showApiErrorDialog();
+                                }
+                            }
+                        });
+            }
+        });
     }
 }

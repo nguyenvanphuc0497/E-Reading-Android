@@ -18,5 +18,6 @@
     <!--Pager Account-->
     <string name="page_account_header_title">Tài khoản</string>
     <string name="page_account_login_info_default">Đăng nhập</string>
+    <string name="toast_requirement_login">Trước tiên bạn hãy đăng nhập.</string>
 
 </resources>
