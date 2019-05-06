@@ -5,6 +5,7 @@ import com.dtu.capstone2.ereading.network.ApiServer;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
@@ -13,8 +14,8 @@ import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
-import com.dtu.capstone2.ereading.network.response.LevelEnglishReponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
+import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -49,13 +50,8 @@ public class EReadingRemoteDataSource {
         return mApiServer.registerAccount(accountRegisterRequest);
     }
 
-    public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
-        return mApiServer.getListLevelEnglish().map(new Function<LevelEnglishReponse, List<LevelEnglish>>() {
-            @Override
-            public List<LevelEnglish> apply(LevelEnglishReponse levelEnglishReponse) {
-                return levelEnglishReponse.getLevels();
-            }
-        });
+    public Single<ListLevelEnglishResponse> getLevelEnglishFromServer() {
+        return mApiServer.getListLevelEnglish();
     }
 
     public Single<LevelEnglish> setLevelEnglishForUser(int levelPosition) {
@@ -65,6 +61,10 @@ public class EReadingRemoteDataSource {
                 return levelUserResponse.getLevel();
             }
         });
+    }
+
+    public Single<DataFavoriteReponse> getDataFavorite() {
+        return mApiServer.getDataFavorite();
     }
 
     public Single<DetailResponse> setListVocabularyFavorite(List<Vocabulary> vocabularyList) {

@@ -4,6 +4,7 @@ import com.dtu.capstone2.ereading.network.remote.EReadingRemoteDataSource;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
@@ -11,6 +12,7 @@ import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
+import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -47,7 +49,7 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.registerNewAccount(accountRegisterRequest);
     }
 
-    public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
+    public Single<ListLevelEnglishResponse> getLevelEnglishFromServer() {
         return eReadingRemoteDataSource.getLevelEnglishFromServer();
     }
 
@@ -57,6 +59,10 @@ public class EReadingRepository {
 
     public Single<DetailResponse> setListVocabularyFavorite(List<Vocabulary> vocabularyList) {
         return eReadingRemoteDataSource.setListVocabularyFavorite(vocabularyList);
+    }
+
+    public Single<DataFavoriteReponse> getDataFavorite() {
+        return eReadingRemoteDataSource.getDataFavorite();
     }
 
     public Single<DataStringReponse> translateNewFeed(String urlNewFeed, int positionContent, String wordContent) {

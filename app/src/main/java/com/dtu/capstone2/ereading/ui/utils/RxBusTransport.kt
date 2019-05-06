@@ -40,4 +40,5 @@ enum class TypeTransportBus(val typeValue: String) {
     CALL_BACK_DIALOG_ERROR_MESSAGE("call_back_dialog_error_message"),
     SPAN_ON_CLICK("span_on_click"),
     TOAST_WITH_MESSAGE_SELECT_WORD("toast_when_select_word_exist"),
+    TOAST_REQUIREMENT_LOGIN("toast_requirement_login"),
 }

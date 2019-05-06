@@ -2,6 +2,7 @@ package com.dtu.capstone2.ereading.ui.account;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
+import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ class PageAccountViewModel {
     private EReadingRepository mEReadingRepository;
     private LocalRepository mLocalRepository;
     private List<String> nameLevels = new ArrayList<>();
+    private int levelSelected = -1;
 
     PageAccountViewModel(EReadingRepository eReadingRepository, LocalRepository localRepository) {
         mEReadingRepository = eReadingRepository;
@@ -25,31 +27,33 @@ class PageAccountViewModel {
     }
 
     Single<List<String>> getListLevelFromServer() {
-        return mEReadingRepository.getLevelEnglishFromServer().doOnSuccess(new Consumer<List<LevelEnglish>>() {
-            @Override
-            public void accept(List<LevelEnglish> levelEnglishes) throws Exception {
-                nameLevels.clear();
-                for (LevelEnglish e : levelEnglishes) {
-                    nameLevels.add(e.getName());
-                }
-            }
-        }).map(new Function<List<LevelEnglish>, List<String>>() {
-            @Override
-            public List<String> apply(List<LevelEnglish> levelEnglishes) throws Exception {
-                List<String> lists = new ArrayList<>();
-                for (LevelEnglish e : levelEnglishes) {
-                    lists.add(e.getName());
-                }
-                return lists;
-            }
-        });
+        return mEReadingRepository.getLevelEnglishFromServer()
+                .doOnSuccess(new Consumer<ListLevelEnglishResponse>() {
+                    @Override
+                    public void accept(ListLevelEnglishResponse listLevelEnglishResponse) throws Exception {
+                        nameLevels.clear();
+                        for (LevelEnglish e : listLevelEnglishResponse.getLevels()) {
+                            nameLevels.add(e.getName());
+                        }
+                        levelSelected = listLevelEnglishResponse.getLevelSelected();
+                    }
+                }).map(new Function<ListLevelEnglishResponse, List<String>>() {
+                    @Override
+                    public List<String> apply(ListLevelEnglishResponse listLevelEnglishResponse) throws Exception {
+                        List<String> lists = new ArrayList<>();
+                        for (LevelEnglish e : listLevelEnglishResponse.getLevels()) {
+                            lists.add(e.getName());
+                        }
+                        return lists;
+                    }
+                });
     }
 
-    public void clearToken() {
+    void clearToken() {
         mLocalRepository.clearTokenUser();
     }
 
-    public void clearEmail() {
+    void clearEmail() {
         mLocalRepository.clearEmailUser();
     }
 
@@ -66,7 +70,11 @@ class PageAccountViewModel {
         });
     }
 
-    String getTokenFromLocal() {
-        return mLocalRepository.getTokenUser();
+    Boolean isLogin() {
+        return mLocalRepository.isLogin();
+    }
+
+    int getLevelSelected() {
+        return levelSelected;
     }
 }
