@@ -10,6 +10,7 @@ import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
+import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 
@@ -46,7 +47,7 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.registerNewAccount(accountRegisterRequest);
     }
 
-    public Single<List<LevelEnglish>> getLevelEnglishFromServer() {
+    public Single<ListLevelEnglishResponse> getLevelEnglishFromServer() {
         return eReadingRemoteDataSource.getLevelEnglishFromServer();
     }
 

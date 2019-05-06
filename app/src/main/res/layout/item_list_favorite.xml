@@ -10,6 +10,7 @@
         android:id="@+id/lltext"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +21,8 @@
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="20dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvNghia"
             android:layout_width="match_parent"
@@ -38,8 +40,6 @@
         android:background="#000"
         app:layout_constraintTop_toBottomOf="@id/lltext"
         android:layout_marginTop="7dp"
-        android:layout_marginHorizontal="20dp"
-        >
-    </LinearLayout>
+        android:layout_marginHorizontal="20dp"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
