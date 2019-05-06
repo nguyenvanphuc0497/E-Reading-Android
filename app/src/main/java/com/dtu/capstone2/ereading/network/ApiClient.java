@@ -40,7 +40,7 @@ public class ApiClient {
     }
 
     public ApiServer createServer() {
-        String mBaseUrl = "http://ereading.eastus.cloudapp.azure.com:8000/api/";
+        String mBaseUrl = "http://172.18.28.197:8000/api/";
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 

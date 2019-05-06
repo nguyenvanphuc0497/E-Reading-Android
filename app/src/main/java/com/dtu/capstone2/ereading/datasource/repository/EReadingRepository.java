@@ -57,8 +57,8 @@ public class EReadingRepository {
     public Single<DetailResponse> setListVocabularyFavorite(List<Vocabulary> vocabularyList) {
         return eReadingRemoteDataSource.setListVocabularyFavorite(vocabularyList);
     }
-    public  Single<DataFavoriteReponse> getDataFavorite()
-    {
-        return  eReadingRemoteDataSource.getDataFavorite();
+
+    public Single<DataFavoriteReponse> getDataFavorite() {
+        return eReadingRemoteDataSource.getDataFavorite();
     }
 }
