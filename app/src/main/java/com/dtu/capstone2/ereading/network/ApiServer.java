@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.network;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
+import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
@@ -54,6 +55,9 @@ public interface ApiServer {
 
     @POST("v1/portal/level")
     Single<LevelUserResponse> setLevelEnglishForUser(@Query("level_position") int levelPosition);
+
+    @GET("v1/portal/favorite")
+    Single<DataFavoriteReponse> getDataFavorite();
 
     @POST("v1/portal/favorite")
     Single<DetailResponse> setListVocabularyFavorite(@Body ListVocabularyFavoriteRequest listVocabularyFavoriteRequest);

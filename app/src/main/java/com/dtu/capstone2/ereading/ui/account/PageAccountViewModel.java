@@ -45,11 +45,11 @@ class PageAccountViewModel {
         });
     }
 
-    public void clearToken() {
+    void clearToken() {
         mLocalRepository.clearTokenUser();
     }
 
-    public void clearEmail() {
+    void clearEmail() {
         mLocalRepository.clearEmailUser();
     }
 
@@ -66,7 +66,7 @@ class PageAccountViewModel {
         });
     }
 
-    String getTokenFromLocal() {
-        return mLocalRepository.getTokenUser();
+    Boolean isLogin() {
+        return mLocalRepository.isLogin();
     }
 }

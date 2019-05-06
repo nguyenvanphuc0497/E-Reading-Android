@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
+import com.dtu.capstone2.ereading.ui.favorite.FavoriteFragment;
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
@@ -47,6 +49,7 @@ public class PageAccountFragment extends BaseFragment {
     private LinearLayout linearLayoutLogin;
     private LinearLayout linearLayoutTrinhDoTiengAnh;
     private LinearLayout linnearLayoutLogout;
+    private LinearLayout linearLayoutFavorite;
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
@@ -81,6 +84,7 @@ public class PageAccountFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_page_account, container, false);
         linearLayoutLogin = view.findViewById(R.id.llLogin);
+        linearLayoutFavorite = view.findViewById(R.id.tvFavorite);
         linnearLayoutLogout = view.findViewById(R.id.layoutLogout);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
@@ -101,7 +105,7 @@ public class PageAccountFragment extends BaseFragment {
         linnearLayoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mViewModel.getEmailFromLocal().equals("")) {
+                if (mViewModel.isLogin()) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     dialog.setCancelable(false);
                     dialog.setTitle("Thông báo!");
@@ -124,12 +128,23 @@ public class PageAccountFragment extends BaseFragment {
                     final AlertDialog alert = dialog.create();
                     alert.show();
                 } else {
-                    Toast.makeText(getContext(),
-                            "Bạn chưa đăng nhập",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
                 }
             }
 
+        });
+        linearLayoutFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewModel.isLogin()) {
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.layoutPageAccountContainer, new FavoriteFragment());
+                    ft.commit();
+                } else {
+                    Toast.makeText(getContext(), "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
         linearLayoutTrinhDoTiengAnh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +208,7 @@ public class PageAccountFragment extends BaseFragment {
     }
 
     private void loadDataUserToView() {
-        if (!mViewModel.getEmailFromLocal().equals("") && !mViewModel.getTokenFromLocal().equals("")) {
+        if (mViewModel.isLogin()) {
             tvEmailUser.setText(mViewModel.getEmailFromLocal());
             linearLayoutLogin.setEnabled(false);
             linnearLayoutLogout.setVisibility(View.VISIBLE);

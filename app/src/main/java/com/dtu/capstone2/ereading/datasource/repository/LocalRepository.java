@@ -33,7 +33,10 @@ public class LocalRepository {
     public void clearTokenUser() {
         mShaPre.edit().remove(KEY_TOKEN_USER).apply();
     }
-    public void clearEmailUser() { mShaPre.edit().remove(KEY_EMAIL_USER).apply();}
+
+    public void clearEmailUser() {
+        mShaPre.edit().remove(KEY_EMAIL_USER).apply();
+    }
 
     public void saveEmailUser(String email) {
         SharedPreferences.Editor editor = mShaPre.edit();
@@ -53,5 +56,9 @@ public class LocalRepository {
 
     public String getNameLevelUser() {
         return mShaPre.getString(KEY_NAME_LEVEL_USER, "");
+    }
+
+    public Boolean isLogin() {
+        return !getTokenUser().isEmpty();
     }
 }
