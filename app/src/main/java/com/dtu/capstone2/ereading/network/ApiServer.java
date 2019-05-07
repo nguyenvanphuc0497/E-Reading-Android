@@ -5,6 +5,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.network.request.DataRequestDeleteFavorite;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
@@ -19,6 +20,7 @@ import com.dtu.capstone2.ereading.network.response.Token;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -69,4 +71,7 @@ public interface ApiServer {
 
     @POST("v1/translate/feed/refresh")
     Single<DataStringReponse> translateNewFeedAgain(@Body TranslateNewFeedAgainRequest translateNewFeedAgainRequest);
+
+    @DELETE("v1/portal/favorite/{idfavorite}")
+    Single<DataRequestDeleteFavorite> deleteFavorite(@Path (value = "idfavorite", encoded = true) int data);
 }

@@ -7,6 +7,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.network.request.DataRequestDeleteFavorite;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
@@ -77,5 +78,10 @@ public class EReadingRemoteDataSource {
 
     public Single<DataStringReponse> translateNewFeedAgain(TranslateNewFeedAgainRequest translateNewFeedAgainRequest) {
         return mApiServer.translateNewFeedAgain(translateNewFeedAgainRequest);
+    }
+
+    public  Single<DataRequestDeleteFavorite> deleteFavorite(int id)
+    {
+        return mApiServer.deleteFavorite(id);
     }
 }
