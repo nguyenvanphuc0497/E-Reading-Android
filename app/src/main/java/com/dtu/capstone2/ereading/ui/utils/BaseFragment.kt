@@ -54,4 +54,14 @@ abstract class BaseFragment : Fragment() {
             this.commit()
         }
     }
+
+    protected fun addFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true) {
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            if (addBackStack) {
+                this.addToBackStack(null)
+            }
+            this.add(container, fragment)
+            this.commit()
+        }
+    }
 }

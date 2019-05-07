@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
-import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
+import com.dtu.capstone2.ereading.ui.account.register.RegisterFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
@@ -123,10 +122,7 @@ public class LoginFragment extends BaseFragment {
         btnLoginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.layoutManagerAccountContainerActivity, new FragmentRegister());
-                ft.addToBackStack(null);
-                ft.commit();
+                addFragment(R.id.layoutManagerAccountContainerActivity, new RegisterFragment(), true);
             }
         });
     }

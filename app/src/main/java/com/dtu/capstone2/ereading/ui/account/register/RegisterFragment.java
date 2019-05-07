@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by Nguyen Van Phuc on 4/1/19
  */
-public class FragmentRegister extends BaseFragment {
+public class RegisterFragment extends BaseFragment {
     private final String TAG = getClass().getSimpleName();
 
     private RegisterViewModel viewModel;
