@@ -30,9 +30,7 @@
             android:id="@+id/tvLoginUsername"
             style="@style/InputEditTextAccounts"
             android:hint="User Name"
-            android:inputType="text"
-            android:maxLength="24"
-            android:maxLines="1" />
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -49,9 +47,7 @@
             android:id="@+id/tvLoginPassword"
             style="@style/InputEditTextAccounts"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            android:maxLines="1" />
+            android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

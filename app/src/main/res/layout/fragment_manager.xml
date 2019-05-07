@@ -25,8 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@string/page_account_login_info_default"
-            android:textSize="40sp" />
+            android:textColor="@color/colorMainApp"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
     <LinearLayout
