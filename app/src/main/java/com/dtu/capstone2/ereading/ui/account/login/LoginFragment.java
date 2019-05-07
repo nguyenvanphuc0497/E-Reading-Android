@@ -18,7 +18,7 @@ import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.register.RegisterFragment;
-import com.dtu.capstone2.ereading.ui.model.AccountRegisterErrorResponse;
+import com.dtu.capstone2.ereading.ui.model.AccountErrorResponse;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
@@ -97,7 +97,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                 break;
             }
             case R.id.btnLoginRegister: {
-                addFragment(R.id.layoutManagerAccountContainerActivity, new RegisterFragment(), true);
+                replaceFragment(R.id.layoutManagerAccountContainerActivity, new RegisterFragment(), true);
                 break;
             }
         }
@@ -108,11 +108,15 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         Log.e("xxx", "" + v.getId() + "::" + hasFocus);
         switch (v.getId()) {
             case R.id.tvLoginUsername: {
-                clearErrorMessageOnLayout();
+                if (hasFocus && layoutUsername.getError() != null) {
+                    layoutUsername.setError(null);
+                }
                 break;
             }
             case R.id.tvLoginPassword: {
-                clearErrorMessageOnLayout();
+                if (hasFocus && layoutPassword.getError() != null) {
+                    layoutPassword.setError(null);
+                }
                 break;
             }
         }
@@ -148,9 +152,9 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                         if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
                             try {
                                 Gson gson = new Gson();
-                                AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
-                                layoutUsername.setError(registerError.getUserNameError());
-                                layoutPassword.setError(registerError.getPasswordError());
+                                AccountErrorResponse accountErrorResponse = gson.fromJson(response.getMessageError(), AccountErrorResponse.class);
+                                layoutUsername.setError(accountErrorResponse.getUserNameError());
+                                layoutPassword.setError(accountErrorResponse.getPasswordError());
                             } catch (Exception ex) {
                                 Log.e(TAG, ex.getMessage());
                             }
