@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,13 +104,17 @@ public class RegisterFragment extends BaseFragment {
                                 dismissLoadingDialog();
                                 ApiExceptionResponse response = ((ApiExceptionResponse) e);
                                 if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
-                                    Gson gson = new Gson();
-                                    AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
+                                    try {
+                                        Gson gson = new Gson();
+                                        AccountRegisterErrorResponse registerError = gson.fromJson(response.getMessageError(), AccountRegisterErrorResponse.class);
 
-                                    layoutUserName.setError(registerError.getUserNameError());
-                                    layoutEmail.setError(registerError.getEmailError());
-                                    layoutPassword.setError(registerError.getPasswordError());
-                                    layoutPasswordConfirm.setError(registerError.getPasswordConfirmError());
+                                        layoutUserName.setError(registerError.getUserNameError());
+                                        layoutEmail.setError(registerError.getEmailError());
+                                        layoutPassword.setError(registerError.getPasswordError());
+                                        layoutPasswordConfirm.setError(registerError.getPasswordConfirmError());
+                                    } catch (Exception ex) {
+                                        Log.e(TAG, ex.getMessage());
+                                    }
                                 } else {
                                     showApiErrorDialog();
                                 }
