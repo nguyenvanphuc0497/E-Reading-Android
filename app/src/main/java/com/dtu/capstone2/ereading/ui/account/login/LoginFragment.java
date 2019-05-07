@@ -35,8 +35,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     public final String TAG = getClass().getSimpleName();
 
     LoginViewModel loginviewmodel;
-    private String strUserName;
-    private String strPassword;
     private EditText edtUsername;
     private EditText edtPassword;
     private Button btnLogin;
@@ -62,6 +60,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                     public void accept(Transport transport) throws Exception {
                         if (transport.getTypeTransport() == TypeTransportBus.CALL_BACK_DIALOG_SUCCESS_DISMISS) {
                             getActivity().finish();
+                            getActivity().overridePendingTransition(R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right);
                         }
                     }
                 }));
@@ -97,7 +96,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                 break;
             }
             case R.id.btnLoginRegister: {
-                replaceFragment(R.id.layoutManagerAccountContainerActivity, new RegisterFragment(), true);
+                replaceFragment(R.id.layoutManagerAccountContainerActivity, new RegisterFragment(), true, true);
                 break;
             }
         }
@@ -130,8 +129,8 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void eventOnLoginClicked() {
-        strUserName = edtUsername.getText().toString().trim();
-        strPassword = edtPassword.getText().toString().trim();
+        String strUserName = edtUsername.getText().toString().trim();
+        String strPassword = edtPassword.getText().toString().trim();
         clearErrorMessageOnLayout();
 
         showLoadingDialog();

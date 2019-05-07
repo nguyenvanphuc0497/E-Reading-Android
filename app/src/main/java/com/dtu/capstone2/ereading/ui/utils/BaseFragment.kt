@@ -2,6 +2,7 @@ package com.dtu.capstone2.ereading.ui.utils
 
 import android.content.Context
 import android.support.v4.app.Fragment
+import com.dtu.capstone2.ereading.R
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -45,8 +46,12 @@ abstract class BaseFragment : Fragment() {
         RxBusTransport.publish(Transport(TypeTransportBus.TOAST_REQUIREMENT_LOGIN, message = message))
     }
 
-    protected fun replaceFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true) {
+    protected fun replaceFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true, enableAnimation: Boolean = true) {
         activity?.supportFragmentManager?.beginTransaction()?.apply {
+            if (enableAnimation) {
+                this.setCustomAnimations(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left,
+                        R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right)
+            }
             if (addBackStack) {
                 this.addToBackStack(null)
             }
@@ -55,8 +60,12 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    protected fun addFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true) {
+    protected fun addFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true, enableAnimation: Boolean = true) {
         activity?.supportFragmentManager?.beginTransaction()?.apply {
+            if (enableAnimation) {
+                this.setCustomAnimations(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left,
+                        R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right)
+            }
             if (addBackStack) {
                 this.addToBackStack(null)
             }

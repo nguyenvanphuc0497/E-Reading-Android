@@ -15,8 +15,12 @@ public class ManagerAccountContainerActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_account_container);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layoutManagerAccountContainerActivity, new LoginFragment())
-                .commit();
+        replaceFragment(R.id.layoutManagerAccountContainerActivity, new LoginFragment(), false, true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right);
     }
 }
