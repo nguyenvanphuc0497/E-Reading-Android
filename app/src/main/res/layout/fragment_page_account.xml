@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvPageAccountHeaderTitle">
 
-        <include layout="@layout/fragment_maneger" />
+        <include layout="@layout/fragment_manager" />
     </ScrollView>
 </RelativeLayout>
