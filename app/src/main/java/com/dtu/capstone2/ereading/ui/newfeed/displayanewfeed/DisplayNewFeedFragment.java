@@ -1,13 +1,16 @@
 package com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed;
 
-import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -22,11 +25,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Create by Nguyen Van Phuc on 4/7/19
  */
-public class DisplayNewFeedFragment extends BaseFragment {
+public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private WebView mWebViewNewFeed;
     private DisplayNewFeedViewModel mViewModel;
     private ImageView imgBack;
     private ImageView imgTranslate;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class DisplayNewFeedFragment extends BaseFragment {
         mWebViewNewFeed.getSettings().setJavaScriptEnabled(true);
         imgBack = view.findViewById(R.id.imgDisplayNewFeedBack);
         imgTranslate = view.findViewById(R.id.imgDisplayNewFeedTranslate);
+        swipeRefreshLayout = view.findViewById(R.id.layout_swipe_refresh_display_new_feed);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
 
         return view;
     }
@@ -59,6 +65,11 @@ public class DisplayNewFeedFragment extends BaseFragment {
 
         initEventsView();
         mWebViewNewFeed.loadUrl(mViewModel.getUrlNewFeed());
+    }
+
+    @Override
+    public void onRefresh() {
+        mWebViewNewFeed.reload();
     }
 
     private void initEventsView() {
@@ -72,7 +83,20 @@ public class DisplayNewFeedFragment extends BaseFragment {
         mWebViewNewFeed.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                swipeRefreshLayout.setRefreshing(false);
+            }
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                swipeRefreshLayout.setRefreshing(true);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -90,5 +114,7 @@ public class DisplayNewFeedFragment extends BaseFragment {
                 ft.commit();
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 }
