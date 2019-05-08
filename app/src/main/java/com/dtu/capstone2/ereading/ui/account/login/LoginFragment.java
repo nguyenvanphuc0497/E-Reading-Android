@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
@@ -38,7 +39,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     private EditText edtUsername;
     private EditText edtPassword;
     private Button btnLogin;
-    private Button btnLoginRegister;
+    private TextView btnLoginRegister;
     private TextInputLayout layoutPassword;
     private TextInputLayout layoutUsername;
 

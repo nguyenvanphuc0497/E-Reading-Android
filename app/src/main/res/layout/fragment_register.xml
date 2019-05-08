@@ -29,7 +29,7 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/edtRegisterUserName"
             style="@style/InputEditTextAccounts"
-            android:hint="User Name"
+            android:hint="Tên đăng nhập"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -60,7 +60,7 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/edtRegisterPassword"
             style="@style/InputEditTextAccounts"
-            android:hint="Password"
+            android:hint="Mật khẩu"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -75,7 +75,7 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/edtRegisterPasswordConfirm"
             style="@style/InputEditTextAccounts"
-            android:hint="Password Confirm"
+            android:hint="Nhập lại mật khẩu"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -86,7 +86,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_button_main_app"
-        android:text="Continue"
+        android:text="Tiếp tục"
         android:textColor="@color/colorMainApp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
