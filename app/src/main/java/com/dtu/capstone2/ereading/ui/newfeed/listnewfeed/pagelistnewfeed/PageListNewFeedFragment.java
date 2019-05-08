@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +39,7 @@ public class PageListNewFeedFragment extends BaseFragment {
         mViewModel = new PageListNewFeedViewModel();
         if (getArguments() != null) {
             mViewModel.setmUrlEndPoint(getArguments().getString(ListNewFeedPagerAdapter.KEY_URL_END_POINT));
+            mViewModel.setTypeNewFeed(getArguments().getString(ListNewFeedPagerAdapter.KEY_TYPE_NEW_FEED));
         }
         mAdapter = new PageListNewFeedAdapter(mViewModel.getListRssItemResponse(), getActivity());
     }
@@ -81,13 +81,10 @@ public class PageListNewFeedFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 String urlNewFeed = mViewModel.getListRssItemResponse().get(position).getLink();
                 bundle.putString(Constants.KEY_URL_NEW_FEED, urlNewFeed);
+                bundle.putString(Constants.KEY_TYPE_NEW_FEED, mViewModel.getTypeNewFeed());
                 Fragment fragment = new DisplayNewFeedFragment();
                 fragment.setArguments(bundle);
-
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.layoutPageNewFeedContainer, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                addFragment(R.id.layoutPageNewFeedContainer, fragment, true, true);
             }
         });
     }

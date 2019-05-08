@@ -90,9 +90,6 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             R.id.imgTranslateNewFeedBack -> {
                 activity?.onBackPressed()
             }
-            R.id.imgTranslateNewFeedHighLight -> {
-            }//                mTextSpannableResults.removeSpan(new);
-            //                mTvWordsResultTitle.setText(mTextSpannableResults);
             R.id.imgTranslateNewFeedRefresh -> {
                 with(viewModel) {
                     if (!isLogin()) {
@@ -177,7 +174,6 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
 
     private fun initEventsView() {
         imgTranslateNewFeedBack?.setOnClickListener(this)
-        imgTranslateNewFeedHighLight?.setOnClickListener(this)
         imgTranslateNewFeedRefresh?.setOnClickListener(this)
         imgTranslateNewFeedFavoriteReview?.setOnClickListener(this)
     }

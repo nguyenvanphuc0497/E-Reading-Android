@@ -25,19 +25,22 @@
             android:padding="10dp"
             android:src="@drawable/ic_back_default" />
 
-        <ImageView
-            android:id="@+id/imgTranslateNewFeedHighLight"
-            android:layout_width="?android:attr/actionBarSize"
+        <TextView
+            android:id="@+id/tv_translate_new_feed_level"
+            android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentRight="true"
-            android:padding="15dp"
-            android:src="@drawable/ic_high_light_open" />
+            android:layout_toLeftOf="@id/imgTranslateNewFeedFavoriteReview"
+            android:layout_toRightOf="@id/imgTranslateNewFeedBack"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            tools:text="Level: Chưa biết gì." />
 
         <ImageView
             android:id="@+id/imgTranslateNewFeedRefresh"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="?android:attr/actionBarSize"
-            android:layout_toLeftOf="@id/imgTranslateNewFeedHighLight"
+            android:layout_toLeftOf="@id/view_neo_view_when_gone"
             android:padding="15dp"
             android:src="@drawable/ic_refresh"
             android:visibility="gone"
@@ -87,7 +90,12 @@
             tools:text="99+"
             tools:visibility="visible" />
 
-        <!--các icon title sẽ nằm ở phía sau này-->
+        <View
+            android:id="@+id/view_neo_view_when_gone"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <TextView

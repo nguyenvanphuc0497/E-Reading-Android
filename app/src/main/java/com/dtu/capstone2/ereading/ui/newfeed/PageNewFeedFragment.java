@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,15 +68,11 @@ public class PageNewFeedFragment extends BaseFragment {
         mAdapter.setmItemPageNewFeeds(new PageNewFeedAdapter.OnItemListener() {
             @Override
             public void onItemClick(int position) {
-                //TODO Send position to Activity để mở fragment
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
                 bundle.putInt(KEY_POSITION_GROUP_NEW_FEED, position);
                 Fragment fragment = new ListNewFeedFragment();
                 fragment.setArguments(bundle);
-                ft.add(R.id.layoutPageNewFeedContainer, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                addFragment(R.id.layoutPageNewFeedContainer, fragment, true, true);
             }
         });
     }

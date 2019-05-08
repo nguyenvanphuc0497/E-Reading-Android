@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.newfeed.translate.TranslateNewFeedFragment;
@@ -31,6 +31,7 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
     private ImageView imgBack;
     private ImageView imgTranslate;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvTypeDisplayNewFeed;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
         if (getArguments() != null) {
             String parseUrl = getArguments().getString(Constants.KEY_URL_NEW_FEED);
             mViewModel.setUrlNewFeed(parseUrl);
+            mViewModel.setTypeNewFeed(getArguments().getString(Constants.KEY_TYPE_NEW_FEED));
         }
     }
 
@@ -55,6 +57,7 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
         imgTranslate = view.findViewById(R.id.imgDisplayNewFeedTranslate);
         swipeRefreshLayout = view.findViewById(R.id.layout_swipe_refresh_display_new_feed);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
+        tvTypeDisplayNewFeed = view.findViewById(R.id.tv_display_new_feed_type);
 
         return view;
     }
@@ -73,6 +76,8 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
     }
 
     private void initEventsView() {
+        tvTypeDisplayNewFeed.setText(mViewModel.getTypeNewFeed());
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,15 +108,12 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
         imgTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new TranslateNewFeedFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.KEY_URL_NEW_FEED, mViewModel.getUrlNewFeed());
+                bundle.putString(Constants.KEY_TYPE_NEW_FEED, mViewModel.getTypeNewFeed());
                 fragment.setArguments(bundle);
-
-                ft.add(R.id.layoutPageNewFeedContainer, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                addFragment(R.id.layoutPageNewFeedContainer, fragment, true, true);
             }
         });
 

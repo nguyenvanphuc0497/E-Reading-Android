@@ -17,6 +17,7 @@ class PageListNewFeedViewModel {
     private RssNewFeedRepository mNewFeedRepository = new RssNewFeedRepository();
     private List<BBCRssItemResponse> mRssItemResponses = new ArrayList<>();
     private String mUrlEndPoint;
+    private String mTypeNewFeed;
 
 //    Single<RssResponse> getNewFeedOfServerCNN() {
 //        return mNewFeedRepository.getNewFeedFromServerCNN().doOnSuccess(new Consumer<RssResponse>() {
@@ -44,5 +45,13 @@ class PageListNewFeedViewModel {
 
     void setmUrlEndPoint(String mUrlEndPoint) {
         this.mUrlEndPoint = mUrlEndPoint;
+    }
+
+    void setTypeNewFeed(String mTypeNewFeed) {
+        this.mTypeNewFeed = mTypeNewFeed;
+    }
+
+    String getTypeNewFeed() {
+        return mTypeNewFeed;
     }
 }
