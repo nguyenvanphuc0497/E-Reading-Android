@@ -19,14 +19,10 @@ import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.history.HistoryFragment;
-import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
 import com.dtu.capstone2.ereading.ui.favorite.FavoriteFragment;
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
-import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
-import com.dtu.capstone2.ereading.ui.utils.Transport;
-import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -36,7 +32,6 @@ import javax.net.ssl.HttpsURLConnection;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -61,22 +56,6 @@ public class PageAccountFragment extends BaseFragment {
 
         mViewModel = new PageAccountViewModel(new EReadingRepository(), new LocalRepository(getContext()));
         initDialog();
-        RxBusTransport.INSTANCE.listen()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<Transport>() {
-                    @Override
-                    public void accept(Transport transport) throws Exception {
-                        if (transport.getTypeTransport() == TypeTransportBus.DIALOG_SUCCESS && transport.getSender().equals(LoginFragment.class.getSimpleName())) {
-                            loadInfoLoginToView();
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                    }
-                });
     }
 
     @Nullable
@@ -98,8 +77,13 @@ public class PageAccountFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadInfoLoginToView();
         initEventView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadInfoLoginToView();
     }
 
     private void initDialog() {
@@ -154,7 +138,7 @@ public class PageAccountFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(LevelEnglish levelEnglish) {
-                        showSuccessDialog("");
+                        showSuccessDialog("", true);
                     }
 
                     @Override

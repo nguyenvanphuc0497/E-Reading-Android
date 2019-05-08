@@ -56,9 +56,13 @@ abstract class BaseActivity : AppCompatActivity() {
                 TypeTransportBus.DIALOG_SUCCESS -> {
                     loadingDialog.dismiss()
                     successDialog.show(supportFragmentManager, TypeTransportBus.DIALOG_SUCCESS.typeValue)
-                    Handler().postDelayed({
-                        successDialog.dismiss()
-                    }, TIME_DELAY_DISMISS_DIALOG_SUCCESS)
+                    (it.message as? Boolean)?.let { isDelay ->
+                        if (isDelay) {
+                            Handler().postDelayed({
+                                successDialog.dismiss()
+                            }, TIME_DELAY_DISMISS_DIALOG_SUCCESS)
+                        }
+                    }
                 }
                 TypeTransportBus.DISMISS_DIALOG_LOADING -> {
                     loadingDialog.dismiss()
