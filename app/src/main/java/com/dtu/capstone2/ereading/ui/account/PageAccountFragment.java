@@ -207,7 +207,7 @@ public class PageAccountFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (mViewModel.isLogin()) {
-                    replaceFragment(R.id.layoutPageAccountContainer, new FavoriteFragment(), true, false);
+                    replaceFragment(R.id.layoutPageAccountContainer, new FavoriteFragment(), true, true);
                 } else {
                     showToastRequirementLogin("");
                 }
@@ -255,7 +255,7 @@ public class PageAccountFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (mViewModel.isLogin()) {
-                    replaceFragment(R.id.layoutPageAccountContainer, new HistoryFragment(), true);
+                    replaceFragment(R.id.layoutPageAccountContainer, new HistoryFragment(), true, true);
                 } else {
                     showToastRequirementLogin("");
                 }
