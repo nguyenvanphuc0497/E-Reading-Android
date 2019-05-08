@@ -14,6 +14,7 @@ import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
+import com.dtu.capstone2.ereading.network.response.ListHistoryResponse;
 import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
@@ -71,6 +72,9 @@ public interface ApiServer {
 
     @POST("v1/translate/feed/refresh")
     Single<DataStringReponse> translateNewFeedAgain(@Body TranslateNewFeedAgainRequest translateNewFeedAgainRequest);
+
+    @GET("v1/portal/history/new_feed")
+    Single<ListHistoryResponse> getListHistory();
 
     @DELETE("v1/portal/favorite/{idfavorite}")
     Single<FavoriteDeletedResponse> deleteFavorite(@Path (value = "idfavorite", encoded = true) int data);
