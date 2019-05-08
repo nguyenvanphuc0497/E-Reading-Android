@@ -18,6 +18,7 @@ import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
+import com.dtu.capstone2.ereading.ui.account.history.HistoryFragment;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
 import com.dtu.capstone2.ereading.ui.favorite.FavoriteFragment;
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone;
@@ -49,6 +50,7 @@ public class PageAccountFragment extends BaseFragment {
     private LinearLayout linearLayoutTrinhDoTiengAnh;
     private LinearLayout linearLayoutLogout;
     private LinearLayout linearLayoutFavorite;
+    private LinearLayout mLinearLayoutHistory;
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
@@ -85,6 +87,7 @@ public class PageAccountFragment extends BaseFragment {
         linearLayoutLogin = view.findViewById(R.id.llLogin);
         linearLayoutLogout = view.findViewById(R.id.layoutLogout);
         linearLayoutFavorite = view.findViewById(R.id.tvFavorite);
+        mLinearLayoutHistory = view.findViewById(R.id.tvHistory);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
 
@@ -244,6 +247,17 @@ public class PageAccountFragment extends BaseFragment {
                                 }
                             }
                         });
+            }
+        });
+
+        mLinearLayoutHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewModel.isLogin()) {
+                    replaceFragment(R.id.layoutPageAccountContainer, new HistoryFragment(), true);
+                } else {
+                    showToastRequirementLogin("");
+                }
             }
         });
     }

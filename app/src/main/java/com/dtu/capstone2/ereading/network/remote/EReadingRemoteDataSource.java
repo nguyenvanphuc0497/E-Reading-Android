@@ -15,6 +15,8 @@ import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
 import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
+
+import com.dtu.capstone2.ereading.network.response.ListHistoryResponse;
 import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
@@ -77,5 +79,9 @@ public class EReadingRemoteDataSource {
 
     public Single<DataStringReponse> translateNewFeedAgain(TranslateNewFeedAgainRequest translateNewFeedAgainRequest) {
         return mApiServer.translateNewFeedAgain(translateNewFeedAgainRequest);
+    }
+
+    public Single<ListHistoryResponse> getListHistory() {
+        return mApiServer.getListHistory();
     }
 }
