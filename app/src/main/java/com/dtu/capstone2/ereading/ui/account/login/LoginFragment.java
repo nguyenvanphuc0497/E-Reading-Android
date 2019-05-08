@@ -71,23 +71,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                 });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getManagerSubscribe().add(RxBusTransport.INSTANCE.listen()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<Transport>() {
-                    @Override
-                    public void accept(Transport transport) throws Exception {
-                        if (transport.getTypeTransport() == TypeTransportBus.CALL_BACK_LOGIN_SUCCESS) {
-                            getActivity().finish();
-                            getActivity().overridePendingTransition(R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right);
-                        }
-                    }
-                }));
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

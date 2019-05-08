@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
@@ -101,8 +102,10 @@ public class RegisterFragment extends BaseFragment implements View.OnClickListen
 
                         @Override
                         public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
-                            showSuccessDialog(TAG, false);
+                            dismissLoadingDialog();
                             RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.REGISTER_SUCCESS, TAG, accountRegisterRequest));
+                            Toast.makeText(getContext(), "Đăng kí tài khoản thành công! Bạn có thể đăng nhập.", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
                         }
 
                         @Override
