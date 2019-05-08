@@ -169,6 +169,7 @@ public class PageAccountFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), ManagerAccountContainerActivity.class));
+                getActivity().overridePendingTransition(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left);
             }
         });
         linearLayoutLogout.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +207,7 @@ public class PageAccountFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (mViewModel.isLogin()) {
-                    replaceFragment(R.id.layoutPageAccountContainer, new FavoriteFragment(), true);
+                    replaceFragment(R.id.layoutPageAccountContainer, new FavoriteFragment(), true, false);
                 } else {
                     showToastRequirementLogin("");
                 }
