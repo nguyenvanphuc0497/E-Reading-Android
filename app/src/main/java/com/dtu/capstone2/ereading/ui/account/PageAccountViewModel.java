@@ -49,14 +49,6 @@ class PageAccountViewModel {
                 });
     }
 
-    void clearToken() {
-        mLocalRepository.clearTokenUser();
-    }
-
-    void clearEmail() {
-        mLocalRepository.clearEmailUser();
-    }
-
     String getEmailFromLocal() {
         return mLocalRepository.getEmailUser();
     }
@@ -76,5 +68,11 @@ class PageAccountViewModel {
 
     int getLevelSelected() {
         return levelSelected;
+    }
+
+    void logOut() {
+        mLocalRepository.clearTokenUser();
+        mLocalRepository.clearEmailUser();
+        mLocalRepository.clearNameLevelUser();
     }
 }

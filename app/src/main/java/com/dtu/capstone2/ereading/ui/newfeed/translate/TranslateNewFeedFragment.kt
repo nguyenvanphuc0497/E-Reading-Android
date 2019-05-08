@@ -170,6 +170,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         adapter = TranslateNewFeedAdapter(viewModel.dataRecyclerView)
         recyclerViewTranslateNewFeed?.layoutManager = LinearLayoutManager(context)
         recyclerViewTranslateNewFeed?.adapter = adapter
+        tv_translate_new_feed_level?.text = viewModel.getNameLevelOfUser()
     }
 
     private fun initEventsView() {

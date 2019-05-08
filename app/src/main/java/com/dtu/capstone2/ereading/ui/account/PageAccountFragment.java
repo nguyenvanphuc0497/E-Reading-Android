@@ -183,8 +183,7 @@ public class PageAccountFragment extends BaseFragment {
                     dialog.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            mViewModel.clearToken();
-                            mViewModel.clearEmail();
+                            mViewModel.logOut();
                             loadInfoLoginToView();
                         }
                     })

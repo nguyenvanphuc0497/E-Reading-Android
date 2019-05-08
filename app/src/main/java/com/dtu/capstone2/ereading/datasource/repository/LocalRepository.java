@@ -61,4 +61,8 @@ public class LocalRepository {
     public Boolean isLogin() {
         return !getTokenUser().isEmpty();
     }
+
+    public void clearNameLevelUser() {
+        mShaPre.edit().remove(KEY_NAME_LEVEL_USER).apply();
+    }
 }

@@ -34,6 +34,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:textColor="@color/colorBackgroundMainApp"
             tools:text="Level: Chưa biết gì." />
 
         <ImageView
