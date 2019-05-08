@@ -9,4 +9,4 @@ import java.util.*
 data class ListHistoryResponse(@SerializedName("history_new_feed") val listData: ArrayList<ListHistory>)
 
 data class ListHistory(@SerializedName("title_new_feed") val titleNewsFeed: String,
-                        @SerializedName("introduction_new_feed") val introduction: String)
+                       @SerializedName("introduction_new_feed") val introduction: String)
