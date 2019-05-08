@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutPageAccountContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvPageAccountHeaderTitle"
@@ -19,6 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvPageAccountHeaderTitle">
 
-        <include layout="@layout/fragment_maneger" />
+        <include layout="@layout/fragment_manager" />
     </ScrollView>
 </RelativeLayout>

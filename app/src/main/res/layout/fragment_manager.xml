@@ -9,24 +9,28 @@
         android:id="@+id/llLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
-            android:background="@drawable/icon_info" />
+            android:background="@drawable/ic_logo_not_text_main_app" />
 
         <TextView
             android:id="@+id/tv_page_account_manager_email_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@string/page_account_login_info_default"
-            android:textSize="40dp" />
+            android:textColor="@color/colorMainApp"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
     <LinearLayout

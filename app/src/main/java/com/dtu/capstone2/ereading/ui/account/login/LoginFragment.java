@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
@@ -17,11 +18,13 @@ import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
-import com.dtu.capstone2.ereading.ui.account.register.FragmentRegister;
+import com.dtu.capstone2.ereading.ui.account.register.RegisterFragment;
+import com.dtu.capstone2.ereading.ui.model.AccountErrorResponse;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
+import com.google.gson.Gson;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -29,17 +32,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginFragment extends BaseFragment {
+public class LoginFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
     public final String TAG = getClass().getSimpleName();
 
     LoginViewModel loginviewmodel;
-    private String strUserName;
-    private String strPassword;
     private EditText edtUsername;
     private EditText edtPassword;
     private Button btnLogin;
-    private Button btnLoginRegister;
+    private TextView btnLoginRegister;
     private TextInputLayout layoutPassword;
+    private TextInputLayout layoutUsername;
 
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class LoginFragment extends BaseFragment {
                     public void accept(Transport transport) throws Exception {
                         if (transport.getTypeTransport() == TypeTransportBus.CALL_BACK_DIALOG_SUCCESS_DISMISS) {
                             getActivity().finish();
+                            getActivity().overridePendingTransition(R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right);
                         }
                     }
                 }));
@@ -74,6 +77,7 @@ public class LoginFragment extends BaseFragment {
         btnLogin = view.findViewById(R.id.btnSignInAccount);
         btnLoginRegister = view.findViewById(R.id.btnLoginRegister);
         layoutPassword = view.findViewById(R.id.layoutLoginPassword);
+        layoutUsername = view.findViewById(R.id.layout_login_username);
 
         return view;
     }
@@ -85,49 +89,88 @@ public class LoginFragment extends BaseFragment {
         initEvent();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSignInAccount: {
+                eventOnLoginClicked();
+                break;
+            }
+            case R.id.btnLoginRegister: {
+                replaceFragment(R.id.layoutManagerAccountContainerActivity, new RegisterFragment(), true, true);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        Log.e("xxx", "" + v.getId() + "::" + hasFocus);
+        switch (v.getId()) {
+            case R.id.tvLoginUsername: {
+                if (hasFocus && layoutUsername.getError() != null) {
+                    layoutUsername.setError(null);
+                }
+                break;
+            }
+            case R.id.tvLoginPassword: {
+                if (hasFocus && layoutPassword.getError() != null) {
+                    layoutPassword.setError(null);
+                }
+                break;
+            }
+        }
+    }
+
     private void initEvent() {
-        /*
-         * this is function typeTransport click button login*/
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                strUserName = edtUsername.getText().toString();
-                strPassword = edtPassword.getText().toString();
-                layoutPassword.setError(null);
+        btnLogin.setOnClickListener(this);
+        btnLoginRegister.setOnClickListener(this);
+        edtUsername.setOnFocusChangeListener(this);
+        edtPassword.setOnFocusChangeListener(this);
+    }
 
-                showLoadingDialog();
-                getManagerSubscribe().add(loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<DataLoginRequest>() {
-                            @Override
-                            public void accept(DataLoginRequest dataLoginRequest) throws Exception {
-                                showSuccessDialog(TAG);
+    private void eventOnLoginClicked() {
+        String strUserName = edtUsername.getText().toString().trim();
+        String strPassword = edtPassword.getText().toString().trim();
+        clearErrorMessageOnLayout();
+
+        showLoadingDialog();
+        getManagerSubscribe().add(loginviewmodel.GetDataLoginRequest(new AccountLoginRequest(strUserName, strPassword))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DataLoginRequest>() {
+                    @Override
+                    public void accept(DataLoginRequest dataLoginRequest) throws Exception {
+                        showSuccessDialog(TAG);
+                    }
+
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        dismissLoadingDialog();
+                        ApiExceptionResponse response = ((ApiExceptionResponse) throwable);
+                        if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
+                            try {
+                                Gson gson = new Gson();
+                                AccountErrorResponse accountErrorResponse = gson.fromJson(response.getMessageError(), AccountErrorResponse.class);
+                                layoutUsername.setError(accountErrorResponse.getUserNameError());
+                                layoutPassword.setError(accountErrorResponse.getPasswordError());
+                            } catch (Exception ex) {
+                                Log.e(TAG, ex.getMessage());
                             }
+                        } else {
+                            showApiErrorDialog();
+                        }
+                    }
+                }));
+    }
 
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                dismissLoadingDialog();
-                                ApiExceptionResponse response = ((ApiExceptionResponse) throwable);
-                                if (response.getStatusCode() != null && response.getStatusCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
-                                    layoutPassword.setError("Tài khoản và mật khẩu nhập vào không chính xác");
-                                } else {
-                                    showApiErrorDialog();
-                                }
-                            }
-                        }));
-            }
-        });
-
-        btnLoginRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.layoutManagerAccountContainerActivity, new FragmentRegister());
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
+    private void clearErrorMessageOnLayout() {
+        if (layoutUsername.getError() != null) {
+            layoutUsername.setError(null);
+        }
+        if (layoutPassword.getError() != null) {
+            layoutPassword.setError(null);
+        }
     }
 }

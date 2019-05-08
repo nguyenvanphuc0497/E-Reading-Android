@@ -2,6 +2,7 @@ package com.dtu.capstone2.ereading.ui.utils
 
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
@@ -84,5 +85,33 @@ abstract class BaseActivity : AppCompatActivity() {
         }, {
             Log.w("BaseActivity", ":$it")
         }))
+    }
+
+    protected fun replaceFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true, enableAnimation: Boolean = true) {
+        supportFragmentManager.beginTransaction().apply {
+            if (enableAnimation) {
+                this.setCustomAnimations(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left,
+                        R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right)
+            }
+            if (addBackStack) {
+                this.addToBackStack(null)
+            }
+            this.replace(container, fragment)
+            this.commit()
+        }
+    }
+
+    protected fun addFragment(container: Int, fragment: Fragment, addBackStack: Boolean = true, enableAnimation: Boolean = true) {
+        supportFragmentManager.beginTransaction().apply {
+            if (enableAnimation) {
+                this.setCustomAnimations(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left,
+                        R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right)
+            }
+            if (addBackStack) {
+                this.addToBackStack(null)
+            }
+            this.add(container, fragment)
+            this.commit()
+        }
     }
 }

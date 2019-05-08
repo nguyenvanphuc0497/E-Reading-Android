@@ -6,12 +6,14 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
+import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
 import com.dtu.capstone2.ereading.network.response.DetailResponse;
+import com.dtu.capstone2.ereading.network.response.ListHistoryResponse;
 import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
 import com.dtu.capstone2.ereading.network.response.Token;
 import com.dtu.capstone2.ereading.ui.model.LevelEnglish;
@@ -71,5 +73,14 @@ public class EReadingRepository {
 
     public Single<DataStringReponse> translateNewFeedAgain(String urlNewFeed, int positionContent, String wordContent, List<Vocabulary> vocabularies) {
         return eReadingRemoteDataSource.translateNewFeedAgain(new TranslateNewFeedAgainRequest(urlNewFeed, positionContent, wordContent, vocabularies));
+    }
+
+    public Single<ListHistoryResponse> getListHistory() {
+        return eReadingRemoteDataSource.getListHistory();
+    }
+
+    public Single<FavoriteDeletedResponse> deleteFavorite (int id)
+    {
+        return eReadingRemoteDataSource.deleteFavorite(id);
     }
 }
