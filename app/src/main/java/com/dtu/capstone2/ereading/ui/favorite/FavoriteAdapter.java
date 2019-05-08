@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.listFavorite;
-import com.dtu.capstone2.ereading.ui.newfeed.PageNewFeedAdapter;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.RecyclerViewHolder> {
     private List<listFavorite> mArrContact;
-    private OnItemListener onclickdelete;
+    private OnItemListener listener;
 
     FavoriteAdapter(List<listFavorite> data) {
         mArrContact = data;
@@ -28,11 +27,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_list_favorite, parent, false);
-        return new RecyclerViewHolder(view,onclickdelete);
+        return new RecyclerViewHolder(view, listener);
     }
+
     void setmItemFavorite(OnItemListener onItemListener) {
-        onclickdelete = onItemListener;
+        listener = onItemListener;
     }
+
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         listFavorite contact = mArrContact.get(position);
@@ -55,7 +56,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
             tvWord = itemView.findViewById(R.id.tvWord);
             tvMeanShort = itemView.findViewById(R.id.tvNghia);
             imgdelete = itemView.findViewById(R.id.imgdeleteitem);
-            onItemListener=onItemListener1;
+            onItemListener = onItemListener1;
             imgdelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,6 +66,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
 
         }
     }
+
     interface OnItemListener {
         void onItemClick(int position);
     }

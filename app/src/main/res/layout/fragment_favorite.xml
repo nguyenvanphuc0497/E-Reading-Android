@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundMainApp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/colorBackgroundMainApp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layoutFavoriteHeader"
@@ -34,7 +34,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleviewFavorite"
         android:layout_width="match_parent"
-        android:layout_height="727dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutFavoriteHeader" />
-
 </android.support.constraint.ConstraintLayout>

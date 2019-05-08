@@ -28,17 +28,14 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by Vo The Doan on 04/30/2019
  */
-public class FavoriteFragment extends BaseFragment{
+public class FavoriteFragment extends BaseFragment {
     private RecyclerView recycleListView;
     private List<listFavorite> listFavorite;
-    private ImageView imageListFavoriteBack;
-    private ImageView imgDeleteFavorite;
     FavoriteViewModel favoriteViewModal = new FavoriteViewModel();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -47,7 +44,7 @@ public class FavoriteFragment extends BaseFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         recycleListView = view.findViewById(R.id.recycleviewFavorite);
-        imageListFavoriteBack = view.findViewById(R.id.imgListFavoriteBack);
+        ImageView imageListFavoriteBack = view.findViewById(R.id.imgListFavoriteBack);
         listFavorite = new ArrayList<>();
 
         getManagerSubscribe().add(favoriteViewModal.getDataFavorite()
@@ -67,14 +64,14 @@ public class FavoriteFragment extends BaseFragment{
                         arrayAdapter.setmItemFavorite(new FavoriteAdapter.OnItemListener() {
                             @Override
                             public void onItemClick(final int position) {
-                                int iditem=listFavorite.get(position).getIntId();
+                                int iditem = listFavorite.get(position).getIntId();
                                 getManagerSubscribe().add(favoriteViewModal.deleteFavorite(iditem)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Consumer<DataRequestDeleteFavorite>() {
                                             @Override
                                             public void accept(DataRequestDeleteFavorite dataLoginRequest) throws Exception {
-                                                Toast.makeText(getContext(),"Đã xóa thành công",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getContext(), "Đã xóa thành công", Toast.LENGTH_LONG).show();
                                                 listFavorite.remove(position);
                                                 arrayAdapter.notifyDataSetChanged();
                                             }
