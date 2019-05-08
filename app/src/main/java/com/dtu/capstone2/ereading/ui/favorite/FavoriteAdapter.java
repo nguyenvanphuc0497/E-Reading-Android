@@ -39,6 +39,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
         listFavorite contact = mArrContact.get(position);
         holder.tvWord.setText((position + 1) + ". " + contact.getStrWord());
         holder.tvMeanShort.setText(contact.getStrMeanShort());
+        holder.tvType.setText(contact.getStrType());
     }
 
     @Override
@@ -47,7 +48,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
     }
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        TextView tvWord, tvMeanShort;
+        TextView tvWord, tvMeanShort,tvType;
         ImageView imgdelete;
         OnItemListener onItemListener;
 
@@ -56,6 +57,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
             tvWord = itemView.findViewById(R.id.tvWord);
             tvMeanShort = itemView.findViewById(R.id.tvNghia);
             imgdelete = itemView.findViewById(R.id.imgdeleteitem);
+            tvType= itemView.findViewById(R.id.tvtype);
             onItemListener = onItemListener1;
             imgdelete.setOnClickListener(new View.OnClickListener() {
                 @Override
