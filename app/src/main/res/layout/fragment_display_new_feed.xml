@@ -24,6 +24,18 @@
             android:padding="10dp"
             android:src="@drawable/ic_back_default" />
 
+        <TextView
+            android:id="@+id/tv_display_new_feed_type"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_toLeftOf="@id/imgDisplayNewFeedTranslate"
+            android:layout_toRightOf="@id/imgDisplayNewFeedBack"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/list_new_feed_header_title"
+            android:textSize="@dimen/action_bar_title_text_size" />
+
         <ImageView
             android:id="@+id/imgDisplayNewFeedTranslate"
             android:layout_width="?android:attr/actionBarSize"
@@ -33,11 +45,16 @@
             android:src="@drawable/ic_translate_new_feed_white" />
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/webViewDisplayNewFeed"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh_display_new_feed"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDisplayNewFeedHeader" />
+        app:layout_constraintTop_toBottomOf="@id/layoutDisplayNewFeedHeader">
 
+        <WebView
+            android:id="@+id/webViewDisplayNewFeed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.constraint.ConstraintLayout>

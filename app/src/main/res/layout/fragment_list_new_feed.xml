@@ -28,7 +28,9 @@
             android:id="@+id/tvListNewFeedTitle"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:text="@string/list_new_feed_header_title"
             android:textSize="@dimen/action_bar_title_text_size"
             app:layout_constraintTop_toTopOf="parent" />

@@ -90,9 +90,6 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
             R.id.imgTranslateNewFeedBack -> {
                 activity?.onBackPressed()
             }
-            R.id.imgTranslateNewFeedHighLight -> {
-            }//                mTextSpannableResults.removeSpan(new);
-            //                mTvWordsResultTitle.setText(mTextSpannableResults);
             R.id.imgTranslateNewFeedRefresh -> {
                 with(viewModel) {
                     if (!isLogin()) {
@@ -173,11 +170,11 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         adapter = TranslateNewFeedAdapter(viewModel.dataRecyclerView)
         recyclerViewTranslateNewFeed?.layoutManager = LinearLayoutManager(context)
         recyclerViewTranslateNewFeed?.adapter = adapter
+        tv_translate_new_feed_level?.text = viewModel.getNameLevelOfUser()
     }
 
     private fun initEventsView() {
         imgTranslateNewFeedBack?.setOnClickListener(this)
-        imgTranslateNewFeedHighLight?.setOnClickListener(this)
         imgTranslateNewFeedRefresh?.setOnClickListener(this)
         imgTranslateNewFeedFavoriteReview?.setOnClickListener(this)
     }

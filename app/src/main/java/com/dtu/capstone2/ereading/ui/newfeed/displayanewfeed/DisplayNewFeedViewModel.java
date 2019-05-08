@@ -5,6 +5,7 @@ package com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed;
  */
 class DisplayNewFeedViewModel {
     private String urlNewFeed;
+    private String typeNewFeed;
 
     String getUrlNewFeed() {
         return urlNewFeed;
@@ -12,5 +13,13 @@ class DisplayNewFeedViewModel {
 
     void setUrlNewFeed(String urlNewFeed) {
         this.urlNewFeed = urlNewFeed;
+    }
+
+    String getTypeNewFeed() {
+        return typeNewFeed;
+    }
+
+    void setTypeNewFeed(String typeNewFeed) {
+        this.typeNewFeed = typeNewFeed;
     }
 }

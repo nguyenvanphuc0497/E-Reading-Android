@@ -194,7 +194,9 @@ internal class TranslateNewFeedViewModel(private val mReadingRepository: EReadin
         }
     }
 
-    fun isLogin() = localRepository.isLogin()
+    fun isLogin(): Boolean = localRepository.isLogin()
+
+    fun getNameLevelOfUser(): String = localRepository.nameLevelUser
 
     private fun setListVocabularyFromSeverByPosition(positionContent: Int, vocabulariesTranslated: List<Vocabulary>, vocabulariesUntranslated: List<Vocabulary>) {
         listVocabularyTranslatedResponse[positionContent] = vocabulariesTranslated
