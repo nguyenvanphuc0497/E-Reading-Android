@@ -5,7 +5,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
-import com.dtu.capstone2.ereading.network.request.DataRequestDeleteFavorite;
+import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
@@ -73,5 +73,5 @@ public interface ApiServer {
     Single<DataStringReponse> translateNewFeedAgain(@Body TranslateNewFeedAgainRequest translateNewFeedAgainRequest);
 
     @DELETE("v1/portal/favorite/{idfavorite}")
-    Single<DataRequestDeleteFavorite> deleteFavorite(@Path (value = "idfavorite", encoded = true) int data);
+    Single<FavoriteDeletedResponse> deleteFavorite(@Path (value = "idfavorite", encoded = true) int data);
 }

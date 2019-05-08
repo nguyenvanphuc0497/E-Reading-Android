@@ -5,4 +5,4 @@ import com.google.gson.annotations.SerializedName
 /**
  * Create by Vo The Doan on 05/07/2019
  */
-data class DataRequestDeleteFavorite (@SerializedName ("detail") val idfavorite: Int)
+data class FavoriteDeletedResponse(@SerializedName("detail") val idfavorite: Int)

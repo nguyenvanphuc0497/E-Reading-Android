@@ -2,7 +2,7 @@ package com.dtu.capstone2.ereading.ui.favorite;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
-import com.dtu.capstone2.ereading.network.request.DataRequestDeleteFavorite;
+import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 
 import io.reactivex.Single;
 
@@ -16,7 +16,7 @@ class FavoriteViewModel {
         return eReadingRepository.getDataFavorite();
     }
 
-    Single<DataRequestDeleteFavorite> deleteFavorite(int id) {
+    Single<FavoriteDeletedResponse> deleteFavorite(int id) {
         return eReadingRepository.deleteFavorite(id);
     }
 }

@@ -6,7 +6,7 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
-import com.dtu.capstone2.ereading.network.request.DataRequestDeleteFavorite;
+import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
@@ -74,7 +74,7 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.translateNewFeedAgain(new TranslateNewFeedAgainRequest(urlNewFeed, positionContent, wordContent, vocabularies));
     }
 
-    public Single<DataRequestDeleteFavorite> deleteFavorite (int id)
+    public Single<FavoriteDeletedResponse> deleteFavorite (int id)
     {
         return eReadingRemoteDataSource.deleteFavorite(id);
     }

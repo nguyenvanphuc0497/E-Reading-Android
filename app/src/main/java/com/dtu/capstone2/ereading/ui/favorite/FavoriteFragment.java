@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
-import com.dtu.capstone2.ereading.network.request.DataRequestDeleteFavorite;
+import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 import com.dtu.capstone2.ereading.network.request.listFavorite;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 
@@ -68,9 +68,9 @@ public class FavoriteFragment extends BaseFragment {
                                 getManagerSubscribe().add(favoriteViewModal.deleteFavorite(iditem)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Consumer<DataRequestDeleteFavorite>() {
+                                        .subscribe(new Consumer<FavoriteDeletedResponse>() {
                                             @Override
-                                            public void accept(DataRequestDeleteFavorite dataLoginRequest) throws Exception {
+                                            public void accept(FavoriteDeletedResponse dataLoginRequest) throws Exception {
                                                 Toast.makeText(getContext(), "Đã xóa thành công", Toast.LENGTH_LONG).show();
                                                 listFavorite.remove(position);
                                                 arrayAdapter.notifyDataSetChanged();
