@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.favorite;
+package com.dtu.capstone2.ereading.ui.account.favorite;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteResponse;

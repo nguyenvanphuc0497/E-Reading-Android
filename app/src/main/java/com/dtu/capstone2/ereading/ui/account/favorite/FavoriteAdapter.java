@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.favorite;
+package com.dtu.capstone2.ereading.ui.account.favorite;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
