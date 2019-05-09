@@ -63,8 +63,8 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.setListVocabularyFavorite(vocabularyList);
     }
 
-    public Single<DataFavoriteResponse> getDataFavorite() {
-        return eReadingRemoteDataSource.getDataFavorite();
+    public Single<DataFavoriteResponse> getDataFavorite(int page) {
+        return eReadingRemoteDataSource.getDataFavorite(page);
     }
 
     public Single<DataStringReponse> translateNewFeed(String urlNewFeed, int positionContent, String wordContent) {
@@ -79,8 +79,7 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.getListHistory();
     }
 
-    public Single<FavoriteDeletedResponse> deleteFavorite (int id)
-    {
+    public Single<FavoriteDeletedResponse> deleteFavorite(int id) {
         return eReadingRemoteDataSource.deleteFavorite(id);
     }
 }

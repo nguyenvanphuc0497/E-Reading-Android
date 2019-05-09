@@ -62,7 +62,7 @@ public interface ApiServer {
     Single<LevelUserResponse> setLevelEnglishForUser(@Query("level_position") int levelPosition);
 
     @GET("v1/portal/favorite")
-    Single<DataFavoriteResponse> getDataFavorite();
+    Single<DataFavoriteResponse> getDataFavorite(@Query("page") int page);
 
     @POST("v1/portal/favorite")
     Single<DetailResponse> setListVocabularyFavorite(@Body ListVocabularyFavoriteRequest listVocabularyFavoriteRequest);
@@ -77,5 +77,5 @@ public interface ApiServer {
     Single<ListHistoryResponse> getListHistory();
 
     @DELETE("v1/portal/favorite/{idfavorite}")
-    Single<FavoriteDeletedResponse> deleteFavorite(@Path (value = "idfavorite", encoded = true) int data);
+    Single<FavoriteDeletedResponse> deleteFavorite(@Path(value = "idfavorite", encoded = true) int data);
 }

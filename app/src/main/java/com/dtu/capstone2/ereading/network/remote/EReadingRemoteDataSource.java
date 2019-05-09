@@ -65,8 +65,8 @@ public class EReadingRemoteDataSource {
         });
     }
 
-    public Single<DataFavoriteResponse> getDataFavorite() {
-        return mApiServer.getDataFavorite();
+    public Single<DataFavoriteResponse> getDataFavorite(int page) {
+        return mApiServer.getDataFavorite(page);
     }
 
     public Single<DetailResponse> setListVocabularyFavorite(List<Vocabulary> vocabularyList) {

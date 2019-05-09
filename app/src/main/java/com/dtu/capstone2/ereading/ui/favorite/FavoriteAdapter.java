@@ -1,5 +1,6 @@
 package com.dtu.capstone2.ereading.ui.favorite;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,17 @@ import android.widget.TextView;
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.request.Favorite;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 /**
  * Create by Vo The Doan on 04/30/2019
  */
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.RecyclerViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+
     private List<Favorite> mArrContact;
     private OnItemListener listener;
 
@@ -23,11 +29,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
         mArrContact = data;
     }
 
+    @NotNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_list_favorite, parent, false);
-        return new RecyclerViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_favorite, parent, false);
+            return new ItemViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_progress_loading, parent, false);
+            return new LoadingViewHolder(view);
+        }
     }
 
     void setItemDeleteOnClickListener(OnItemListener onItemListener) {
@@ -35,20 +46,29 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.onBindData(mArrContact.get(position));
+    public void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ItemViewHolder) {
+            populateItemRows((ItemViewHolder) holder, position);
+        } else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) holder, position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mArrContact.size();
+        return mArrContact == null ? 0 : mArrContact.size();
     }
 
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getItemViewType(int position) {
+        return mArrContact.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView tvWord, tvMeanShort, tvType;
         private ImageView imgDelete;
 
-        RecyclerViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             tvWord = itemView.findViewById(R.id.tvWord);
             tvMeanShort = itemView.findViewById(R.id.tvNghia);
@@ -67,6 +87,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
             tvMeanShort.setText(favorite.getStrMeanShort());
             tvType.setText(favorite.getStrType());
         }
+    }
+
+    class LoadingViewHolder extends RecyclerView.ViewHolder {
+        LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
+    }
+
+    private void populateItemRows(ItemViewHolder viewHolder, int position) {
+        viewHolder.onBindData(mArrContact.get(position));
     }
 
     interface OnItemListener {
