@@ -1,7 +1,6 @@
 package com.dtu.capstone2.ereading.ui.utils
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.support.v4.app.FragmentManager
 import com.dtu.capstone2.ereading.R
 
@@ -24,12 +23,6 @@ class SuccessDialog : BaseDialog() {
             isShowing = true
             super.show(manager, tag)
         }
-    }
-
-    override fun onDismiss(dialog: DialogInterface?) {
-        super.onDismiss(dialog)
-        RxBusTransport.publish(Transport(TypeTransportBus.CALL_BACK_DIALOG_SUCCESS_DISMISS, activity?.javaClass?.simpleName
-                ?: ""))
     }
 
     override fun dismiss() {

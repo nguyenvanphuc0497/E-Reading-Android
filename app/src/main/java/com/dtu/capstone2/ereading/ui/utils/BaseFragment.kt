@@ -34,8 +34,8 @@ abstract class BaseFragment : Fragment() {
         RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_API_ERROR, nameActivity))
     }
 
-    protected fun showSuccessDialog(senderName: String) {
-        RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_SUCCESS, senderName))
+    protected fun showSuccessDialog(senderName: String, isDelayDismissLoading: Boolean) {
+        RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_SUCCESS, senderName, isDelayDismissLoading))
     }
 
     protected fun showMessageErrorDialog(message: String) {
@@ -72,5 +72,9 @@ abstract class BaseFragment : Fragment() {
             this.add(container, fragment)
             this.commit()
         }
+    }
+
+    protected fun onBackPressed() {
+        activity?.onBackPressed()
     }
 }

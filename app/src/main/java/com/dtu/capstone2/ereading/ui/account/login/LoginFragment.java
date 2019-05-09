@@ -1,5 +1,6 @@
 package com.dtu.capstone2.ereading.ui.account.login;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
+import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.register.RegisterFragment;
@@ -43,28 +45,30 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     private TextInputLayout layoutPassword;
     private TextInputLayout layoutUsername;
 
+    @SuppressLint("CheckResult")
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         loginviewmodel = new LoginViewModel(new EReadingRepository(), new LocalRepository(getContext()));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getManagerSubscribe().add(RxBusTransport.INSTANCE.listen()
-                .observeOn(AndroidSchedulers.mainThread())
+        RxBusTransport.INSTANCE.listen()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Transport>() {
                     @Override
                     public void accept(Transport transport) throws Exception {
-                        if (transport.getTypeTransport() == TypeTransportBus.CALL_BACK_DIALOG_SUCCESS_DISMISS) {
-                            getActivity().finish();
-                            getActivity().overridePendingTransition(R.animator.anim_slide_new_in_left, R.animator.anim_slide_old_out_right);
+                        if (transport.getSender().equals(RegisterFragment.class.getSimpleName()) && transport.getTypeTransport() == TypeTransportBus.REGISTER_SUCCESS) {
+                            AccountRegisterRequest accountRegisterRequest = (AccountRegisterRequest) transport.getMessage();
+                            edtUsername.setText(accountRegisterRequest.getUserName());
+                            edtPassword.setText(accountRegisterRequest.getPassword());
                         }
                     }
-                }));
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
     }
 
     @Nullable
@@ -141,7 +145,8 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                 .subscribe(new Consumer<DataLoginRequest>() {
                     @Override
                     public void accept(DataLoginRequest dataLoginRequest) throws Exception {
-                        showSuccessDialog(TAG);
+                        showSuccessDialog(TAG, false);
+                        onBackPressed();
                     }
 
                 }, new Consumer<Throwable>() {

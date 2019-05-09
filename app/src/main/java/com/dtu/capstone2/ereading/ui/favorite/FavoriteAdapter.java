@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.network.request.listFavorite;
+import com.dtu.capstone2.ereading.network.request.Favorite;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ import java.util.List;
  * Create by Vo The Doan on 04/30/2019
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.RecyclerViewHolder> {
-    private List<listFavorite> mArrContact;
+    private List<Favorite> mArrContact;
     private OnItemListener listener;
 
-    FavoriteAdapter(List<listFavorite> data) {
+    FavoriteAdapter(List<Favorite> data) {
         mArrContact = data;
     }
 
@@ -36,7 +36,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        listFavorite contact = mArrContact.get(position);
+        Favorite contact = mArrContact.get(position);
         holder.tvWord.setText((position + 1) + ". " + contact.getStrWord());
         holder.tvMeanShort.setText(contact.getStrMeanShort());
         holder.tvType.setText(contact.getStrType());

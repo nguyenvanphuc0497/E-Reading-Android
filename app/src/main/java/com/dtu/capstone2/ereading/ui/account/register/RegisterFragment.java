@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
@@ -18,6 +19,9 @@ import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.model.AccountErrorResponse;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
+import com.dtu.capstone2.ereading.ui.utils.Transport;
+import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;
 import com.google.gson.Gson;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -98,8 +102,10 @@ public class RegisterFragment extends BaseFragment implements View.OnClickListen
 
                         @Override
                         public void onSuccess(AccountRegisterRequest accountRegisterRequest) {
-                            showSuccessDialog(TAG);
-//                                TODO : Xử lí khi đăng kí thành công
+                            dismissLoadingDialog();
+                            RxBusTransport.INSTANCE.publish(new Transport(TypeTransportBus.REGISTER_SUCCESS, TAG, accountRegisterRequest));
+                            Toast.makeText(getContext(), "Đăng kí tài khoản thành công! Bạn có thể đăng nhập.", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
                         }
 
                         @Override

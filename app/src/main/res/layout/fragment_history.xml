@@ -35,12 +35,17 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_list_history"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh_list_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/constraint_history_list"
-        app:layout_constraintTop_toBottomOf="@id/constraint_history_list" />
+        app:layout_constraintTop_toBottomOf="@id/constraint_history_list">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_list_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.constraint.ConstraintLayout>
