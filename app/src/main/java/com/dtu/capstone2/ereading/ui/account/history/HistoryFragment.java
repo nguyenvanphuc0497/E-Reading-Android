@@ -83,7 +83,7 @@ public class HistoryFragment extends BaseFragment {
     }
 
     private void getDataFromServer() {
-        getManagerSubscribe().add(viewModel.getListHistoryFromServer()
+        getManagerSubscribe().add(viewModel.getListHistoryFromServerFirstLoad()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ListHistoryResponse>() {

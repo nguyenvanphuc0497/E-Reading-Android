@@ -111,7 +111,7 @@ public class FavoriteFragment extends BaseFragment {
     }
 
     private void getDataFromServer() {
-        getManagerSubscribe().add(viewModel.getDataFavoriteFromServer()
+        getManagerSubscribe().add(viewModel.getDataFavoriteFromServerFirstLoad()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<DataFavoriteResponse>() {

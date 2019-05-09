@@ -21,8 +21,9 @@ class FavoriteViewModel {
     private int pageData = 1;
     private boolean isCanLoadMore = false;
 
-    Single<DataFavoriteResponse> getDataFavoriteFromServer() {
-        return eReadingRepository.getDataFavorite(1)
+    Single<DataFavoriteResponse> getDataFavoriteFromServerFirstLoad() {
+        pageData = 1;
+        return eReadingRepository.getDataFavorite(pageData)
                 .doOnSuccess(new Consumer<DataFavoriteResponse>() {
                     @Override
                     public void accept(DataFavoriteResponse dataFavoriteReponse) throws Exception {
