@@ -10,6 +10,7 @@
         android:background="@color/colorMainApp"
         android:gravity="center"
         android:text="@string/page_home_header_title"
+        android:textColor="@color/colorBackgroundMainApp"
         android:textSize="@dimen/action_bar_title_text_size" />
 
     <EditText
@@ -34,8 +35,8 @@
 
     <EditText
         android:id="@+id/edtReponseText"
-        android:gravity="top|left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4" />
+        android:layout_weight="4"
+        android:gravity="top|left" />
 </LinearLayout>
