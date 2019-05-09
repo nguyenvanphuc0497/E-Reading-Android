@@ -20,8 +20,9 @@ class HistoryViewModel {
     private int pageData = 1;
     private boolean isCanLoadMore = false;
 
-    Single<ListHistoryResponse> getListHistoryFromServer() {
-        return eReadingRepository.getListHistory(1)
+    Single<ListHistoryResponse> getListHistoryFromServerFirstLoad() {
+        pageData = 1;
+        return eReadingRepository.getListHistory(pageData)
                 .doOnSuccess(new Consumer<ListHistoryResponse>() {
                     @Override
                     public void accept(ListHistoryResponse listHistoryResponse) throws Exception {
