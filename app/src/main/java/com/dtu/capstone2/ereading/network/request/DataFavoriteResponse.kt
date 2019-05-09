@@ -6,7 +6,10 @@ import java.util.*
 /**
  * Create by Vo The Doan on 04/30/2019
  */
-data class DataFavoriteResponse(@SerializedName("vocabulary_favorite") val listData: ArrayList<Favorite>)
+data class DataFavoriteResponse(@SerializedName("result_count") val resultCount: Int,
+                                @SerializedName("page") val page: Int,
+                                @SerializedName("next_page_flg") val nextPageFlg: Boolean,
+                                @SerializedName("result") val listData: ArrayList<Favorite>)
 
 data class Favorite(@SerializedName("id") val intId: Int,
                     @SerializedName("time_create") val dateCreate: String,

@@ -27,19 +27,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_list_favorite, parent, false);
-        return new RecyclerViewHolder(view, listener);
+        return new RecyclerViewHolder(view);
     }
 
-    void setmItemFavorite(OnItemListener onItemListener) {
+    void setItemDeleteOnClickListener(OnItemListener onItemListener) {
         listener = onItemListener;
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        Favorite contact = mArrContact.get(position);
-        holder.tvWord.setText((position + 1) + ". " + contact.getStrWord());
-        holder.tvMeanShort.setText(contact.getStrMeanShort());
-        holder.tvType.setText(contact.getStrType());
+        holder.onBindData(mArrContact.get(position));
     }
 
     @Override
@@ -48,24 +45,27 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Recycl
     }
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        TextView tvWord, tvMeanShort,tvType;
-        ImageView imgdelete;
-        OnItemListener onItemListener;
+        private TextView tvWord, tvMeanShort, tvType;
+        private ImageView imgDelete;
 
-        RecyclerViewHolder(View itemView, OnItemListener onItemListener1) {
+        RecyclerViewHolder(View itemView) {
             super(itemView);
             tvWord = itemView.findViewById(R.id.tvWord);
             tvMeanShort = itemView.findViewById(R.id.tvNghia);
-            imgdelete = itemView.findViewById(R.id.imgdeleteitem);
-            tvType= itemView.findViewById(R.id.tvtype);
-            onItemListener = onItemListener1;
-            imgdelete.setOnClickListener(new View.OnClickListener() {
+            imgDelete = itemView.findViewById(R.id.imgdeleteitem);
+            tvType = itemView.findViewById(R.id.tvtype);
+            imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemListener.onItemClick(getAdapterPosition());
+                    listener.onItemClick(getAdapterPosition());
                 }
             });
+        }
 
+        void onBindData(Favorite favorite) {
+            tvWord.setText((getAdapterPosition() + 1) + ". " + favorite.getStrWord());
+            tvMeanShort.setText(favorite.getStrMeanShort());
+            tvType.setText(favorite.getStrType());
         }
     }
 

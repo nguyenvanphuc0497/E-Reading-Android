@@ -35,7 +35,7 @@ internal fun <T> Single<T>.publishDialogLoading(): Single<T> =
         this.doOnSubscribe {
             RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_LOADING))
         }.doOnSuccess {
-            RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_SUCCESS))
+            RxBusTransport.publish(Transport(TypeTransportBus.DIALOG_SUCCESS, message = true))
         }.doOnError {
             (it as? HttpException)?.let { exception ->
                 if (exception.code() >= HttpsURLConnection.HTTP_INTERNAL_ERROR) {

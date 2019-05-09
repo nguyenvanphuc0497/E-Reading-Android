@@ -68,7 +68,7 @@ public class FavoriteFragment extends BaseFragment {
     }
 
     private void initEventView() {
-        adapter.setmItemFavorite(new FavoriteAdapter.OnItemListener() {
+        adapter.setItemDeleteOnClickListener(new FavoriteAdapter.OnItemListener() {
             @Override
             public void onItemClick(final int position) {
                 showLoadingDialog();
