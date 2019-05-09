@@ -74,7 +74,7 @@ public interface ApiServer {
     Single<DataStringReponse> translateNewFeedAgain(@Body TranslateNewFeedAgainRequest translateNewFeedAgainRequest);
 
     @GET("v1/portal/history/new_feed")
-    Single<ListHistoryResponse> getListHistory();
+    Single<ListHistoryResponse> getListHistory(@Query("page") int page);
 
     @DELETE("v1/portal/favorite/{idfavorite}")
     Single<FavoriteDeletedResponse> deleteFavorite(@Path(value = "idfavorite", encoded = true) int data);

@@ -75,8 +75,8 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.translateNewFeedAgain(new TranslateNewFeedAgainRequest(urlNewFeed, positionContent, wordContent, vocabularies));
     }
 
-    public Single<ListHistoryResponse> getListHistory() {
-        return eReadingRemoteDataSource.getListHistory();
+    public Single<ListHistoryResponse> getListHistory(int page) {
+        return eReadingRemoteDataSource.getListHistory(page);
     }
 
     public Single<FavoriteDeletedResponse> deleteFavorite(int id) {

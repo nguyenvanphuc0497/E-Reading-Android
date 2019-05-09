@@ -81,8 +81,8 @@ public class EReadingRemoteDataSource {
         return mApiServer.translateNewFeedAgain(translateNewFeedAgainRequest);
     }
 
-    public Single<ListHistoryResponse> getListHistory() {
-        return mApiServer.getListHistory();
+    public Single<ListHistoryResponse> getListHistory(int page) {
+        return mApiServer.getListHistory(page);
     }
 
     public Single<FavoriteDeletedResponse> deleteFavorite(int id) {

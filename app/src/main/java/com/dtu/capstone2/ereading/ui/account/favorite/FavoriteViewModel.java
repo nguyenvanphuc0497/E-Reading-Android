@@ -54,7 +54,7 @@ class FavoriteViewModel {
         return listFavorite.size();
     }
 
-    Single<DataFavoriteResponse> loadMore(final int page) {
+    Single<DataFavoriteResponse> loadMore(int page) {
         return eReadingRepository.getDataFavorite(page).doOnSuccess(new Consumer<DataFavoriteResponse>() {
             @Override
             public void accept(DataFavoriteResponse dataFavoriteResponse) throws Exception {

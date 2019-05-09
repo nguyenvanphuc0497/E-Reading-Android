@@ -15,7 +15,10 @@ import java.util.List;
 /**
  * Create by Huynh Vu Ha Lan on 06/05/2019
  */
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.RecyclerViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+
     private List<HistoryNewFeed> mArrContact;
 
     HistoryAdapter(List<HistoryNewFeed> data) {
@@ -24,41 +27,67 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Recycler
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.item_fragment_history, viewGroup, false);
-        return new HistoryAdapter.RecyclerViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment_history, parent, false);
+            return new ItemViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_progress_loading, parent, false);
+            return new LoadingViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int i) {
-        recyclerViewHolder.onBindData(mArrContact.get(i));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ItemViewHolder) {
+            populateItemRows((ItemViewHolder) holder, position);
+        } else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) holder, position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mArrContact.size();
+        return mArrContact == null ? 0 : mArrContact.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mArrContact.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     /**
      * This class is view holder of this adapter
      */
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mTxtTitle;
         private TextView mTxtIntroduction;
         private TextView mTxtTime;
 
-        RecyclerViewHolder(View itemView) {
+        private ItemViewHolder(View itemView) {
             super(itemView);
             mTxtTitle = itemView.findViewById(R.id.txt_history_title);
             mTxtIntroduction = itemView.findViewById(R.id.txt_history_introduction);
             mTxtTime = itemView.findViewById(R.id.txt_history_time);
         }
 
-        void onBindData(HistoryNewFeed historyNewFeed) {
+        private void onBindData(HistoryNewFeed historyNewFeed) {
             mTxtTitle.setText((getAdapterPosition() + 1) + ". " + historyNewFeed.getTitleNewsFeed());
             mTxtIntroduction.setText(historyNewFeed.getIntroduction());
             mTxtTime.setText(historyNewFeed.getTimeCreate());
         }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
+    }
+
+    private void populateItemRows(ItemViewHolder viewHolder, int position) {
+        viewHolder.onBindData(mArrContact.get(position));
     }
 }

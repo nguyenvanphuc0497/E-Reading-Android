@@ -6,7 +6,10 @@ import java.util.*
 /**
  * Create by Huynh Vu Ha Lan on 06/05/2019
  */
-data class ListHistoryResponse(@SerializedName("history_new_feed") val listData: ArrayList<HistoryNewFeed>)
+data class ListHistoryResponse(@SerializedName("result_count") val resultCount: Int,
+                               @SerializedName("page") val page: Int,
+                               @SerializedName("next_page_flg") val nextPageFlg: Boolean,
+                               @SerializedName("result") val listData: ArrayList<HistoryNewFeed>)
 
 data class HistoryNewFeed(@SerializedName("title_new_feed") val titleNewsFeed: String,
                           @SerializedName("time_create") val timeCreate: String,
