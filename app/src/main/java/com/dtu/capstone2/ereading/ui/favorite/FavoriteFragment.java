@@ -72,14 +72,14 @@ public class FavoriteFragment extends BaseFragment {
             @Override
             public void onItemClick(final int position) {
                 showLoadingDialog();
-                getManagerSubscribe().add(viewModel.deleteFavorite(viewModel.getListFavorite().get(position).getIntId())
+                getManagerSubscribe().add(viewModel.deleteFavorite(position)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<FavoriteDeletedResponse>() {
                             @Override
                             public void accept(FavoriteDeletedResponse dataLoginRequest) throws Exception {
                                 dismissLoadingDialog();
-                                Toast.makeText(getContext(), "Đã xóa thành công", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Đã xóa thành công.", Toast.LENGTH_SHORT).show();
                                 viewModel.getListFavorite().remove(position);
                                 adapter.notifyDataSetChanged();
                             }

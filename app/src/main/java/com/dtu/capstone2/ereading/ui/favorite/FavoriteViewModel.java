@@ -29,8 +29,8 @@ class FavoriteViewModel {
                 });
     }
 
-    Single<FavoriteDeletedResponse> deleteFavorite(int id) {
-        return eReadingRepository.deleteFavorite(id);
+    Single<FavoriteDeletedResponse> deleteFavorite(int position) {
+        return eReadingRepository.deleteFavorite(listFavorite.get(position).getIntId());
     }
 
     List<Favorite> getListFavorite() {
