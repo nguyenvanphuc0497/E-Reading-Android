@@ -56,6 +56,7 @@ public class HistoryFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView();
+        initScrollListener();
         initEventView();
         initData();
     }
@@ -94,12 +95,76 @@ public class HistoryFragment extends BaseFragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        showApiErrorDialog();
+                        handleGetDataFromServerError();
                     }
                 }));
     }
 
     private void initData() {
         getDataFromServer();
+    }
+
+    private void initScrollListener() {
+        mRecycleListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!viewModel.getLoadingMore() && viewModel.getIsCanLoadMore()) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == viewModel.getSizeListFavorite() - 1) {
+                        //bottom of list!
+                        loadMore();
+                        viewModel.setLoadingMore(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void loadMore() {
+        viewModel.getListHistory().add(null);
+        adapter.notifyItemInserted(viewModel.getSizeListFavorite() - 1);
+
+
+        getManagerSubscribe().add(viewModel.loadMore(viewModel.getPageData())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ListHistoryResponse>() {
+                    @Override
+                    public void accept(ListHistoryResponse dataFavoriteReponse) throws Exception {
+                        handleLoadMoreDataSuccess(dataFavoriteReponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        handleGetDataFromServerError();
+                    }
+                }));
+    }
+
+    private void handleLoadMoreDataSuccess(ListHistoryResponse listHistoryResponse) {
+        refreshLayout.setRefreshing(false);
+        viewModel.getListHistory().remove(viewModel.getPositionItemLater());
+        adapter.notifyItemRemoved(viewModel.getSizeListFavorite());
+        viewModel.getListHistory().addAll(listHistoryResponse.getListData());
+        adapter.notifyDataSetChanged();
+        viewModel.setLoadingMore(false);
+    }
+
+    private void handleGetDataFromServerError() {
+        showApiErrorDialog();
+        refreshLayout.setRefreshing(false);
+        if (viewModel.getLoadingMore()) {
+            viewModel.setLoadingMore(false);
+            viewModel.getListHistory().remove(viewModel.getPositionItemLater());
+            adapter.notifyItemRemoved(viewModel.getSizeListFavorite());
+        }
     }
 }

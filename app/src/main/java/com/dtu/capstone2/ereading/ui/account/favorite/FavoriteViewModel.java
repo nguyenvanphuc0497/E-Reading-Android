@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.favorite;
+package com.dtu.capstone2.ereading.ui.account.favorite;
 
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.network.request.DataFavoriteResponse;
@@ -17,14 +17,19 @@ import io.reactivex.functions.Consumer;
 class FavoriteViewModel {
     private EReadingRepository eReadingRepository = new EReadingRepository();
     private List<Favorite> listFavorite = new ArrayList<>();
+    private boolean isLoadingMore = false;
+    private int pageData = 1;
+    private boolean isCanLoadMore = false;
 
     Single<DataFavoriteResponse> getDataFavoriteFromServer() {
-        return eReadingRepository.getDataFavorite()
+        return eReadingRepository.getDataFavorite(1)
                 .doOnSuccess(new Consumer<DataFavoriteResponse>() {
                     @Override
                     public void accept(DataFavoriteResponse dataFavoriteReponse) throws Exception {
                         listFavorite.clear();
                         listFavorite.addAll(dataFavoriteReponse.getListData());
+                        pageData += 1;
+                        isCanLoadMore = dataFavoriteReponse.getNextPageFlg();
                     }
                 });
     }
@@ -35,5 +40,39 @@ class FavoriteViewModel {
 
     List<Favorite> getListFavorite() {
         return listFavorite;
+    }
+
+    boolean getLoadingMore() {
+        return isLoadingMore;
+    }
+
+    void setLoadingMore(Boolean loadingMore) {
+        isLoadingMore = loadingMore;
+    }
+
+    int getSizeListFavorite() {
+        return listFavorite.size();
+    }
+
+    Single<DataFavoriteResponse> loadMore(int page) {
+        return eReadingRepository.getDataFavorite(page).doOnSuccess(new Consumer<DataFavoriteResponse>() {
+            @Override
+            public void accept(DataFavoriteResponse dataFavoriteResponse) throws Exception {
+                pageData += 1;
+                isCanLoadMore = dataFavoriteResponse.getNextPageFlg();
+            }
+        });
+    }
+
+    int getPageData() {
+        return pageData;
+    }
+
+    int getPositionItemLater() {
+        return listFavorite.size() - 1;
+    }
+
+    boolean getIsCanLoadMore() {
+        return isCanLoadMore;
     }
 }

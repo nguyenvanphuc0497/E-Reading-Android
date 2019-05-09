@@ -16,19 +16,59 @@ import io.reactivex.functions.Consumer;
 class HistoryViewModel {
     private EReadingRepository eReadingRepository = new EReadingRepository();
     private List<HistoryNewFeed> mListHistory = new ArrayList<>();
+    private boolean isLoadingMore = false;
+    private int pageData = 1;
+    private boolean isCanLoadMore = false;
 
     Single<ListHistoryResponse> getListHistoryFromServer() {
-        return eReadingRepository.getListHistory()
+        return eReadingRepository.getListHistory(1)
                 .doOnSuccess(new Consumer<ListHistoryResponse>() {
                     @Override
                     public void accept(ListHistoryResponse listHistoryResponse) throws Exception {
                         mListHistory.clear();
                         mListHistory.addAll(listHistoryResponse.getListData());
+                        pageData += 1;
+                        isCanLoadMore = listHistoryResponse.getNextPageFlg();
                     }
                 });
     }
 
     List<HistoryNewFeed> getListHistory() {
         return mListHistory;
+    }
+
+    boolean getLoadingMore() {
+        return isLoadingMore;
+    }
+
+    void setLoadingMore(Boolean loadingMore) {
+        isLoadingMore = loadingMore;
+    }
+
+    int getSizeListFavorite() {
+        return mListHistory.size();
+    }
+
+    Single<ListHistoryResponse> loadMore(int page) {
+        return eReadingRepository.getListHistory(page)
+                .doOnSuccess(new Consumer<ListHistoryResponse>() {
+                    @Override
+                    public void accept(ListHistoryResponse listHistoryResponse) throws Exception {
+                        pageData += 1;
+                        isCanLoadMore = listHistoryResponse.getNextPageFlg();
+                    }
+                });
+    }
+
+    int getPageData() {
+        return pageData;
+    }
+
+    int getPositionItemLater() {
+        return mListHistory.size() - 1;
+    }
+
+    boolean getIsCanLoadMore() {
+        return isCanLoadMore;
     }
 }

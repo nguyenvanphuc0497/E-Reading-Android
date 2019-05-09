@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.favorite;
+package com.dtu.capstone2.ereading.ui.account.favorite;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,6 +57,7 @@ public class FavoriteFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView();
+        initScrollListener();
         initEventView();
         initData();
     }
@@ -68,7 +69,7 @@ public class FavoriteFragment extends BaseFragment {
     }
 
     private void initEventView() {
-        adapter.setmItemFavorite(new FavoriteAdapter.OnItemListener() {
+        adapter.setItemDeleteOnClickListener(new FavoriteAdapter.OnItemListener() {
             @Override
             public void onItemClick(final int position) {
                 showLoadingDialog();
@@ -122,8 +123,72 @@ public class FavoriteFragment extends BaseFragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        showApiErrorDialog();
+                        handleGetDataFromServerError();
                     }
                 }));
+    }
+
+    private void initScrollListener() {
+        recycleListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!viewModel.getLoadingMore() && viewModel.getIsCanLoadMore()) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == viewModel.getSizeListFavorite() - 1) {
+                        //bottom of list!
+                        loadMore();
+                        viewModel.setLoadingMore(true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void loadMore() {
+        viewModel.getListFavorite().add(null);
+        adapter.notifyItemInserted(viewModel.getSizeListFavorite() - 1);
+
+
+        getManagerSubscribe().add(viewModel.loadMore(viewModel.getPageData())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DataFavoriteResponse>() {
+                    @Override
+                    public void accept(DataFavoriteResponse dataFavoriteReponse) throws Exception {
+                        handleLoadMoreDataSuccess(dataFavoriteReponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        handleGetDataFromServerError();
+                    }
+                }));
+    }
+
+    private void handleLoadMoreDataSuccess(DataFavoriteResponse dataFavoriteResponse) {
+        refreshLayout.setRefreshing(false);
+        viewModel.getListFavorite().remove(viewModel.getPositionItemLater());
+        adapter.notifyItemRemoved(viewModel.getSizeListFavorite());
+        viewModel.getListFavorite().addAll(dataFavoriteResponse.getListData());
+        adapter.notifyDataSetChanged();
+        viewModel.setLoadingMore(false);
+    }
+
+    private void handleGetDataFromServerError() {
+        showApiErrorDialog();
+        refreshLayout.setRefreshing(false);
+        if (viewModel.getLoadingMore()) {
+            viewModel.setLoadingMore(false);
+            viewModel.getListFavorite().remove(viewModel.getPositionItemLater());
+            adapter.notifyItemRemoved(viewModel.getSizeListFavorite());
+        }
     }
 }
