@@ -46,16 +46,19 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Recycler
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         private TextView mTxtTitle;
         private TextView mTxtIntroduction;
+        private TextView mTxtTime;
 
         RecyclerViewHolder(View itemView) {
             super(itemView);
             mTxtTitle = itemView.findViewById(R.id.txt_history_title);
             mTxtIntroduction = itemView.findViewById(R.id.txt_history_introduction);
+            mTxtTime = itemView.findViewById(R.id.txt_history_time);
         }
 
-        void onBindData(HistoryNewFeed listHistory) {
-            mTxtTitle.setText((getAdapterPosition() + 1) + ". " + listHistory.getTitleNewsFeed());
-            mTxtIntroduction.setText(listHistory.getIntroduction());
+        void onBindData(HistoryNewFeed historyNewFeed) {
+            mTxtTitle.setText((getAdapterPosition() + 1) + ". " + historyNewFeed.getTitleNewsFeed());
+            mTxtIntroduction.setText(historyNewFeed.getIntroduction());
+            mTxtTime.setText(historyNewFeed.getTimeCreate());
         }
     }
 }

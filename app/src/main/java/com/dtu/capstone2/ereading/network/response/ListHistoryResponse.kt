@@ -9,4 +9,5 @@ import java.util.*
 data class ListHistoryResponse(@SerializedName("history_new_feed") val listData: ArrayList<HistoryNewFeed>)
 
 data class HistoryNewFeed(@SerializedName("title_new_feed") val titleNewsFeed: String,
+                          @SerializedName("time_create") val timeCreate: String,
                           @SerializedName("introduction_new_feed") val introduction: String)
