@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.ui.account.history;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,49 +11,87 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.dtu.capstone2.ereading.R;
-import com.dtu.capstone2.ereading.network.response.ListHistory;
 import com.dtu.capstone2.ereading.network.response.ListHistoryResponse;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Create by Huynh Vu Ha Lan on 06/05/2019
  */
 public class HistoryFragment extends BaseFragment {
+    private HistoryViewModel viewModel;
+    private HistoryAdapter adapter;
+
     private RecyclerView mRecycleListView;
-    private List<ListHistory> mListHistory;
     private ImageView mImageListHistoryBack;
-    HistoryViewModel historyViewModal = new HistoryViewModel();
+    private SwipeRefreshLayout refreshLayout;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModel = new HistoryViewModel();
+        adapter = new HistoryAdapter(viewModel.getListHistory());
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         mRecycleListView = view.findViewById(R.id.recycler_list_history);
         mImageListHistoryBack = view.findViewById(R.id.image_back_list_history);
-        mListHistory = new ArrayList<>();
+        refreshLayout = view.findViewById(R.id.layout_swipe_refresh_list_history);
 
-        getManagerSubscribe().add(historyViewModal.getListHistory()
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initView();
+        initEventView();
+        initData();
+    }
+
+    private void initView() {
+        mRecycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycleListView.setAdapter(adapter);
+        refreshLayout.setRefreshing(true);
+    }
+
+    private void initEventView() {
+        mImageListHistoryBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromServer();
+            }
+        });
+    }
+
+    private void getDataFromServer() {
+        getManagerSubscribe().add(viewModel.getListHistoryFromServer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ListHistoryResponse>() {
                     @Override
                     public void accept(ListHistoryResponse listHistoryResponse) throws Exception {
-                        mListHistory = listHistoryResponse.getListData();
-                        Log.e("xxx", listHistoryResponse.toString());
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-                        mRecycleListView.setLayoutManager(layoutManager);
-                        HistoryAdapter arrayAdapter = new HistoryAdapter(mListHistory);
-                        mRecycleListView.setAdapter(arrayAdapter);
+                        refreshLayout.setRefreshing(false);
+                        adapter.notifyDataSetChanged();
+                        Log.e("xxx", viewModel.getListHistory().toString());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -60,13 +99,9 @@ public class HistoryFragment extends BaseFragment {
                         showApiErrorDialog();
                     }
                 }));
+    }
 
-        mImageListHistoryBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-        return view;
+    private void initData() {
+        getDataFromServer();
     }
 }

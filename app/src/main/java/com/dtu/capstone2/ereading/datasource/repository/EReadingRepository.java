@@ -4,11 +4,11 @@ import com.dtu.capstone2.ereading.network.remote.EReadingRemoteDataSource;
 import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
 import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
 import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
-import com.dtu.capstone2.ereading.network.request.DataFavoriteReponse;
+import com.dtu.capstone2.ereading.network.request.DataFavoriteResponse;
 import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
-import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
+import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
 import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
@@ -63,7 +63,7 @@ public class EReadingRepository {
         return eReadingRemoteDataSource.setListVocabularyFavorite(vocabularyList);
     }
 
-    public Single<DataFavoriteReponse> getDataFavorite() {
+    public Single<DataFavoriteResponse> getDataFavorite() {
         return eReadingRemoteDataSource.getDataFavorite();
     }
 
