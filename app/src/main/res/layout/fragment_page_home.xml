@@ -17,7 +17,8 @@
         android:id="@+id/edtInputText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="4"
+        android:background="@null"
         android:gravity="top|left"
         android:hint="Input Text Here" />
 
@@ -27,16 +28,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="0.2"
         android:background="@drawable/bg_button_main_app"
-        android:text="Translate"
+        android:text="Tự động dịch"
         android:textColor="@color/colorMainApp" />
 
-    <EditText
-        android:id="@+id/edtReponseText"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:gravity="top|left" />
+        android:layout_weight="4">
+
+        <TextView
+            android:id="@+id/edtResponseText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|left" />
+    </ScrollView>
 </LinearLayout>

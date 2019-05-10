@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
@@ -31,7 +33,7 @@ public class PageHomeFragment extends BaseFragment {
     private String strInputText;
     private String strReponseText;
     private EditText edtInputText;
-    private EditText edtReponserText;
+    private TextView edtReponserText;
     private Button btnTranslate;
 
     @Override
@@ -47,12 +49,16 @@ public class PageHomeFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_page_home, container, false);
         edtInputText = view.findViewById(R.id.edtInputText);
-        edtReponserText = view.findViewById(R.id.edtReponseText);
+        edtReponserText = view.findViewById(R.id.edtResponseText);
         btnTranslate = view.findViewById(R.id.btnTranslate);
         btnTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                strInputText = edtInputText.getText().toString();
+                strInputText = edtInputText.getText().toString().trim();
+                if (strInputText.isEmpty()) {
+                    Toast.makeText(getContext(), "Vui lòng nhập văn bản cần đọc.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 showLoadingDialog();
                 mViewModel.getDataStringReponse(strInputText)
                         .subscribeOn(Schedulers.io())
