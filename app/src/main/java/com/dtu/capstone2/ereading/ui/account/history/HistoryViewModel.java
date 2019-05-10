@@ -26,8 +26,8 @@ class HistoryViewModel {
                 .doOnSuccess(new Consumer<ListHistoryResponse>() {
                     @Override
                     public void accept(ListHistoryResponse listHistoryResponse) throws Exception {
-                        mListHistory.clear();
-                        mListHistory.addAll(listHistoryResponse.getListData());
+//                        mListHistory.clear();
+//                        mListHistory.addAll(listHistoryResponse.getListData());
                         pageData += 1;
                         isCanLoadMore = listHistoryResponse.getNextPageFlg();
                     }
