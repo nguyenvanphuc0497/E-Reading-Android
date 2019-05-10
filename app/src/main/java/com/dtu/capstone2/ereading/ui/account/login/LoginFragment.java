@@ -109,7 +109,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        Log.e("xxx", "" + v.getId() + "::" + hasFocus);
         switch (v.getId()) {
             case R.id.tvLoginUsername: {
                 if (hasFocus && layoutUsername.getError() != null) {

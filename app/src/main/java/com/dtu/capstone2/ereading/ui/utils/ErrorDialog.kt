@@ -10,9 +10,7 @@ import com.dtu.capstone2.ereading.R
  * Create by Nguyen Van Phuc on 4/3/19
  */
 class ErrorDialog : BaseDialog() {
-    companion object {
-        private var isShowing = false
-    }
+    private var isShowing = false
 
     internal var titleDialog = ""
 

@@ -8,9 +8,7 @@ import com.dtu.capstone2.ereading.R
  * Create by Nguyen Van Phuc on 4/3/19
  */
 class SuccessDialog : BaseDialog() {
-    companion object {
-        private var isShowing = false
-    }
+    private var isShowing = false
 
     override fun setContentDialog(dialog: Dialog) {
         dialog.setContentView(R.layout.dialog_success)

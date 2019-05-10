@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dtu.capstone2.ereading.R;
+import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.ui.newfeed.translate.TranslateNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.Constants;
@@ -37,7 +38,7 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new DisplayNewFeedViewModel();
+        mViewModel = new DisplayNewFeedViewModel(new LocalRepository(getContext()));
 
         if (getArguments() != null) {
             String parseUrl = getArguments().getString(Constants.KEY_URL_NEW_FEED);
@@ -108,6 +109,11 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
         imgTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mViewModel.isNotSetLevelWhenLogin()) {
+                    showMessageErrorDialog("Vui lòng cho chúng tôi biết trình độ tiếng anh của bạn.");
+                    return;
+                }
+
                 Fragment fragment = new TranslateNewFeedFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.KEY_URL_NEW_FEED, mViewModel.getUrlNewFeed());
