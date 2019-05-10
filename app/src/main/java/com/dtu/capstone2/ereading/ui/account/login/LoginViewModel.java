@@ -26,6 +26,7 @@ class LoginViewModel {
             public void accept(DataLoginRequest dataLoginRequest) throws Exception {
                 mLocalRepository.saveTokenUser(dataLoginRequest.getStringToken());
                 mLocalRepository.saveEmailUser(dataLoginRequest.getStringEmail());
+                mLocalRepository.saveNameLevelUser(dataLoginRequest.getLevelNameUser());
             }
         });
     }
