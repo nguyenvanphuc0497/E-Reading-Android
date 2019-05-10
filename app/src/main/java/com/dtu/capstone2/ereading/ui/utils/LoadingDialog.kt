@@ -17,10 +17,7 @@ import kotlinx.android.synthetic.main.dialog_loading.*
  * Create by Nguyen Van Phuc on 4/3/19
  */
 class LoadingDialog : DialogFragment() {
-    companion object {
-        @Volatile
-        private var isShowing = false
-    }
+    private var isShowing = false
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return object : Dialog(context) {

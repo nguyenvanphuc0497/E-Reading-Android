@@ -10,9 +10,7 @@ import kotlinx.android.synthetic.main.dialog_error_detail.*
  * Create by Nguyen Van Phuc on 4/3/19
  */
 class ApiErrorDialog : BaseDialog() {
-    companion object {
-        private var isShowing = false
-    }
+    private var isShowing = false
 
     override fun setContentDialog(dialog: Dialog) {
         dialog.setContentView(R.layout.dialog_error_detail)
