@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/llcontaineritem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llcontaineritem"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
+            android:id="@+id/lltext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lltext"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight="8"
             android:orientation="vertical"
-            android:layout_weight="8">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="word"
                     android:id="@+id/tvWord"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="20dp" />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="word"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/tvtype"
-                    android:text="type"
-                    android:textColor="#FF0000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:gravity="left"
                     android:layout_marginTop="4dp"
-                    />
+                    android:gravity="left"
+                    android:text="type"
+                    android:textColor="#FF0000" />
 
             </LinearLayout>
 
@@ -48,29 +51,43 @@
                 android:id="@+id/tvNghia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="nghia"
-                app:layout_constraintTop_toBottomOf="@+id/tvWord"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="nghia"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWord" />
         </LinearLayout>
+
         <ImageView
+            android:id="@+id/imgdeleteitem"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_weight="2"
-            android:src="@drawable/delete"
-            android:id="@+id/imgdeleteitem"
-            android:layout_marginRight="20dp"
             android:layout_gravity="center"
-            />
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
+            android:src="@drawable/delete" />
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/txt_favorite_datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="italic"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llcontaineritem"
+        tools:text="10-10-2018 10:10:10" />
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#000"
-        app:layout_constraintTop_toBottomOf="@id/llcontaineritem"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="7dp"
-        android:layout_marginHorizontal="20dp"></LinearLayout>
-
+        android:background="#000"
+        app:layout_constraintTop_toBottomOf="@id/txt_favorite_datetime" />
 </android.support.constraint.ConstraintLayout>

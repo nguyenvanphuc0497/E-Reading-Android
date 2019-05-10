@@ -29,6 +29,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:gravity="center"
             android:text="Mục Ưa Thích"
+            android:textColor="@color/colorBackgroundMainApp"
             android:textSize="@dimen/action_bar_title_text_size"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>

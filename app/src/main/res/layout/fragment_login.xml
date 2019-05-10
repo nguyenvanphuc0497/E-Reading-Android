@@ -57,6 +57,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/bg_button_main_app"
+        android:padding="15dp"
         android:text="Đăng Nhập"
         android:textColor="@color/colorMainApp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,5 +76,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnSignInAccount" />
-
 </android.support.constraint.ConstraintLayout>

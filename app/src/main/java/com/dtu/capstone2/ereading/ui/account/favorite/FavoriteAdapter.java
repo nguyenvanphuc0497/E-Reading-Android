@@ -65,7 +65,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvWord, tvMeanShort, tvType;
+        private TextView tvWord, tvMeanShort, tvType, tvDateTime;
         private ImageView imgDelete;
 
         ItemViewHolder(View itemView) {
@@ -74,6 +74,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvMeanShort = itemView.findViewById(R.id.tvNghia);
             imgDelete = itemView.findViewById(R.id.imgdeleteitem);
             tvType = itemView.findViewById(R.id.tvtype);
+            tvDateTime = itemView.findViewById(R.id.txt_favorite_datetime);
+
             imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,8 +86,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         void onBindData(Favorite favorite) {
             tvWord.setText((getAdapterPosition() + 1) + ". " + favorite.getStrWord());
-            tvMeanShort.setText(favorite.getStrMeanShort());
+            tvMeanShort.setText(favorite.getStrMeanShort() == null ? "..." : favorite.getStrMeanShort());
             tvType.setText(favorite.getStrType());
+            tvDateTime.setText(favorite.getDateCreate());
         }
     }
 

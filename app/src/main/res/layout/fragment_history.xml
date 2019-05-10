@@ -30,6 +30,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:gravity="center"
             android:text="Lịch sử"
+            android:textColor="@color/colorBackgroundMainApp"
             android:textSize="@dimen/action_bar_title_text_size"
             app:layout_constraintLeft_toRightOf="@id/image_back_list_history"
             app:layout_constraintTop_toTopOf="parent" />
