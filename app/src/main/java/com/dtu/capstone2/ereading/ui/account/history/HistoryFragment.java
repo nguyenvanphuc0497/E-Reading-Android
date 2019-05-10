@@ -65,6 +65,7 @@ public class HistoryFragment extends BaseFragment {
         mRecycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycleListView.setAdapter(adapter);
         refreshLayout.setRefreshing(true);
+        refreshLayout.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
     }
 
     private void initEventView() {

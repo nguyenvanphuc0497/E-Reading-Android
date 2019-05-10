@@ -66,6 +66,7 @@ public class FavoriteFragment extends BaseFragment {
         recycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleListView.setAdapter(adapter);
         refreshLayout.setRefreshing(true);
+        refreshLayout.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
     }
 
     private void initEventView() {

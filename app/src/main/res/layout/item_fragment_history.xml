@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textStyle="italic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_history_introduction"
