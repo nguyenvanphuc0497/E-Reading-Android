@@ -55,7 +55,7 @@ public class RegisterFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    public void initView() {
+    public void initView(@org.jetbrains.annotations.Nullable View view) {
 
     }
 

@@ -60,14 +60,14 @@ public class HistoryFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initView();
+        initView(view);
         initScrollListener();
         initEventView();
         initData();
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         mRecycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycleListView.setAdapter(adapter);
         refreshLayout.setRefreshing(true);

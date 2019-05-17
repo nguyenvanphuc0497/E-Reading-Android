@@ -172,7 +172,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         }
     }
 
-    override fun initView() {
+    override fun initView(view: View?) {
         adapter = TranslateNewFeedAdapter(viewModel.dataRecyclerView)
         recyclerViewTranslateNewFeed?.layoutManager = LinearLayoutManager(context)
         recyclerViewTranslateNewFeed?.adapter = adapter

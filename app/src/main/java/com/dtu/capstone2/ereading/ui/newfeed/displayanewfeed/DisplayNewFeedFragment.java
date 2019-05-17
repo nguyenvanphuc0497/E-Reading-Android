@@ -40,7 +40,7 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
     }
 
     @Override
-    public void initView() {
+    public void initView(@Nullable View view) {
 
     }
 

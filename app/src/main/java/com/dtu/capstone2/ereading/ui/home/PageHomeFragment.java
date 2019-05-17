@@ -42,7 +42,7 @@ public class PageHomeFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(@org.jetbrains.annotations.Nullable View view) {
 
     }
 

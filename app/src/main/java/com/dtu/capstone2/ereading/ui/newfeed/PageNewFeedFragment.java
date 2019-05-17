@@ -28,7 +28,7 @@ public class PageNewFeedFragment extends BaseFragment {
     private List<ItemPageNewFeed> mItemPageNewFeeds;
 
     @Override
-    public void initView() {
+    public void initView(@org.jetbrains.annotations.Nullable View view) {
 
     }
 

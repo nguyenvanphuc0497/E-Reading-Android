@@ -56,14 +56,14 @@ public class FavoriteFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initView();
+        initView(view);
         initScrollListener();
         initEvent();
         initData();
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         recycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleListView.setAdapter(adapter);
         refreshLayout.setRefreshing(true);
