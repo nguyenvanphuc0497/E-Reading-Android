@@ -49,6 +49,21 @@ public class PageAccountFragment extends BaseFragment {
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
     @SuppressLint("CheckResult")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

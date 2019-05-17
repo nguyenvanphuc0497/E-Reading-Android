@@ -33,6 +33,12 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
     private lateinit var viewModel: TranslateNewFeedViewModel
     private lateinit var adapter: TranslateNewFeedAdapter
 
+    override fun initData() {
+    }
+
+    override fun initEvent() {
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -166,7 +172,7 @@ class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInt
         }
     }
 
-    private fun initView() {
+    override fun initView() {
         adapter = TranslateNewFeedAdapter(viewModel.dataRecyclerView)
         recyclerViewTranslateNewFeed?.layoutManager = LinearLayoutManager(context)
         recyclerViewTranslateNewFeed?.adapter = adapter

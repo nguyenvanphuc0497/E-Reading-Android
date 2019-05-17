@@ -37,6 +37,21 @@ public class PageHomeFragment extends BaseFragment {
     private Button btnTranslate;
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

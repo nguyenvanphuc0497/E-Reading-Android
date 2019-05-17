@@ -58,18 +58,20 @@ public class FavoriteFragment extends BaseFragment {
 
         initView();
         initScrollListener();
-        initEventView();
+        initEvent();
         initData();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         recycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleListView.setAdapter(adapter);
         refreshLayout.setRefreshing(true);
         refreshLayout.setColorSchemeResources(R.color.colorPink, R.color.colorIndigo, R.color.colorLime);
     }
 
-    private void initEventView() {
+    @Override
+    public void initEvent() {
         adapter.setItemDeleteOnClickListener(new FavoriteAdapter.OnItemListener() {
             @Override
             public void onItemClick(final int position) {
@@ -107,7 +109,8 @@ public class FavoriteFragment extends BaseFragment {
         });
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         getDataFromServer();
     }
 

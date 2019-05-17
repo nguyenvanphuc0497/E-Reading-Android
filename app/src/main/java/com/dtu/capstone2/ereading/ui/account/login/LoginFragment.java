@@ -45,6 +45,16 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     private TextInputLayout layoutPassword;
     private TextInputLayout layoutUsername;
 
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
     @SuppressLint("CheckResult")
     @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -125,7 +135,8 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         }
     }
 
-    private void initEvent() {
+    @Override
+    public void initEvent() {
         btnLogin.setOnClickListener(this);
         btnLoginRegister.setOnClickListener(this);
         edtUsername.setOnFocusChangeListener(this);

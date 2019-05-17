@@ -12,6 +12,12 @@ abstract class BaseFragment : Fragment() {
     private var nameActivity = "null"
     protected val managerSubscribe: CompositeDisposable = CompositeDisposable()
 
+    abstract fun initData()
+
+    abstract fun initView()
+
+    abstract fun initEvent()
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         nameActivity = activity?.javaClass?.simpleName ?: "null"
