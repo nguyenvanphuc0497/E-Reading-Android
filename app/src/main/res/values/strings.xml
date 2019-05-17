@@ -20,5 +20,9 @@
     <string name="page_account_header_title">Tài khoản</string>
     <string name="page_account_login_info_default">Đăng nhập</string>
     <string name="toast_requirement_login">Trước tiên bạn hãy đăng nhập.</string>
+    <string name="page_account_tv_level_english">Trình độ tiếng anh</string>
+    <string name="page_account_tv_favorite">Từ vựng yêu thích</string>
+    <string name="page_account_tv_history">Lịch sử bài báo</string>
+    <string name="page_account_tv_logout">Đăng xuất</string>
 
 </resources>
