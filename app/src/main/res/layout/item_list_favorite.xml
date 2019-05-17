@@ -67,7 +67,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
             android:layout_weight="2"
-            android:src="@drawable/delete" />
+            android:src="@drawable/ic_delete_512" />
     </LinearLayout>
 
     <TextView
