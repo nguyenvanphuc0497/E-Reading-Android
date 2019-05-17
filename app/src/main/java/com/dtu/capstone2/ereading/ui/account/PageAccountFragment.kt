@@ -44,7 +44,7 @@ class PageAccountFragment : BaseFragment() {
     override fun initEvent() {
         tv_manager_email_user?.setOnClickListener {
             startActivity(Intent(context, ManagerAccountContainerActivity::class.java))
-            activity!!.overridePendingTransition(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left)
+            activity?.overridePendingTransition(R.animator.anim_slide_new_in_right, R.animator.anim_slide_old_out_left)
         }
         tv_manager_logout?.setOnClickListener {
             if (mViewModel.isLogin!!) {
