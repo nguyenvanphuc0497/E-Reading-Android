@@ -28,6 +28,16 @@ public class PageNewFeedFragment extends BaseFragment {
     private List<ItemPageNewFeed> mItemPageNewFeeds;
 
     @Override
+    public void initView(@org.jetbrains.annotations.Nullable View view) {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

@@ -37,6 +37,21 @@ public class PageHomeFragment extends BaseFragment {
     private Button btnTranslate;
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView(@org.jetbrains.annotations.Nullable View view) {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

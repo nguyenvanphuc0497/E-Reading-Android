@@ -35,6 +35,21 @@ public class DisplayNewFeedFragment extends BaseFragment implements SwipeRefresh
     private TextView tvTypeDisplayNewFeed;
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView(@Nullable View view) {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

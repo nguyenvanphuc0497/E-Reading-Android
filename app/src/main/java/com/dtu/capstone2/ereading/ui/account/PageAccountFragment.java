@@ -49,106 +49,24 @@ public class PageAccountFragment extends BaseFragment {
     private TextView tvEmailUser;
     private int mItemSelect = -1;
 
-    @SuppressLint("CheckResult")
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void initData() {
         mViewModel = new PageAccountViewModel(new EReadingRepository(), new LocalRepository(getContext()));
         initDialog();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_page_account, container, false);
+    public void initView(View view) {
         linearLayoutLogin = view.findViewById(R.id.llLogin);
         linearLayoutLogout = view.findViewById(R.id.layoutLogout);
         linearLayoutFavorite = view.findViewById(R.id.tvFavorite);
         mLinearLayoutHistory = view.findViewById(R.id.tvHistory);
         linearLayoutTrinhDoTiengAnh = view.findViewById(R.id.llTrinhDoTiengAnh);
         tvEmailUser = view.findViewById(R.id.tv_page_account_manager_email_user);
-
-        return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        initEventView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadInfoLoginToView();
-    }
-
-    private void initDialog() {
-        builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Trình độ tiếng anh của bạn ?");
-    }
-
-    private void showDialog(final String[] arrayNameLevel, int levelSelected) {
-        mItemSelect = -1;
-        builder.setSingleChoiceItems(arrayNameLevel, levelSelected, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mItemSelect = i;
-            }
-        });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (mItemSelect != -1) {
-                    handelEventSetLevelUserToServer(mItemSelect);
-                }
-                mItemSelect = -1;
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void loadInfoLoginToView() {
-        Log.e("xxx", mViewModel.isLogin().toString());
-        if (mViewModel.isLogin()) {
-            tvEmailUser.setText(mViewModel.getEmailFromLocal());
-            linearLayoutLogin.setEnabled(false);
-            linearLayoutLogout.setVisibility(View.VISIBLE);
-        } else {
-            tvEmailUser.setText(getString(R.string.page_account_login_info_default));
-            linearLayoutLogin.setEnabled(true);
-            linearLayoutLogout.setVisibility(View.GONE);
-        }
-    }
-
-    private void handelEventSetLevelUserToServer(int position) {
-        showLoadingDialog();
-        mViewModel.setLevelOfUserToServer(position)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new SingleObserver<LevelEnglish>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(LevelEnglish levelEnglish) {
-                        showSuccessDialog("", true);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        showApiErrorDialog();
-                    }
-                });
-    }
-
-    private void initEventView() {
+    public void initEvent() {
         linearLayoutLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,5 +162,97 @@ public class PageAccountFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        initData();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_page_account, container, false);
+        initView(view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initEvent();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadInfoLoginToView();
+    }
+
+    private void initDialog() {
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Trình độ tiếng anh của bạn ?");
+    }
+
+    private void showDialog(final String[] arrayNameLevel, int levelSelected) {
+        mItemSelect = -1;
+        builder.setSingleChoiceItems(arrayNameLevel, levelSelected, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mItemSelect = i;
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (mItemSelect != -1) {
+                    handelEventSetLevelUserToServer(mItemSelect);
+                }
+                mItemSelect = -1;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void loadInfoLoginToView() {
+        Log.e("xxx", mViewModel.isLogin().toString());
+        if (mViewModel.isLogin()) {
+            tvEmailUser.setText(mViewModel.getEmailFromLocal());
+            linearLayoutLogin.setEnabled(false);
+            linearLayoutLogout.setVisibility(View.VISIBLE);
+        } else {
+            tvEmailUser.setText(getString(R.string.page_account_login_info_default));
+            linearLayoutLogin.setEnabled(true);
+            linearLayoutLogout.setVisibility(View.GONE);
+        }
+    }
+
+    private void handelEventSetLevelUserToServer(int position) {
+        showLoadingDialog();
+        mViewModel.setLevelOfUserToServer(position)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new SingleObserver<LevelEnglish>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(LevelEnglish levelEnglish) {
+                        showSuccessDialog("", true);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showApiErrorDialog();
+                    }
+                });
     }
 }

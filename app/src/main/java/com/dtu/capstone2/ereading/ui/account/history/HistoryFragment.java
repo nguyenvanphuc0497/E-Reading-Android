@@ -31,6 +31,11 @@ public class HistoryFragment extends BaseFragment {
     private SwipeRefreshLayout refreshLayout;
 
     @Override
+    public void initEvent() {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -55,13 +60,14 @@ public class HistoryFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initView();
+        initView(view);
         initScrollListener();
         initEventView();
         initData();
     }
 
-    private void initView() {
+    @Override
+    public void initView(View view) {
         mRecycleListView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycleListView.setAdapter(adapter);
         refreshLayout.setRefreshing(true);
@@ -101,7 +107,8 @@ public class HistoryFragment extends BaseFragment {
                 }));
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         getDataFromServer();
     }
 

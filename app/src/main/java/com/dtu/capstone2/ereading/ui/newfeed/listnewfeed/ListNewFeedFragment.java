@@ -27,6 +27,21 @@ public class ListNewFeedFragment extends BaseFragment {
     private TextView mTitle;
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView(@org.jetbrains.annotations.Nullable View view) {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
     public void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

@@ -2,6 +2,7 @@ package com.dtu.capstone2.ereading.ui.utils
 
 import android.content.Context
 import android.support.v4.app.Fragment
+import android.view.View
 import com.dtu.capstone2.ereading.R
 import io.reactivex.disposables.CompositeDisposable
 
@@ -11,6 +12,12 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseFragment : Fragment() {
     private var nameActivity = "null"
     protected val managerSubscribe: CompositeDisposable = CompositeDisposable()
+
+    abstract fun initData()
+
+    abstract fun initView(view: View? = null)
+
+    abstract fun initEvent()
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
