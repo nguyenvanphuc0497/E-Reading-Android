@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse
 import com.dtu.capstone2.ereading.ui.account.favorite.FavoriteFragment
+import com.dtu.capstone2.ereading.ui.account.feedback.FeedBackDialog
 import com.dtu.capstone2.ereading.ui.account.history.HistoryFragment
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment
@@ -30,6 +32,7 @@ import javax.net.ssl.HttpsURLConnection
 class PageAccountFragment : BaseFragment() {
     private lateinit var mViewModel: PageAccountViewModel
     private lateinit var builder: AlertDialog.Builder
+    private lateinit var feedBackDialog: FeedBackDialog
     private var mItemSelect = -1
 
     override fun initData() {
@@ -38,7 +41,7 @@ class PageAccountFragment : BaseFragment() {
     }
 
     override fun initView(view: View?) {
-
+        feedBackDialog = FeedBackDialog()
     }
 
     override fun initEvent() {
@@ -112,6 +115,14 @@ class PageAccountFragment : BaseFragment() {
                 showToastRequirementLogin("")
             }
         }
+
+        tv_manager_feedback?.setOnClickListener {
+            feedBackDialog.show(fragmentManager, "")
+        }
+
+        feedBackDialog.onSubmitClicked = {
+            Log.e("xxx", "${feedBackDialog.edtMessage.text} : ${feedBackDialog.edtContact.text}")
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -123,6 +134,7 @@ class PageAccountFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        initView()
         return inflater.inflate(R.layout.fragment_page_account, container, false)
     }
 

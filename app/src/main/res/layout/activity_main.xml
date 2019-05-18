@@ -18,7 +18,10 @@
         android:id="@+id/tabLayoutMain"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/colorBackgroundMainApp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:tabIndicatorHeight="0dp" />
+        app:tabIndicatorHeight="0dp"
+        app:tabSelectedTextColor="@color/colorMainApp"
+        app:tabTextAppearance="@style/CustomTabText" />
 
 </android.support.constraint.ConstraintLayout>

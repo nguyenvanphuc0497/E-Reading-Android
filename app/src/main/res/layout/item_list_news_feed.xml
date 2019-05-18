@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackgroundMainApp"
@@ -28,7 +29,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_news_thumbnail" />
+        app:layout_constraintTop_toBottomOf="@id/img_news_thumbnail"
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/tv_news_description"
@@ -39,7 +41,20 @@
         android:maxLines="3"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_news_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_news_title"
+        tools:text="Introduction" />
+
+    <TextView
+        android:id="@+id/tv_news_time_publish"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textStyle="italic"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_news_description"
+        tools:text="10 giờ trước" />
 
     <View
         android:layout_width="match_parent"
