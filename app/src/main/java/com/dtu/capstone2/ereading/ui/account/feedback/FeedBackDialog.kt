@@ -29,6 +29,7 @@ class FeedBackDialog : BaseDialog() {
         edtContact = dialog.findViewById(R.id.edt_feedback_contact)
         btnSubmit = dialog.findViewById(R.id.btn_feedback_submit)
         btnSubmit.setOnClickListener {
+            this.dismiss()
             onSubmitClicked()
         }
     }
