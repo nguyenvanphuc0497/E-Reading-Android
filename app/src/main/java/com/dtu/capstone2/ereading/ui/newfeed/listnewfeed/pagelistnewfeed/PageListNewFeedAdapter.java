@@ -59,6 +59,7 @@ public class PageListNewFeedAdapter extends RecyclerView.Adapter<PageListNewFeed
         private ImageView imgNewsThumbnail;
         private TextView tvNewsTitle;
         private TextView tvNewsDescription;
+        private TextView tvTime;
 
         //Setting các tuỳ chọn cho thư viện load ảnh Glide
         private RequestOptions options = new RequestOptions()
@@ -71,6 +72,7 @@ public class PageListNewFeedAdapter extends RecyclerView.Adapter<PageListNewFeed
             imgNewsThumbnail = itemView.findViewById(R.id.img_news_thumbnail);
             tvNewsTitle = itemView.findViewById(R.id.tv_news_title);
             tvNewsDescription = itemView.findViewById(R.id.tv_news_description);
+            tvTime = itemView.findViewById(R.id.tv_news_time_publish);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,7 +90,7 @@ public class PageListNewFeedAdapter extends RecyclerView.Adapter<PageListNewFeed
             Glide.with(mContext).load(urlImage).apply(options).into(imgNewsThumbnail);
             tvNewsTitle.setText(rssItemResponse.getTitle());
             tvNewsDescription.setText(rssItemResponse.getDescription());
-
+            tvTime.setText(rssItemResponse.getPushDate());
         }
     }
 

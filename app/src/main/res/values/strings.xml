@@ -23,6 +23,14 @@
     <string name="page_account_tv_level_english">Trình độ tiếng anh</string>
     <string name="page_account_tv_favorite">Từ vựng yêu thích</string>
     <string name="page_account_tv_history">Lịch sử bài báo</string>
+    <string name="page_account_tv_feedback">Góp ý</string>
     <string name="page_account_tv_logout">Đăng xuất</string>
+
+    <!--Dialog Feedback-->
+    <string name="dialog_feedback_title">Góp ý</string>
+    <string name="dialog_feedback_message_text_hint">Bạn chưa hài lòng, hãy giúp chúng tôi cải thiện ứng dụng này hơn!</string>
+    <string name="dialog_feedback_contact_text_hint">Số điên thoại, gmail hoặc facebook để chúng tôi có thể liên lac với bạn.</string>
+    <string name="dialog_feedback_btn_send">Gửi</string>
+
 
 </resources>

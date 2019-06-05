@@ -64,6 +64,20 @@
         app:layout_constraintTop_toBottomOf="@id/tv_manager_favorite" />
 
     <TextView
+        android:id="@+id/tv_manager_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_text_view_manager"
+        android:drawableLeft="@drawable/ic_feedback_24"
+        android:drawableRight="@drawable/ic_next_24"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:text="@string/page_account_tv_feedback"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_manager_history" />
+
+    <TextView
         android:id="@+id/tv_manager_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,5 +89,5 @@
         android:padding="10dp"
         android:text="@string/page_account_tv_logout"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_manager_history" />
+        app:layout_constraintTop_toBottomOf="@id/tv_manager_feedback" />
 </android.support.constraint.ConstraintLayout>
