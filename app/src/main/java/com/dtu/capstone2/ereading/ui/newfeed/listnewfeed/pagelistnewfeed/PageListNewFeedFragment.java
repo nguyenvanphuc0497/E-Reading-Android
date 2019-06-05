@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
-import com.dtu.capstone2.ereading.ui.newfeed.displayanewfeed.DisplayNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.ListNewFeedPagerAdapter;
+import com.dtu.capstone2.ereading.ui.newfeed.translate.TranslateNewFeedFragment;
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.Constants;
 
@@ -97,7 +97,7 @@ public class PageListNewFeedFragment extends BaseFragment {
                 String urlNewFeed = mViewModel.getListRssItemResponse().get(position).getLink();
                 bundle.putString(Constants.KEY_URL_NEW_FEED, urlNewFeed);
                 bundle.putString(Constants.KEY_TYPE_NEW_FEED, mViewModel.getTypeNewFeed());
-                Fragment fragment = new DisplayNewFeedFragment();
+                Fragment fragment = new TranslateNewFeedFragment();
                 fragment.setArguments(bundle);
                 addFragment(R.id.layoutPageNewFeedContainer, fragment, true, true);
             }
