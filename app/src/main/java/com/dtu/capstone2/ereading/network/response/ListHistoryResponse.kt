@@ -13,4 +13,12 @@ data class ListHistoryResponse(@SerializedName("result_count") val resultCount: 
 
 data class HistoryNewFeed(@SerializedName("title_new_feed") val titleNewsFeed: String,
                           @SerializedName("time_create") val timeCreate: String,
-                          @SerializedName("introduction_new_feed") val introduction: String)
+                          @SerializedName("introduction_new_feed") val introduction: String) : Comparable<HistoryNewFeed> {
+    override fun compareTo(other: HistoryNewFeed): Int {
+        return if (other.titleNewsFeed == this.titleNewsFeed && other.timeCreate == this.timeCreate && other.introduction == this.introduction) {
+            0
+        } else {
+            1
+        }
+    }
+}

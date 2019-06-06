@@ -1,14 +1,20 @@
 package com.dtu.capstone2.ereading.ui.account.history;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.response.HistoryNewFeed;
+import com.dtu.capstone2.ereading.ui.utils.BaseDIffUtilCallBack;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -23,6 +29,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     HistoryAdapter(List<HistoryNewFeed> data) {
         mArrContact = data;
+    }
+
+    void onNewData(List<HistoryNewFeed> newData, RecyclerView recyclerView) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new BaseDIffUtilCallBack(newData, mArrContact));
+        diffResult.dispatchUpdatesTo(this);
+        this.mArrContact.clear();
+        this.mArrContact.addAll(newData);
+        recyclerView.scrollToPosition(0);
     }
 
     @NonNull
@@ -43,6 +57,31 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             populateItemRows((ItemViewHolder) holder, position);
         } else if (holder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) holder, position);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NotNull List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads);
+        } else {
+            Bundle o = (Bundle) payloads.get(0);
+            for (String key : o.keySet()) {
+                if (key.equals("introduction")) {
+                    Toast.makeText(holder.itemView.getContext(), "HistoryNewFeed " + position + " : introduction Changed", Toast.LENGTH_SHORT).show();
+                }
+                if (key.equals("timeCreate")) {
+                    Toast.makeText(holder.itemView.getContext(), "HistoryNewFeed " + position + " : timeCreate Changed", Toast.LENGTH_SHORT).show();
+                }
+                if (key.equals("titleNewsFeed")) {
+                    Toast.makeText(holder.itemView.getContext(), "HistoryNewFeed " + position + " : titleNewsFeed Changed", Toast.LENGTH_SHORT).show();
+                }
+                if (holder instanceof ItemViewHolder) {
+                    populateItemRows((ItemViewHolder) holder, position);
+                } else if (holder instanceof LoadingViewHolder) {
+                    showLoadingView((LoadingViewHolder) holder, position);
+                }
+            }
         }
     }
 

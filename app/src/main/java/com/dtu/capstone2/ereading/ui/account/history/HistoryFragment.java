@@ -97,7 +97,8 @@ public class HistoryFragment extends BaseFragment {
                     @Override
                     public void accept(ListHistoryResponse listHistoryResponse) throws Exception {
                         refreshLayout.setRefreshing(false);
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
+                        adapter.onNewData(listHistoryResponse.getListData(), mRecycleListView);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
