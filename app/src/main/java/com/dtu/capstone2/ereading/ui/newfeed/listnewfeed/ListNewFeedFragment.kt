@@ -1,0 +1,76 @@
+package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed
+
+import android.os.Bundle
+import android.support.v4.view.ViewPager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.utils.BaseFragment
+import kotlinx.android.synthetic.main.fragment_list_new_feed.*
+
+/**
+ * Create by Nguyen Van Phuc on 4/8/19
+ */
+class ListNewFeedFragment : BaseFragment() {
+    companion object {
+        private const val KEY_POSITION_GROUP_NEW_FEED = "position_group_new_feed"
+
+        internal fun newInstant(positionGroup: Int) = ListNewFeedFragment().apply {
+            arguments = Bundle().apply {
+                putInt(KEY_POSITION_GROUP_NEW_FEED, positionGroup)
+            }
+        }
+    }
+
+    private lateinit var mAdapter: ListNewFeedPagerAdapter
+    private lateinit var mViewModel: ListNewFeedViewModel
+
+    override fun initData() {
+        mViewModel = ListNewFeedViewModel().also {
+            arguments?.let { arguments ->
+                it.positionGroup = arguments.getInt(KEY_POSITION_GROUP_NEW_FEED)
+            }
+            mAdapter = ListNewFeedPagerAdapter(fragmentManager, it.getGroupNewFeed()[it.positionGroup])
+        }
+    }
+
+    override fun initView(view: View?) {
+        viewPagerListNewFeed?.apply {
+            adapter = mAdapter
+            offscreenPageLimit = 1
+            tabLayoutListNewFeed?.setupWithViewPager(this, true)
+        }
+
+        if (mViewModel.getGroupNewFeed()[mViewModel.positionGroup].isNotEmpty()) {
+            tvListNewFeedTitle?.text = mViewModel.getGroupNewFeed()[mViewModel.positionGroup][0].titleFragment
+        }
+    }
+
+    override fun initEvent() {
+        imgListNewFeedBack?.setOnClickListener { activity!!.onBackPressed() }
+
+        viewPagerListNewFeed?.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tvListNewFeedTitle?.text = mViewModel.getGroupNewFeed()[mViewModel!!.positionGroup!!][position].titleFragment
+            }
+        })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initData()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_list_new_feed, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initEvent()
+    }
+}

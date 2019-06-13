@@ -21,6 +21,7 @@
         android:background="@color/colorBackgroundMainApp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@color/colorTransparent"
         app:tabSelectedTextColor="@color/colorMainApp"
         app:tabTextAppearance="@style/CustomTabText" />
 
