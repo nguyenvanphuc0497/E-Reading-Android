@@ -34,7 +34,6 @@
 
     <style name="CustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">8sp</item>
-        <item name="android:animation">@null</item>
     </style>
 
 </resources>

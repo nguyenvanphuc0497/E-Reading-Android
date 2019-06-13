@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.model.ItemListNewFeedPager
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment
 import kotlinx.android.synthetic.main.fragment_list_new_feed.*
 
@@ -16,9 +17,9 @@ class ListNewFeedFragment : BaseFragment() {
     companion object {
         private const val KEY_POSITION_GROUP_NEW_FEED = "position_group_new_feed"
 
-        internal fun newInstant(positionGroup: Int) = ListNewFeedFragment().apply {
+        internal fun newInstant(listNewsFeed: ArrayList<ItemListNewFeedPager>) = ListNewFeedFragment().apply {
             arguments = Bundle().apply {
-                putInt(KEY_POSITION_GROUP_NEW_FEED, positionGroup)
+                putParcelableArrayList(KEY_POSITION_GROUP_NEW_FEED, listNewsFeed)
             }
         }
     }
@@ -27,11 +28,12 @@ class ListNewFeedFragment : BaseFragment() {
     private lateinit var mViewModel: ListNewFeedViewModel
 
     override fun initData() {
-        mViewModel = ListNewFeedViewModel().also {
+        mViewModel = ListNewFeedViewModel().apply {
             arguments?.let { arguments ->
-                it.positionGroup = arguments.getInt(KEY_POSITION_GROUP_NEW_FEED)
+                listRssNewFeed = arguments.getParcelableArrayList<ItemListNewFeedPager>(KEY_POSITION_GROUP_NEW_FEED)?.toMutableList()
+                        ?: mutableListOf()
             }
-            mAdapter = ListNewFeedPagerAdapter(fragmentManager, it.getGroupNewFeed()[it.positionGroup])
+            mAdapter = ListNewFeedPagerAdapter(fragmentManager, listRssNewFeed)
         }
     }
 
@@ -41,10 +43,7 @@ class ListNewFeedFragment : BaseFragment() {
             offscreenPageLimit = 1
             tabLayoutListNewFeed?.setupWithViewPager(this, true)
         }
-
-        if (mViewModel.getGroupNewFeed()[mViewModel.positionGroup].isNotEmpty()) {
-            tvListNewFeedTitle?.text = mViewModel.getGroupNewFeed()[mViewModel.positionGroup][0].titleFragment
-        }
+        tvListNewFeedTitle?.text = mViewModel.listRssNewFeed[0].titleFragment
     }
 
     override fun initEvent() {
@@ -53,7 +52,7 @@ class ListNewFeedFragment : BaseFragment() {
         viewPagerListNewFeed?.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                tvListNewFeedTitle?.text = mViewModel.getGroupNewFeed()[mViewModel!!.positionGroup!!][position].titleFragment
+                tvListNewFeedTitle?.text = mViewModel.listRssNewFeed[position].titleFragment
             }
         })
     }
