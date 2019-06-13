@@ -25,8 +25,17 @@ import javax.net.ssl.HttpsURLConnection
  */
 class TranslateNewFeedFragment : BaseFragment(), View.OnClickListener, DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnClickListener {
     companion object {
-        const val TITLE_DIALOG_FAVORITE = "favorite"
-        const val TITLE_DIALOG_REFRESH = "refresh"
+        private const val TITLE_DIALOG_FAVORITE = "favorite"
+        private const val TITLE_DIALOG_REFRESH = "refresh"
+        private const val KEY_URL_NEW_FEED = "key_url_new_feed"
+        private const val KEY_TYPE_NEW_FEED = "key_type_new_feed"
+
+        internal fun newInstant(urlNewFeed: String, typeNewFeed: String) = TranslateNewFeedFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_URL_NEW_FEED, urlNewFeed)
+                putString(KEY_TYPE_NEW_FEED, typeNewFeed)
+            }
+        }
     }
 
     private lateinit var mAlertDialogBuilder: AlertDialog.Builder
