@@ -40,7 +40,7 @@ public class ApiClient {
     }
 
     public ApiServer createServer() {
-        String mBaseUrl = "http://172.18.28.101:8000/api/";
+        String mBaseUrl = "http://172.18.28.63:8000/api/";
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
