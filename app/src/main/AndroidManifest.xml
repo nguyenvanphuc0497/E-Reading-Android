@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -31,6 +31,10 @@
 
         <activity
             android:name=".ui.account.ManagerAccountContainerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
     </application>
 
