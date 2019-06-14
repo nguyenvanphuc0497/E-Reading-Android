@@ -11,6 +11,7 @@ public class LocalRepository {
     private final static String KEY_TOKEN_USER = "key_token_user";
     private final static String KEY_EMAIL_USER = "key_email_user";
     private final static String KEY_NAME_LEVEL_USER = "key_name_level_user";
+    private final static String KEY_BASE_URL_SERVER = "key_base_url_server";
 
     private Context mContext;
     private SharedPreferences mShaPre;
@@ -64,5 +65,15 @@ public class LocalRepository {
 
     public void clearNameLevelUser() {
         mShaPre.edit().remove(KEY_NAME_LEVEL_USER).apply();
+    }
+
+    public void saveConfigApplication(String baseUrl) {
+        SharedPreferences.Editor editor = mShaPre.edit();
+        editor.putString(KEY_BASE_URL_SERVER, baseUrl);
+        editor.apply();
+    }
+
+    public String getConfigApplication() {
+        return mShaPre.getString(KEY_BASE_URL_SERVER, "");
     }
 }
