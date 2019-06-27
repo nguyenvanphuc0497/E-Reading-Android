@@ -4,10 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.network.response.BBCRssItemResponse
+import com.dtu.capstone2.ereading.ui.utils.glideLoadImage
 import kotlinx.android.synthetic.main.item_list_news_feed.view.*
 
 /**
@@ -40,18 +39,10 @@ class PageListNewFeedAdapter(private val mRssItemResponses: List<BBCRssItemRespo
             itemView.setOnClickListener { onItemClick(adapterPosition) }
         }
 
-        //Setting các tuỳ chọn cho thư viện load ảnh Glide
-        private val options = RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.ic_image_thumbnail_default)
-                .error(R.drawable.ic_thumbnail_error)
-
         internal fun onBindData(rssItemResponse: BBCRssItemResponse) {
             //Load Anh tu Url sử dụng thư viện Glide
             itemView.also {
-                Glide.with(itemView.context).load(rssItemResponse.bbcRssThumbnail.urlImage)
-                        .apply(options)
-                        .into(it.img_news_thumbnail)
+                it.img_news_thumbnail.glideLoadImage("https://www.bbc.co.uk/news/business-48772596")
                 it.tv_news_title.text = rssItemResponse.title
                 it.tv_news_description.text = rssItemResponse.description
                 it.tv_news_time_publish.text = rssItemResponse.pushDate

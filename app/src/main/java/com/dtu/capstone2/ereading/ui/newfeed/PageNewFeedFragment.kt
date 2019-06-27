@@ -19,7 +19,7 @@ class PageNewFeedFragment : BaseFragment() {
 
     override fun initData() {
         viewModel = PageNewFeedViewModel()
-        mAdapter = PageNewFeedAdapter(viewModel.initDataGroup(), context)
+        mAdapter = PageNewFeedAdapter(viewModel.initDataGroup())
     }
 
     override fun initView(view: View?) {
@@ -31,7 +31,7 @@ class PageNewFeedFragment : BaseFragment() {
     }
 
     override fun initEvent() {
-        mAdapter.setmItemPageNewFeeds { position ->
+        mAdapter.onItemClick = { position ->
             addFragment(R.id.layoutPageNewFeedContainer, ListNewFeedFragment.newInstant(viewModel.initDataGroup()[position].listNewFeedPager), true)
         }
     }

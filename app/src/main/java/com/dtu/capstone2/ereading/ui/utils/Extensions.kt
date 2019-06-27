@@ -4,6 +4,10 @@ import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.ui.model.LineContentNewFeed
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -75,4 +79,16 @@ private fun SpannableString.removeHighLightWordSelected(startIndex: Int, endInde
         this.removeSpan(it)
     }
     return this
+}
+
+internal fun ImageView.glideLoadImage(urlImage: String?) {
+    //Setting các tuỳ chọn cho thư viện load ảnh Glide
+    val options = RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.ic_image_thumbnail_default)
+            .error(R.drawable.ic_thumbnail_error)
+
+    Glide.with(this.context).load(urlImage ?: "")
+            .apply(options)
+            .into(this)
 }
