@@ -19,12 +19,13 @@ class PageListNewFeedFragment : BaseFragment() {
         private const val KEY_URL_END_POINT = "key_url_end_point"
         private const val KEY_TYPE_NEW_FEED = "key_type_new_feed"
 
-        internal fun newInstant(urlEndPointRSS: String, titleFragment: String) = PageListNewFeedFragment().apply {
-            arguments = Bundle().apply {
-                putString(KEY_URL_END_POINT, urlEndPointRSS)
-                putString(KEY_TYPE_NEW_FEED, titleFragment)
-            }
-        }
+        internal fun newInstant(urlEndPointRSS: String, titleFragment: String) =
+                PageListNewFeedFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(KEY_URL_END_POINT, urlEndPointRSS)
+                        putString(KEY_TYPE_NEW_FEED, titleFragment)
+                    }
+                }
     }
 
     private lateinit var mViewModel: PageListNewFeedViewModel
@@ -37,7 +38,7 @@ class PageListNewFeedFragment : BaseFragment() {
                 typeNewFeed = it.getString(KEY_TYPE_NEW_FEED)
             }
         }
-        mAdapter = PageListNewFeedAdapter(mViewModel.listRssItemResponse, activity)
+        mAdapter = PageListNewFeedAdapter(mViewModel.listRssItemResponse)
     }
 
     override fun initView(view: View?) {
@@ -60,7 +61,11 @@ class PageListNewFeedFragment : BaseFragment() {
         initData()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_list_new_feed_page, container, false)
     }
@@ -73,23 +78,30 @@ class PageListNewFeedFragment : BaseFragment() {
 
     private fun initEventsView() {
         layoutSwipeRefreshListNewFeed.setOnRefreshListener { loadDataFromServer() }
-        mAdapter.setmOnItemListener { position ->
-            addFragment(R.id.layoutPageNewFeedContainer,
-                    TranslateNewFeedFragment.newInstant(mViewModel.listRssItemResponse[position].link, mViewModel.typeNewFeed),
-                    true)
+        mAdapter.onItemClick = { position ->
+            addFragment(
+                    R.id.layoutPageNewFeedContainer,
+                    TranslateNewFeedFragment.newInstant(
+                            mViewModel.listRssItemResponse[position].link,
+                            mViewModel.typeNewFeed
+                    ),
+                    true
+            )
         }
         loadDataFromServer()
     }
 
     private fun loadDataFromServer() {
-        managerSubscribe.add(mViewModel.newsFeedFromServerBBCPopularTopStories
-                .observeOnUiThread()
-                .subscribe({
-                    mAdapter.notifyDataSetChanged()
-                    layoutSwipeRefreshListNewFeed.isRefreshing = false
-                }, {
-                    showApiErrorDialog()
-                    layoutSwipeRefreshListNewFeed.isRefreshing = false
-                }))
+        managerSubscribe.add(
+                mViewModel.newsFeedFromServerBBCPopularTopStories
+                        .observeOnUiThread()
+                        .subscribe({
+                            mAdapter.notifyDataSetChanged()
+                            layoutSwipeRefreshListNewFeed.isRefreshing = false
+                        }, {
+                            showApiErrorDialog()
+                            layoutSwipeRefreshListNewFeed.isRefreshing = false
+                        })
+        )
     }
 }
