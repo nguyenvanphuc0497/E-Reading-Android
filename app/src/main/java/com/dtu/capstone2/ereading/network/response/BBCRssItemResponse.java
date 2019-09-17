@@ -24,6 +24,9 @@ public class BBCRssItemResponse {
     @Element(name = "thumbnail", required = false)
     private BBCRssThumbnail bbcRssThumbnail;
 
+    @Element(name = "image", required = false)
+    private String image;
+
     /**
      * @return the title
      */
@@ -80,5 +83,13 @@ public class BBCRssItemResponse {
 
     public void setBbcRssThumbnail(BBCRssThumbnail bbcRssThumbnail) {
         this.bbcRssThumbnail = bbcRssThumbnail;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

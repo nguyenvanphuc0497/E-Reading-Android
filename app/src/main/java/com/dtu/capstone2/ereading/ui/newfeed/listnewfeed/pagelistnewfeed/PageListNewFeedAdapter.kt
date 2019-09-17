@@ -1,18 +1,20 @@
 package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.pagelistnewfeed
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dtu.capstone2.ereading.R
-import com.dtu.capstone2.ereading.network.response.BBCRssItemResponse
+import com.dtu.capstone2.ereading.network.response.VnExpressItemRss
 import com.dtu.capstone2.ereading.ui.utils.glideLoadImage
 import kotlinx.android.synthetic.main.item_list_news_feed.view.*
+import org.jsoup.Jsoup
 
 /**
  * Create by Nguyen Van Phuc on 4/6/19
  */
-class PageListNewFeedAdapter(private val mRssItemResponses: List<BBCRssItemResponse>) :
+class PageListNewFeedAdapter(private val mRssItemResponses: List<VnExpressItemRss>) :
         RecyclerView.Adapter<PageListNewFeedAdapter.ListNewFeedViewHolder>() {
     internal var onItemClick: (position: Int) -> Unit = { _ -> }
 
@@ -39,13 +41,19 @@ class PageListNewFeedAdapter(private val mRssItemResponses: List<BBCRssItemRespo
             itemView.setOnClickListener { onItemClick(adapterPosition) }
         }
 
-        internal fun onBindData(rssItemResponse: BBCRssItemResponse) {
+        internal fun onBindData(rssItemResponse: VnExpressItemRss) {
             //Load Anh tu Url sử dụng thư viện Glide
             itemView.also {
-                it.img_news_thumbnail.glideLoadImage("https://www.bbc.co.uk/news/business-48772596")
+                Jsoup.parse(rssItemResponse.summary).run {
+                    select("a[href]").attr()run {
+                        Log.d("xxx", attr("href"))
+                    }
+                    select("img").run {
+
+                    }
+                }
                 it.tv_news_title.text = rssItemResponse.title
-                it.tv_news_description.text = rssItemResponse.description
-                it.tv_news_time_publish.text = rssItemResponse.pushDate
+                it.tv_news_time_publish.text = rssItemResponse.published
             }
         }
     }

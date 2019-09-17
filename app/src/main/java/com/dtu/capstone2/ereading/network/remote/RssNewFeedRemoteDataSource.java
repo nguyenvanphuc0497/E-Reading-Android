@@ -2,9 +2,8 @@ package com.dtu.capstone2.ereading.network.remote;
 
 import com.dtu.capstone2.ereading.network.ApiClient;
 import com.dtu.capstone2.ereading.network.ApiServer;
-import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
+import com.dtu.capstone2.ereading.network.response.BaseFeedResponse;
 import com.dtu.capstone2.ereading.network.response.RssResponse;
-
 import io.reactivex.Single;
 
 /**
@@ -18,7 +17,7 @@ public class RssNewFeedRemoteDataSource {
         return mApiServer.getNewsFromCNN();
     }
 
-    public Single<BBCRssResponse> getNewsFeedFromServerBBC(String urlEndpoint) {
+    public Single<BaseFeedResponse> getNewsFeedFromServerBBC(String urlEndpoint) {
         return mApiServerBBC.getNewsFeedFromServerBBC(urlEndpoint);
     }
 }
