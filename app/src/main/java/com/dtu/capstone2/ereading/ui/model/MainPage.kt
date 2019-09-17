@@ -1,6 +1,6 @@
 package com.dtu.capstone2.ereading.ui.model
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  * Create by Nguyen Van Phuc on 3/22/19

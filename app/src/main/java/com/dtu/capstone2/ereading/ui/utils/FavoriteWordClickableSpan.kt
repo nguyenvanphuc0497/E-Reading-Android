@@ -1,7 +1,7 @@
 package com.dtu.capstone2.ereading.ui.utils
 
 import android.graphics.Color
-import android.support.v7.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatTextView
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View

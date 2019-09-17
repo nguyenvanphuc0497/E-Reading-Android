@@ -2,8 +2,8 @@ package com.dtu.capstone2.ereading.ui.utils
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.dtu.capstone2.ereading.R

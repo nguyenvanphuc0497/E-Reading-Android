@@ -1,10 +1,10 @@
 package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed
 
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.ViewPager
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.ui.model.ItemListNewFeedPager
 import com.dtu.capstone2.ereading.ui.utils.BaseFragment
@@ -33,7 +33,7 @@ class ListNewFeedFragment : BaseFragment() {
                 listRssNewFeed = arguments.getParcelableArrayList<ItemListNewFeedPager>(KEY_POSITION_GROUP_NEW_FEED)?.toMutableList()
                         ?: mutableListOf()
             }
-            mAdapter = ListNewFeedPagerAdapter(fragmentManager, listRssNewFeed)
+            mAdapter = ListNewFeedPagerAdapter(childFragmentManager, listRssNewFeed)
         }
     }
 

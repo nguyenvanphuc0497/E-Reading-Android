@@ -5,11 +5,11 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.dtu.capstone2.ereading.R
 import kotlinx.android.synthetic.main.dialog_loading.*
 
@@ -39,7 +39,7 @@ class LoadingDialog : DialogFragment() {
         }
     }
 
-    override fun show(manager: FragmentManager?, tag: String?) {
+    override fun show(manager: FragmentManager, tag: String?) {
         if (!isShowing) {
             isShowing = true
             super.show(manager, tag)

@@ -1,8 +1,8 @@
 package com.dtu.capstone2.ereading.ui.utils
 
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.dtu.capstone2.ereading.R
 import io.reactivex.disposables.CompositeDisposable
 
@@ -19,7 +19,7 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun initEvent()
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         nameActivity = activity?.javaClass?.simpleName ?: "null"
     }
