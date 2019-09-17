@@ -6,24 +6,19 @@ import com.dtu.capstone2.ereading.network.utils.CustomCallAdapterFactory;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import okhttp3.*;
+import okhttp3.logging.HttpLoggingInterceptor;
+import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.convert.AnnotationStrategy;
 import org.simpleframework.xml.core.Persister;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Create by Nguyen Van Phuc on 2/20/19
@@ -40,7 +35,7 @@ public class ApiClient {
     }
 
     public ApiServer createServer() {
-        String mBaseUrl = "http://172.18.28.63:8000/api/";
+        String mBaseUrl = "http://172.18.28.106:8000/api/";
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
@@ -57,8 +52,9 @@ public class ApiClient {
 
         // Header for request
         httpClientBuilder.addInterceptor(new Interceptor() {
+            @NotNull
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public Response intercept(@NotNull Chain chain) throws IOException {
                 Request original = chain.request();
                 Request.Builder requestBuilder = (original).newBuilder()
                         .method((original).method(), (original).body());
@@ -103,6 +99,7 @@ public class ApiClient {
                 .writeTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
                 .readTimeout(API_TIMEOUT, TimeUnit.MILLISECONDS)
                 .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+//                .sslSocketFactory(App.Companion.getInstant().getCertificateVietnamNet$app_debug().getSocketFactory())
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()

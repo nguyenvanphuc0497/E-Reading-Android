@@ -1,31 +1,9 @@
 package com.dtu.capstone2.ereading.network;
 
-import com.dtu.capstone2.ereading.network.request.AccountLoginRequest;
-import com.dtu.capstone2.ereading.network.request.AccountRegisterRequest;
-import com.dtu.capstone2.ereading.network.request.AddFavoriteRequest;
-import com.dtu.capstone2.ereading.network.request.DataFavoriteResponse;
-import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
-import com.dtu.capstone2.ereading.network.request.DataStringReponse;
-import com.dtu.capstone2.ereading.network.request.DetectWordRequest;
-import com.dtu.capstone2.ereading.network.request.FavoriteDeletedResponse;
-import com.dtu.capstone2.ereading.network.request.ListVocabularyFavoriteRequest;
-import com.dtu.capstone2.ereading.network.request.TranslateNewFeedAgainRequest;
-import com.dtu.capstone2.ereading.network.request.TranslateNewFeedRequest;
-import com.dtu.capstone2.ereading.network.response.BBCRssResponse;
-import com.dtu.capstone2.ereading.network.response.DetailResponse;
-import com.dtu.capstone2.ereading.network.response.LevelUserResponse;
-import com.dtu.capstone2.ereading.network.response.ListHistoryResponse;
-import com.dtu.capstone2.ereading.network.response.ListLevelEnglishResponse;
-import com.dtu.capstone2.ereading.network.response.RssResponse;
-import com.dtu.capstone2.ereading.network.response.Token;
-
+import com.dtu.capstone2.ereading.network.request.*;
+import com.dtu.capstone2.ereading.network.response.*;
 import io.reactivex.Single;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 /**
  * Create by Nguyen Van Phuc on 2/20/19
@@ -53,7 +31,7 @@ public interface ApiServer {
     Single<RssResponse> getNewsFromCNN();
 
     @GET("{endpoint}")
-    Single<BBCRssResponse> getNewsFeedFromServerBBC(@Path(value = "endpoint", encoded = true) String url);
+    Single<BaseFeedResponse> getNewsFeedFromServerBBC(@Path(value = "endpoint", encoded = true) String url);
 
     @GET("v1/portal/level")
     Single<ListLevelEnglishResponse> getListLevelEnglish();

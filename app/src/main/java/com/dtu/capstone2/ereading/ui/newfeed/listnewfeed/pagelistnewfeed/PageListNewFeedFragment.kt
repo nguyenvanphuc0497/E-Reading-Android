@@ -2,6 +2,7 @@ package com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.pagelistnewfeed
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +83,7 @@ class PageListNewFeedFragment : BaseFragment() {
             addFragment(
                     R.id.layoutPageNewFeedContainer,
                     TranslateNewFeedFragment.newInstant(
-                            mViewModel.listRssItemResponse[position].link,
+                            mViewModel.listRssItemResponse[position].link!!,
                             mViewModel.typeNewFeed
                     ),
                     true
@@ -99,6 +100,7 @@ class PageListNewFeedFragment : BaseFragment() {
                             mAdapter.notifyDataSetChanged()
                             layoutSwipeRefreshListNewFeed.isRefreshing = false
                         }, {
+                            Log.e("Xxx",it.toString())
                             showApiErrorDialog()
                             layoutSwipeRefreshListNewFeed.isRefreshing = false
                         })

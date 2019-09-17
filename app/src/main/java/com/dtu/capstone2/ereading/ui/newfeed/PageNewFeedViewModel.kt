@@ -20,7 +20,8 @@ class PageNewFeedViewModel {
         mItemPageNewFeeds.add(ItemPageNewFeed("https://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif",
                 "BCC Sports news",
                 initListNewsFeedBBCSports()))
-//        mItemPageNewFeeds.add(ItemPageNewFeed("", "Vietnamnet English"))
+        mItemPageNewFeeds.add(ItemPageNewFeed("", "Vietnamnet English", initListNewsFeedVietnamNet()))
+        mItemPageNewFeeds.add(ItemPageNewFeed("", "VN Express", initListNewsFeedVNExpress()))
     }
 
     private fun initListNewsFeedBBCPopular() = arrayListOf<ItemListNewFeedPager>().apply {
@@ -49,6 +50,19 @@ class PageNewFeedViewModel {
         add(ItemListNewFeedPager("Northern Ireland", "news/northern_ireland/rss.xml"))
         add(ItemListNewFeedPager("Scotland", "news/scotland/rss.xml"))
         add(ItemListNewFeedPager("Wales", "news/wales/rss.xml"))
+    }
+
+    private fun initListNewsFeedVietnamNet() = arrayListOf<ItemListNewFeedPager>().apply {
+        clear()
+        add(ItemListNewFeedPager("Homepage", "https://english.vietnamnet.vn/rss/top-hot-news.rss"))
+        add(ItemListNewFeedPager("Special Reports", "https://english.vietnamnet.vn/rss/special-reports.rss"))
+        add(ItemListNewFeedPager("Vietnam In Photos", "https://english.vietnamnet.vn/rss/vietnam-in-photos.rss"))
+        add(ItemListNewFeedPager("What's On", "https://english.vietnamnet.vn/rss/what-s-on.rss"))
+    }
+
+    private fun initListNewsFeedVNExpress() = arrayListOf<ItemListNewFeedPager>().apply {
+        clear()
+        add(ItemListNewFeedPager("New Feed", "https://e.vnexpress.net/rss/news.rss"))
     }
 
     private fun initListNewsFeedBBCSports() = arrayListOf<ItemListNewFeedPager>().apply {
