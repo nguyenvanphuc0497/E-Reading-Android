@@ -3,12 +3,12 @@ package com.dtu.capstone2.ereading.ui
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.dtu.capstone2.ereading.R
-import com.dtu.capstone2.ereading.ui.utils.BaseActivity
+import com.dtu.capstone2.ereading.ui.base.BaseActivity
+import com.dtu.capstone2.ereading.ui.base.TypeTabPager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private lateinit var mMainPagerAdapter: MainPagerAdapter
-    private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +26,13 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onPageSelected(position: Int) {
         when (position) {
-            0 -> {
+            TypeTabPager.TAB_NEW_FEED.type -> {
                 tab_layout_main?.run {
                     getTabAt(0)?.icon?.alpha = 255
                     getTabAt(1)?.icon?.alpha = 100
                 }
             }
-            1 -> {
+            TypeTabPager.TAB_ACCOUNT.type -> {
                 tab_layout_main?.run {
                     getTabAt(0)?.icon?.alpha = 100
                     getTabAt(1)?.icon?.alpha = 255
@@ -42,8 +42,7 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun initData() {
-        viewModel = MainActivityViewModel()
-        mMainPagerAdapter = MainPagerAdapter(supportFragmentManager, viewModel.initListFragment())
+        mMainPagerAdapter = MainPagerAdapter(supportFragmentManager)
     }
 
     private fun initView() {
@@ -55,8 +54,8 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         tab_layout_main?.apply {
             setupWithViewPager(view_pager_main)
-            getTabAt(0)?.setIcon(R.drawable.ic_news_feed_16)
-            getTabAt(1)?.setIcon(R.drawable.ic_account_16)
+            getTabAt(TypeTabPager.TAB_NEW_FEED.type)?.setIcon(R.drawable.ic_news_feed_16)
+            getTabAt(TypeTabPager.TAB_ACCOUNT.type)?.setIcon(R.drawable.ic_account_16)
             repeat(tabCount) {
                 getTabAt(it)?.run {
                     if (it != 0) {

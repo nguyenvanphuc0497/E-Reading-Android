@@ -16,7 +16,7 @@ import com.dtu.capstone2.ereading.ui.account.favorite.FavoriteFragment
 import com.dtu.capstone2.ereading.ui.account.feedback.FeedBackDialog
 import com.dtu.capstone2.ereading.ui.account.history.HistoryFragment
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment
+import com.dtu.capstone2.ereading.ui.base.BaseFragment
 import com.dtu.capstone2.ereading.ui.utils.observeOnUiThread
 import com.google.gson.Gson
 import io.reactivex.SingleObserver

@@ -1,4 +1,4 @@
-package com.dtu.capstone2.ereading.ui.utils
+package com.dtu.capstone2.ereading.ui.base
 
 import android.app.Dialog
 import android.graphics.Color

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.ui.newfeed.translate.TranslateNewFeedFragment
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment
+import com.dtu.capstone2.ereading.ui.base.BaseFragment
 import com.dtu.capstone2.ereading.ui.utils.observeOnUiThread
 import kotlinx.android.synthetic.main.fragment_list_new_feed_page.*
 

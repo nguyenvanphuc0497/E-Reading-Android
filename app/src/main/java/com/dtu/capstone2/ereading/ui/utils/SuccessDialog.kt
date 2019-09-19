@@ -3,6 +3,7 @@ package com.dtu.capstone2.ereading.ui.utils
 import android.app.Dialog
 import androidx.fragment.app.FragmentManager
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 
 /**
  * Create by Nguyen Van Phuc on 4/3/19

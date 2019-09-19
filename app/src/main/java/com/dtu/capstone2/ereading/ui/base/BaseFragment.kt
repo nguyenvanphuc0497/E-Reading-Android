@@ -1,9 +1,12 @@
-package com.dtu.capstone2.ereading.ui.utils
+package com.dtu.capstone2.ereading.ui.base
 
 import android.content.Context
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.utils.RxBusTransport
+import com.dtu.capstone2.ereading.ui.utils.Transport
+import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus
 import io.reactivex.disposables.CompositeDisposable
 
 /**

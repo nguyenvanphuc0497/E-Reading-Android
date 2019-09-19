@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.network.response.ListHistoryResponse;
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.dtu.capstone2.ereading.ui.base.BaseFragment;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;

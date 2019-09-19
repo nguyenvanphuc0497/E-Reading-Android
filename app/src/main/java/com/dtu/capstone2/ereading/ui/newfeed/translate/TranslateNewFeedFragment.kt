@@ -13,6 +13,7 @@ import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse
+import com.dtu.capstone2.ereading.ui.base.BaseFragment
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
 import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
 import com.dtu.capstone2.ereading.ui.utils.*

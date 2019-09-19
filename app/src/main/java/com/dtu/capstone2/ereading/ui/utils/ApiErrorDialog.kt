@@ -4,6 +4,7 @@ import android.app.Dialog
 import androidx.fragment.app.FragmentManager
 import android.widget.TextView
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 import kotlinx.android.synthetic.main.dialog_error_detail.*
 
 /**

@@ -22,7 +22,7 @@ import com.dtu.capstone2.ereading.network.request.DataLoginRequest;
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse;
 import com.dtu.capstone2.ereading.ui.account.register.RegisterFragment;
 import com.dtu.capstone2.ereading.ui.model.AccountErrorResponse;
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.dtu.capstone2.ereading.ui.base.BaseFragment;
 import com.dtu.capstone2.ereading.ui.utils.RxBusTransport;
 import com.dtu.capstone2.ereading.ui.utils.Transport;
 import com.dtu.capstone2.ereading.ui.utils.TypeTransportBus;

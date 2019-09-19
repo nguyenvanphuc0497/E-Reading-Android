@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 
 /**
  * Create by Nguyen Van Phuc on 4/3/19
