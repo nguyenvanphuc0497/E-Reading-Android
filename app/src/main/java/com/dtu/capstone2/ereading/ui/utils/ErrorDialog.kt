@@ -2,9 +2,10 @@ package com.dtu.capstone2.ereading.ui.utils
 
 import android.app.Dialog
 import android.content.DialogInterface
-import android.support.v4.app.FragmentManager
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 
 /**
  * Create by Nguyen Van Phuc on 4/3/19
@@ -27,7 +28,7 @@ class ErrorDialog : BaseDialog() {
         tvTitle.text = titleDialog
     }
 
-    override fun show(manager: FragmentManager?, tag: String?) {
+    override fun show(manager: FragmentManager, tag: String?) {
         if (!isShowing) {
             isShowing = true
             super.show(manager, tag)
@@ -41,7 +42,7 @@ class ErrorDialog : BaseDialog() {
         }
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         RxBusTransport.publish(Transport(TypeTransportBus.CALL_BACK_DIALOG_ERROR_MESSAGE, activity?.javaClass?.simpleName
                 ?: ""))

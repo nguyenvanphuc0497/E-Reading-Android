@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,37 +19,37 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutRegisterUserName"
         style="@style/LayoutInputEditTextAccounts"
         android:layout_marginTop="10dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_register_logo">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtRegisterUserName"
             style="@style/InputEditTextAccounts"
             android:hint="Tên đăng nhập"
             android:inputType="text" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutRegisterEmail"
         style="@style/LayoutInputEditTextAccounts"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutRegisterUserName">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtRegisterEmail"
             style="@style/InputEditTextAccounts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Gmail"
             android:inputType="textEmailAddress" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutRegisterPassword"
         style="@style/LayoutInputEditTextAccounts"
         app:layout_constraintRight_toRightOf="parent"
@@ -57,14 +57,14 @@
         app:passwordToggleDrawable="@drawable/icons8_lock_25"
         app:passwordToggleEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtRegisterPassword"
             style="@style/InputEditTextAccounts"
             android:hint="Mật khẩu"
             android:inputType="textPassword" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutRegisterPasswordConfirm"
         style="@style/LayoutInputEditTextAccounts"
         app:layout_constraintRight_toRightOf="parent"
@@ -72,12 +72,12 @@
         app:passwordToggleDrawable="@drawable/icons8_lock_25"
         app:passwordToggleEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtRegisterPasswordConfirm"
             style="@style/InputEditTextAccounts"
             android:hint="Nhập lại mật khẩu"
             android:inputType="textPassword" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnRegisterContinue"
@@ -90,4 +90,4 @@
         android:textColor="@color/colorMainApp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

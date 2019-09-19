@@ -2,8 +2,8 @@ package com.dtu.capstone2.ereading.ui.newfeed.translate
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +13,7 @@ import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
 import com.dtu.capstone2.ereading.network.utils.ApiExceptionResponse
+import com.dtu.capstone2.ereading.ui.base.BaseFragment
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
 import com.dtu.capstone2.ereading.ui.model.VocabularyLocation
 import com.dtu.capstone2.ereading.ui.utils.*

@@ -1,13 +1,13 @@
 package com.dtu.capstone2.ereading.ui.newfeed
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.ui.newfeed.listnewfeed.ListNewFeedFragment
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment
+import com.dtu.capstone2.ereading.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_page_new_feed.*
 
 /**

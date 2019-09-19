@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.widget.Button
 import android.widget.EditText
 import com.dtu.capstone2.ereading.R
-import com.dtu.capstone2.ereading.ui.utils.BaseDialog
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 
 /**
  * Create by Nguyen Van Phuc on 19/5/19

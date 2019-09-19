@@ -1,11 +1,11 @@
 package com.dtu.capstone2.ereading.ui.account;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.dtu.capstone2.ereading.R;
 import com.dtu.capstone2.ereading.ui.account.login.LoginFragment;
-import com.dtu.capstone2.ereading.ui.utils.BaseActivity;
+import com.dtu.capstone2.ereading.ui.base.BaseActivity;
 
 /**
  * Create by Nguyen Van Phuc on 4/3/19

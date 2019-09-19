@@ -1,8 +1,8 @@
 package com.dtu.capstone2.ereading.ui.home;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository;
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository;
 import com.dtu.capstone2.ereading.network.request.DataStringReponse;
 import com.dtu.capstone2.ereading.network.request.Vocabulary;
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment;
+import com.dtu.capstone2.ereading.ui.base.BaseFragment;
 
 import java.util.List;
 

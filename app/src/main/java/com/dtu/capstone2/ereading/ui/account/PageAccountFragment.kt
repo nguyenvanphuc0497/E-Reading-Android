@@ -3,11 +3,11 @@ package com.dtu.capstone2.ereading.ui.account
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.dtu.capstone2.ereading.R
 import com.dtu.capstone2.ereading.datasource.repository.EReadingRepository
 import com.dtu.capstone2.ereading.datasource.repository.LocalRepository
@@ -16,7 +16,7 @@ import com.dtu.capstone2.ereading.ui.account.favorite.FavoriteFragment
 import com.dtu.capstone2.ereading.ui.account.feedback.FeedBackDialog
 import com.dtu.capstone2.ereading.ui.account.history.HistoryFragment
 import com.dtu.capstone2.ereading.ui.model.ErrorUnauthorizedRespone
-import com.dtu.capstone2.ereading.ui.utils.BaseFragment
+import com.dtu.capstone2.ereading.ui.base.BaseFragment
 import com.dtu.capstone2.ereading.ui.utils.observeOnUiThread
 import com.google.gson.Gson
 import io.reactivex.SingleObserver
@@ -117,7 +117,7 @@ class PageAccountFragment : BaseFragment() {
         }
 
         tv_manager_feedback?.setOnClickListener {
-            feedBackDialog.show(fragmentManager, "")
+            feedBackDialog.show(childFragmentManager, "")
         }
 
         feedBackDialog.onSubmitClicked = {

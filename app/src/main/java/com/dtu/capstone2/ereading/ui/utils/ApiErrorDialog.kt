@@ -1,9 +1,10 @@
 package com.dtu.capstone2.ereading.ui.utils
 
 import android.app.Dialog
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.widget.TextView
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 import kotlinx.android.synthetic.main.dialog_error_detail.*
 
 /**
@@ -23,7 +24,7 @@ class ApiErrorDialog : BaseDialog() {
         }
     }
 
-    override fun show(manager: FragmentManager?, tag: String?) {
+    override fun show(manager: FragmentManager, tag: String?) {
         if (!isShowing) {
             isShowing = true
             super.show(manager, tag)

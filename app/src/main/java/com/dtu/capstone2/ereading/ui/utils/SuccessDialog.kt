@@ -1,8 +1,9 @@
 package com.dtu.capstone2.ereading.ui.utils
 
 import android.app.Dialog
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import com.dtu.capstone2.ereading.R
+import com.dtu.capstone2.ereading.ui.base.BaseDialog
 
 /**
  * Create by Nguyen Van Phuc on 4/3/19
@@ -16,7 +17,7 @@ class SuccessDialog : BaseDialog() {
 
     override fun initListeners(dialog: Dialog) {}
 
-    override fun show(manager: FragmentManager?, tag: String?) {
+    override fun show(manager: FragmentManager, tag: String?) {
         if (!isShowing) {
             isShowing = true
             super.show(manager, tag)

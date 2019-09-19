@@ -1,16 +1,16 @@
 package com.dtu.capstone2.ereading.ui
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import com.dtu.capstone2.ereading.ui.base.BasePagerFragment
+import com.dtu.capstone2.ereading.ui.base.TypeTabPager
 
-import com.dtu.capstone2.ereading.ui.model.MainPage
+class MainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-class MainPagerAdapter(fm: FragmentManager, private val mFragmentList: List<MainPage>) : FragmentStatePagerAdapter(fm) {
+    override fun getItem(position: Int): Fragment = BasePagerFragment.newInstance(TypeTabPager.values()[position].type)
 
-    override fun getItem(i: Int): Fragment = mFragmentList[i].fragment
+    override fun getCount() = TypeTabPager.values().size
 
-    override fun getCount() = mFragmentList.size
-
-    override fun getPageTitle(position: Int): CharSequence? = mFragmentList[position].titleFragment
+    override fun getPageTitle(position: Int): CharSequence? = TypeTabPager.values()[position].title
 }
